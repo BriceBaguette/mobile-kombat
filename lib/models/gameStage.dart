@@ -103,7 +103,7 @@ class Stage extends ChangeNotifier {
     character.setMovement(isMoving);
   }
 
-  void updateView() {
+  void updateGame() {
     for (var character in _stage!.characters) {
       character.move();
     }

@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
 
@@ -46,6 +48,11 @@ class StickMan extends Character {
     }
     return;
   }
+
+  @override
+  void update() {
+    move();
+  }
 }
 
 abstract class Character {
@@ -55,6 +62,7 @@ abstract class Character {
 
   get bbox => null;
 
+  void update();
   void setMovement(bool move);
   void setDirection(String direction);
   void move();
