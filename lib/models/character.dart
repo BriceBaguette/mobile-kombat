@@ -15,22 +15,21 @@ class StickMan extends Character {
   @override
   double speed;
   String facing;
-  var moving = false;
+  var isMoving = false;
 
   @override
   void setDirection(String direction) {
     facing = direction;
-    return;
   }
 
   @override
   void setMovement(bool move) {
-    moving = move;
+    isMoving = move;
   }
 
   @override
   void move() {
-    if (moving) {
+    if (isMoving) {
       switch (facing) {
         case 'RIGHT':
           bbox = Rect.fromLTWH(

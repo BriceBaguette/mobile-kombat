@@ -107,7 +107,7 @@ class Stage extends ChangeNotifier {
     for (var character in _stage!.characters) {
       character.update();
     }
-    notifyListeners();
+    _updateScreen();
   }
 
   Button? getButton(Offset pointerPos) {
