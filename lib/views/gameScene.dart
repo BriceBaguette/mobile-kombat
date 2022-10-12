@@ -32,11 +32,11 @@ class GameScene extends StatelessWidget {
         return GestureDetector(
             onTapDown: (details) => Controller().onTapStart(details),
             onTapUp: (_) => Controller().onTapStop(),
-            child: SafeArea(
-                child: CustomPaint(
+            child: CustomPaint(
               size: Size.infinite,
-              painter: ScenePainter(scene.characters, scene.buttons),
-            )));
+              painter:
+                  ScenePainter(scene.characters, scene.buttons, scene.grounds),
+            ));
       }
     });
   }

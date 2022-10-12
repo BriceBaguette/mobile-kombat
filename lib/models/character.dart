@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
 
+import 'package:flutter_application_1/models/gameStage.dart';
+
 class StickMan extends Character {
   @override
   StickMan(
@@ -15,6 +17,7 @@ class StickMan extends Character {
   @override
   double speed;
   String facing;
+  double upSpeed = 0;
   var isMoving = false;
 
   @override
@@ -29,6 +32,13 @@ class StickMan extends Character {
 
   @override
   void move() {
+    if (isGrounded()) {
+      setJumpSpeed(0);
+    } else {
+      setJumpSpeed(upSpeed + 0.01);
+    }
+    bbox =
+        Rect.fromLTWH(bbox.left, bbox.top + upSpeed, bbox.width, bbox.height);
     if (isMoving) {
       switch (facing) {
         case 'RIGHT':
@@ -50,6 +60,19 @@ class StickMan extends Character {
   void update() {
     move();
   }
+
+  @override
+  void setJumpSpeed(double value) {
+    upSpeed = value;
+  }
+
+  @override
+  bool isGrounded() {
+    if (Stage().isGround(
+        Offset(bbox.left + bbox.width, bbox.top + bbox.height + 1),
+        Offset(bbox.left, bbox.top + bbox.height + 1))) return true;
+    return false;
+  }
 }
 
 abstract class Character {
@@ -59,8 +82,12 @@ abstract class Character {
 
   get bbox => null;
 
+  get upspeed => null;
+
+  bool isGrounded();
   void update();
   void setMovement(bool move);
   void setDirection(String direction);
+  void setJumpSpeed(double value);
   void move();
 }

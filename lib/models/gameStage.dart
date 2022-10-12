@@ -8,19 +8,22 @@ import 'dart:ui' as ui;
 import 'package:flutter_application_1/models/character.dart';
 
 import 'CustomButtons.dart';
+import 'ground.dart';
 
-enum AssetList { characterImg, rightButtonImg, leftButtonImg }
+enum AssetList { characterImg, rightButtonImg, leftButtonImg, baseGround }
 
 const _sceneAssets = {
   AssetList.characterImg: "assets/character.png",
   AssetList.rightButtonImg: "assets/rightArrow.png",
-  AssetList.leftButtonImg: "assets/leftArrow.png"
+  AssetList.leftButtonImg: "assets/leftArrow.png",
+  AssetList.baseGround: "assets/baseGround.png"
 };
 
 class Stage extends ChangeNotifier {
   static Stage? _stage;
   var characters = <Character>[];
   var buttons = <Button>[];
+  var grounds = <Ground>[];
   var _loading = true;
   var _ready = false;
 
@@ -57,30 +60,16 @@ class Stage extends ChangeNotifier {
     }
 
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
-    var screenWidth = window.size.width;
-    var screenHeight = window.size.height;
-    var ratio = screenHeight / screenWidth;
+    var w = window.size.width;
+    var h = window.size.height;
+
     // enforce aspect ratio RATIO for all body parts, while adapting to screen size
-    double h, w;
     // ignore: constant_identifier_names
-    const RATIO = 2.058;
-    if (ratio < RATIO) {
-      // wider screen aspect
-      h = screenHeight;
-      w = h / RATIO;
-    } else if (ratio > RATIO) {
-      // longer screen aspect
-      w = screenWidth;
-      h = w * RATIO;
-    } else {
-      // same aspect ratio
-      w = screenWidth;
-      h = screenHeight;
-    }
+
     characters.add(
       StickMan(
           image: imgMap[AssetList.characterImg]!,
-          bbox: Rect.fromLTWH(h / 2, w / 2, 64, 64),
+          bbox: Rect.fromLTWH(w / 2, h / 2, 64, 64),
           speed: 0.05,
           facing: 'RIGHT'),
     );
@@ -93,6 +82,10 @@ class Stage extends ChangeNotifier {
           dir: 'RIGHT',
           img: imgMap[AssetList.rightButtonImg]!,
           bbox: Rect.fromLTWH(110, h - 45, 60, 40)));
+    grounds.add(Ground(
+        bbox: Rect.fromLTWH(
+            0, h / 2 + _stage!.characters[0].bbox.height, w, h / 10),
+        groundImg: imgMap[AssetList.baseGround]!));
     _ready = true;
     _loading = false;
     _updateScreen();
@@ -115,5 +108,13 @@ class Stage extends ChangeNotifier {
       if (button.bbox.contains(pointerPos)) return button;
     }
     return null;
+  }
+
+  bool isGround(Offset charPosLeft, Offset charPosRight) {
+    for (var ground in grounds) {
+      if (ground.bbox.contains(charPosLeft) ||
+          ground.bbox.contains(charPosRight)) return true;
+    }
+    return false;
   }
 }
