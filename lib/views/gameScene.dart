@@ -25,16 +25,18 @@ class GameScene extends StatelessWidget {
               ),
             ])));
       } else {
-        Timer.periodic(const Duration(milliseconds: 33), (timer) {
-          Stage().updateGame();
+        Timer gameTimer =
+            Timer.periodic(const Duration(milliseconds: 50), (timer) {
+          scene.updateGame();
         });
         return GestureDetector(
             onTapDown: (details) => Controller().onTapStart(details),
             onTapUp: (_) => Controller().onTapStop(),
-            child: CustomPaint(
+            child: SafeArea(
+                child: CustomPaint(
               size: Size.infinite,
               painter: ScenePainter(scene.characters, scene.buttons),
-            ));
+            )));
       }
     });
   }

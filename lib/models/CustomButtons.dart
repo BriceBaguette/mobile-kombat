@@ -14,7 +14,7 @@ class MovingButton extends Button {
   MovingButton({required this.dir, required this.img, required this.bbox});
 
   @override
-  void onTap() async {
+  void onTap() {
     _scene.move(_scene.characters[0], dir, true);
   }
 
