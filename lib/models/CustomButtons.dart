@@ -5,7 +5,6 @@ import 'gameStage.dart';
 class MovingButton extends Button {
   final String dir;
   final _scene = Stage();
-  bool _pressed = false;
   @override
   final ui.Image img;
   @override
@@ -21,6 +20,26 @@ class MovingButton extends Button {
   @override
   void onTapCancel() {
     _scene.move(_scene.characters[0], dir, false);
+  }
+}
+
+class JumpButton extends Button {
+  final _scene = Stage();
+  @override
+  final ui.Image img;
+  @override
+  final Rect bbox;
+
+  JumpButton({required this.img, required this.bbox});
+
+  @override
+  void onTap() {
+    _scene.characters[0].setJumpSpeed(-1);
+  }
+
+  @override
+  void onTapCancel() {
+    return;
   }
 }
 

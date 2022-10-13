@@ -10,13 +10,20 @@ import 'package:flutter_application_1/models/character.dart';
 import 'CustomButtons.dart';
 import 'ground.dart';
 
-enum AssetList { characterImg, rightButtonImg, leftButtonImg, baseGround }
+enum AssetList {
+  characterImg,
+  rightButtonImg,
+  leftButtonImg,
+  baseGround,
+  jumpButtonImg
+}
 
 const _sceneAssets = {
   AssetList.characterImg: "assets/character.png",
   AssetList.rightButtonImg: "assets/rightArrow.png",
   AssetList.leftButtonImg: "assets/leftArrow.png",
-  AssetList.baseGround: "assets/baseGround.png"
+  AssetList.baseGround: "assets/baseGround.png",
+  AssetList.jumpButtonImg: "assets/jump.png"
 };
 
 class Stage extends ChangeNotifier {
@@ -81,7 +88,11 @@ class Stage extends ChangeNotifier {
       ..add(MovingButton(
           dir: 'RIGHT',
           img: imgMap[AssetList.rightButtonImg]!,
-          bbox: Rect.fromLTWH(110, h - 45, 60, 40)));
+          bbox: Rect.fromLTWH(110, h - 45, 60, 40)))
+      ..add(JumpButton(
+          img: imgMap[AssetList.jumpButtonImg]!,
+          bbox: Rect.fromLTWH(20, h - 130, 30, 30)));
+
     grounds.add(Ground(
         bbox: Rect.fromLTWH(
             0, h / 2 + _stage!.characters[0].bbox.height, w, h / 10),
