@@ -68,9 +68,8 @@ class StickMan extends Character {
 
   @override
   bool isGrounded() {
-    if (Stage().isGround(
-        Offset(bbox.left + bbox.width, bbox.top + bbox.height + 1),
-        Offset(bbox.left, bbox.top + bbox.height + 1))) return true;
+    if (Stage().isGround(Offset(bbox.left + bbox.width, bbox.top + bbox.height),
+        Offset(bbox.left, bbox.top + bbox.height))) return true;
     return false;
   }
 }
