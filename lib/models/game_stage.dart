@@ -77,7 +77,7 @@ class Stage extends ChangeNotifier {
       StickMan(
           image: imgMap[AssetList.characterImg]!,
           bbox: Rect.fromLTWH(w / 2, h / 2, 64, 64),
-          speed: 0.05,
+          speed: 1,
           facing: 'RIGHT'),
     );
     buttons
