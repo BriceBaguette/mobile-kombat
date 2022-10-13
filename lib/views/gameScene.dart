@@ -15,15 +15,14 @@ class GameScene extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, Stage scene, _) {
       if (!scene.ready) {
-        return Container(
-            child: Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const <Widget>[
+        return Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const <Widget>[
               CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
               ),
-            ])));
+            ]));
       } else {
         Timer gameTimer =
             Timer.periodic(const Duration(milliseconds: 50), (timer) {

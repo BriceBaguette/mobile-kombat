@@ -69,6 +69,8 @@ class Stage extends ChangeNotifier {
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     var w = window.size.width;
     var h = window.size.height;
+    print(w);
+    print(h);
 
     // enforce aspect ratio RATIO for all body parts, while adapting to screen size
     // ignore: constant_identifier_names
@@ -91,7 +93,7 @@ class Stage extends ChangeNotifier {
           bbox: Rect.fromLTWH(110, h - 45, 60, 40)))
       ..add(JumpButton(
           img: imgMap[AssetList.jumpButtonImg]!,
-          bbox: Rect.fromLTWH(20, h - 130, 30, 30)));
+          bbox: Rect.fromLTWH(20, h - 80, 40, 40)));
 
     grounds.add(Ground(
         bbox: Rect.fromLTWH(

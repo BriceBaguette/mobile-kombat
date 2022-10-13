@@ -32,10 +32,10 @@ class StickMan extends Character {
 
   @override
   void move() {
-    if (isGrounded()) {
+    if (isGrounded() & (upSpeed >= 0)) {
       setJumpSpeed(0);
     } else {
-      setJumpSpeed(upSpeed + 0.01);
+      setJumpSpeed(upSpeed + 0.001);
     }
     bbox =
         Rect.fromLTWH(bbox.left, bbox.top + upSpeed, bbox.width, bbox.height);
