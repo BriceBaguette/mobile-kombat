@@ -69,8 +69,6 @@ class Stage extends ChangeNotifier {
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     var w = window.size.width;
     var h = window.size.height;
-    print(w);
-    print(h);
 
     // enforce aspect ratio RATIO for all body parts, while adapting to screen size
     // ignore: constant_identifier_names
