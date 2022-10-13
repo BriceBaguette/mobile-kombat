@@ -5,8 +5,7 @@ import 'package:flutter_application_1/controller.dart';
 import 'package:flutter_application_1/views/canvas.dart';
 import 'package:provider/provider.dart';
 
-import '../models/CustomButtons.dart';
-import '../models/gameStage.dart';
+import '../models/game_stage.dart';
 
 class GameScene extends StatelessWidget {
   const GameScene({super.key});

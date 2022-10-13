@@ -1,10 +1,7 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/models/character.dart';
 import 'package:flutter_application_1/views/gameScene.dart';
 import 'package:provider/provider.dart';
-import 'models/CustomButtons.dart';
 import 'models/gameStage.dart';
 
 Future main() async {

@@ -10,12 +10,10 @@ class Controller {
 
   late ui.Offset pointerPos;
   Button? button;
-  var _scene = Stage();
+  final _scene = Stage();
 
   factory Controller() {
-    if (_controller == null) {
-      _controller = Controller._hidden();
-    }
+    _controller ??= Controller._hidden();
     return _controller!;
   }
 
