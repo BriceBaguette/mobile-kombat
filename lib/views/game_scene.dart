@@ -23,10 +23,6 @@ class GameScene extends StatelessWidget {
               ),
             ]));
       } else {
-        Timer gameTimer =
-            Timer.periodic(const Duration(milliseconds: 50), (timer) {
-          scene.updateGame();
-        });
         return GestureDetector(
             onTapDown: (details) => Controller().onTapStart(details),
             onTapUp: (_) => Controller().onTapStop(),

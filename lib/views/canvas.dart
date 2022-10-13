@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_application_1/models/CustomButtons.dart';
+import 'package:flutter_application_1/models/custom_buttons.dart';
 import 'package:flutter_application_1/models/ground.dart';
 
 import '../models/character.dart';

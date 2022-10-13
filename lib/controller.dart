@@ -2,8 +2,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/gestures.dart';
 
-import 'models/CustomButtons.dart';
-import 'models/gameStage.dart';
+import 'models/custom_buttons.dart';
+import 'models/game_stage.dart';
 
 class Controller {
   static Controller? _controller;

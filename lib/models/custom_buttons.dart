@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import "dart:ui" as ui;
-import 'gameStage.dart';
+import 'game_stage.dart';
 
 class MovingButton extends Button {
   final String dir;

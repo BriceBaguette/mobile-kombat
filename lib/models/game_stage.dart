@@ -7,7 +7,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter_application_1/models/character.dart';
 
-import 'CustomButtons.dart';
+import 'custom_buttons.dart';
 import 'ground.dart';
 
 enum AssetList {
@@ -100,6 +100,9 @@ class Stage extends ChangeNotifier {
     _ready = true;
     _loading = false;
     _updateScreen();
+    Timer gameTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+      _stage!.updateGame();
+    });
   }
 
   void move(Character character, String dir, bool isMoving) {
