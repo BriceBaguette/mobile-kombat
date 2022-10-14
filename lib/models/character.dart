@@ -35,7 +35,7 @@ class StickMan extends Character {
     if (isGrounded() & (upSpeed >= 0)) {
       setJumpSpeed(0);
     } else {
-      setJumpSpeed(upSpeed + 0.1);
+      setJumpSpeed(upSpeed + 0.05);
     }
     bbox =
         Rect.fromLTWH(bbox.left, bbox.top + upSpeed, bbox.width, bbox.height);

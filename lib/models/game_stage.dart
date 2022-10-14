@@ -33,6 +33,7 @@ class Stage extends ChangeNotifier {
   var grounds = <Ground>[];
   var _loading = true;
   var _ready = false;
+  late Timer gameTimer;
 
   bool get ready => _ready && !_loading;
 
@@ -77,7 +78,7 @@ class Stage extends ChangeNotifier {
       StickMan(
           image: imgMap[AssetList.characterImg]!,
           bbox: Rect.fromLTWH(w / 2, h / 2, 64, 64),
-          speed: 1,
+          speed: 3,
           facing: 'RIGHT'),
     );
     buttons
@@ -100,7 +101,7 @@ class Stage extends ChangeNotifier {
     _ready = true;
     _loading = false;
     _updateScreen();
-    Timer gameTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+    gameTimer = Timer.periodic(const Duration(milliseconds: 16), (timer) {
       _stage!.updateGame();
     });
   }
