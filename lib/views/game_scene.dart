@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controller.dart';
 import 'package:flutter_application_1/views/canvas.dart';
@@ -23,14 +21,14 @@ class GameScene extends StatelessWidget {
               ),
             ]));
       } else {
-        return GestureDetector(
-            onTapDown: (details) => Controller().onTapStart(details),
-            onTapUp: (_) => Controller().onTapStop(),
+        return Listener(
+            onPointerDown: (details) => Controller().onTapStart(details),
+            onPointerMove: (details) => Controller().onDrag(details),
+            onPointerUp: (details) => Controller().onTapStop(details),
             child: CustomPaint(
-              size: Size.infinite,
-              painter:
-                  ScenePainter(scene.characters, scene.buttons, scene.grounds),
-            ));
+                size: Size.infinite,
+                painter: ScenePainter(
+                    scene.characters, scene.buttons, scene.grounds)));
       }
     });
   }

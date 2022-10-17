@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/constant.dart';
 
 import 'dart:ui' as ui;
 
@@ -34,7 +35,7 @@ class Stage extends ChangeNotifier {
   var _loading = true;
   var _ready = false;
   late Timer gameTimer;
-
+  late Constant constants;
   bool get ready => _ready && !_loading;
 
   factory Stage() {
@@ -68,16 +69,14 @@ class Stage extends ChangeNotifier {
     }
 
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
-    var w = window.size.width;
-    var h = window.size.height;
-
+    constants = Constant(w: window.size.width, h: window.size.height);
     // enforce aspect ratio RATIO for all body parts, while adapting to screen size
     // ignore: constant_identifier_names
 
     characters.add(
       StickMan(
           image: imgMap[AssetList.characterImg]!,
-          bbox: Rect.fromLTWH(w / 2, h / 2, 64, 64),
+          bbox: Rect.fromLTWH(constants.w / 2, constants.h / 2, 64, 64),
           speed: 3,
           facing: 'RIGHT'),
     );
@@ -85,18 +84,20 @@ class Stage extends ChangeNotifier {
       ..add(MovingButton(
           dir: 'LEFT',
           img: imgMap[AssetList.leftButtonImg]!,
-          bbox: Rect.fromLTWH(20, h - 45, 60, 40)))
+          bbox: constants.leftButtonPosition))
       ..add(MovingButton(
           dir: 'RIGHT',
           img: imgMap[AssetList.rightButtonImg]!,
-          bbox: Rect.fromLTWH(110, h - 45, 60, 40)))
+          bbox: constants.rightButtonPosition))
       ..add(JumpButton(
           img: imgMap[AssetList.jumpButtonImg]!,
-          bbox: Rect.fromLTWH(20, h - 80, 40, 40)));
-
+          bbox: constants.jumpButtonPosition));
     grounds.add(Ground(
         bbox: Rect.fromLTWH(
-            0, h / 2 + _stage!.characters[0].bbox.height, w, h / 10),
+            0,
+            constants.h / 2 + _stage!.characters[0].bbox.height,
+            constants.w,
+            constants.h / 10),
         groundImg: imgMap[AssetList.baseGround]!));
     _ready = true;
     _loading = false;

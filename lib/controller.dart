@@ -17,17 +17,31 @@ class Controller {
     return _controller!;
   }
 
-  Controller._hidden() {}
+  Controller._hidden();
 
-  void onTapStart(TapDownDetails details) {
+  void onTapStart(PointerDownEvent details) {
     pointerPos = details.localPosition;
+    print(pointerPos);
     button = _scene.getButton(pointerPos);
     if (button != null) {
       button!.onTap();
     }
   }
 
-  void onTapStop() {
+  void onDrag(PointerMoveEvent details) {
+    pointerPos = details.localPosition;
+    if (button != null) {
+      button!.onTapCancel();
+    }
+    button = _scene.getButton(pointerPos);
+    if (button != null) {
+      button!.onTap();
+    }
+  }
+
+  void onTapStop(PointerUpEvent details) {
+    pointerPos = details.localPosition;
+    button = _scene.getButton(pointerPos);
     if (button != null) {
       button!.onTapCancel();
     }

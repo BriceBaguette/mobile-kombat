@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/views/game_scene.dart';
@@ -10,8 +11,9 @@ Future main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
+  debugPrintGestureArenaDiagnostics = true;
   runApp(ChangeNotifierProvider(
-      create: (BuildContext context) => Stage(), child: MyApp()));
+      create: (BuildContext context) => Stage(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
