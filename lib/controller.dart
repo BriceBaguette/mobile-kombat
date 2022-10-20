@@ -21,7 +21,6 @@ class Controller {
 
   void onTapStart(PointerDownEvent details) {
     pointerPos = details.localPosition;
-    print(pointerPos);
     button = _scene.getButton(pointerPos);
     if (button != null) {
       button!.onTap();

@@ -34,6 +34,7 @@ class Stage extends ChangeNotifier {
   var grounds = <Ground>[];
   var _loading = true;
   var _ready = false;
+  List<int> characterLife = [100, 100];
   late Timer gameTimer;
   late Constant constants;
   bool get ready => _ready && !_loading;
@@ -70,8 +71,6 @@ class Stage extends ChangeNotifier {
 
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     constants = Constant(w: window.size.width, h: window.size.height);
-    // enforce aspect ratio RATIO for all body parts, while adapting to screen size
-    // ignore: constant_identifier_names
 
     characters.add(
       StickMan(
