@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_application_1/models/custom_buttons.dart';
-import 'package:flutter_application_1/models/ground.dart';
+import 'package:flutter/material.dart';
+import 'package:mobile_kombat/models/custom_buttons.dart';
+import 'package:mobile_kombat/models/ground.dart';
 
 import '../models/character.dart';
+import '../models/game_stage.dart';
 
 class ScenePainter extends CustomPainter {
   List<Character> characterList;
@@ -34,6 +36,28 @@ class ScenePainter extends CustomPainter {
           rect: element.bbox,
           fit: BoxFit.fill);
     }
+    paintText(canvas, size);
+  }
+
+  void paintText(Canvas canvas, Size size) {
+    final textStyle = TextStyle(
+      color: Colors.black,
+      fontSize: 30,
+    );
+    TextSpan textSpan = TextSpan(
+        text: "${Stage().displayMinutes}:${Stage().displaySeconds}",
+        style: textStyle);
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout(
+      minWidth: 0,
+      maxWidth: size.width,
+    );
+    final xCenter = (size.width - textPainter.width) / 2;
+    final offset = Offset(xCenter, 0);
+    textPainter.paint(canvas, offset);
   }
 
   @override

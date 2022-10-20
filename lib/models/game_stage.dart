@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/constant.dart';
+import 'package:mobile_kombat/constant.dart';
 
 import 'dart:ui' as ui;
 
-import 'package:flutter_application_1/models/character.dart';
+import 'package:mobile_kombat/models/character.dart';
 
 import 'custom_buttons.dart';
 import 'ground.dart';
@@ -37,6 +37,9 @@ class Stage extends ChangeNotifier {
   List<int> characterLife = [100, 100];
   late Timer gameTimer;
   late Constant constants;
+  final DateTime startTime = DateTime.now();
+  int displaySeconds = 0;
+  int displayMinutes = 3;
   bool get ready => _ready && !_loading;
 
   factory Stage() {
@@ -115,8 +118,14 @@ class Stage extends ChangeNotifier {
     for (var character in _stage!.characters) {
       character.update();
     }
+    _updateTimer();
+    if (displaySeconds == 0 && displayMinutes <= 0) {
+      gameTimer.cancel();
+    }
     _updateScreen();
   }
+
+  void _updateTimer() {}
 
   Button? getButton(Offset pointerPos) {
     for (var button in buttons) {

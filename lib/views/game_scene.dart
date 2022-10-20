@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/controller.dart';
-import 'package:flutter_application_1/views/canvas.dart';
+import 'package:mobile_kombat/controller.dart';
+import 'package:mobile_kombat/views/canvas.dart';
 import 'package:provider/provider.dart';
 
 import '../models/game_stage.dart';

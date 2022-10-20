@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/views/game_scene.dart';
+import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:provider/provider.dart';
 import 'models/game_stage.dart';
 

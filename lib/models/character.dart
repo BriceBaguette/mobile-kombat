@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
 
-import 'package:flutter_application_1/models/game_stage.dart';
+import 'package:mobile_kombat/models/game_stage.dart';
 
 class StickMan extends Character {
   @override
