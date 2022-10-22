@@ -5,18 +5,14 @@ import 'package:mobile_kombat/models/game_stage.dart';
 
 class StickMan extends Character {
   @override
-  StickMan(
-      {required this.image,
-      required this.bbox,
-      required this.speed,
-      required this.facing});
+  StickMan({required this.image, required this.bbox});
   @override
   ui.Image image;
   @override
   Rect bbox;
   @override
-  double speed;
-  String facing;
+  double speed = 5;
+  String facing = 'RIGHT';
   double upSpeed = 0;
   var isMoving = false;
 
@@ -35,7 +31,7 @@ class StickMan extends Character {
     if (isGrounded() & (upSpeed >= 0)) {
       setJumpSpeed(0);
     } else {
-      setJumpSpeed(upSpeed + 0.05);
+      setJumpSpeed(upSpeed + 0.1);
     }
     bbox =
         Rect.fromLTWH(bbox.left, bbox.top + upSpeed, bbox.width, bbox.height);

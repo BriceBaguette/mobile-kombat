@@ -37,9 +37,7 @@ class Stage extends ChangeNotifier {
   List<int> characterLife = [100, 100];
   late Timer gameTimer;
   late Constant constants;
-  final DateTime startTime = DateTime.now();
-  int displaySeconds = 0;
-  int displayMinutes = 3;
+  int displayTime = 180000;
   bool get ready => _ready && !_loading;
 
   factory Stage() {
@@ -78,9 +76,7 @@ class Stage extends ChangeNotifier {
     characters.add(
       StickMan(
           image: imgMap[AssetList.characterImg]!,
-          bbox: Rect.fromLTWH(constants.w / 2, constants.h / 2, 64, 64),
-          speed: 3,
-          facing: 'RIGHT'),
+          bbox: Rect.fromLTWH(constants.w / 2, constants.h / 2, 64, 64)),
     );
     buttons
       ..add(MovingButton(
@@ -104,7 +100,8 @@ class Stage extends ChangeNotifier {
     _ready = true;
     _loading = false;
     _updateScreen();
-    gameTimer = Timer.periodic(const Duration(milliseconds: 16), (timer) {
+    gameTimer =
+        Timer.periodic(Duration(milliseconds: constants.framerate), (timer) {
       _stage!.updateGame();
     });
   }
@@ -119,13 +116,15 @@ class Stage extends ChangeNotifier {
       character.update();
     }
     _updateTimer();
-    if (displaySeconds == 0 && displayMinutes <= 0) {
+    if (displayTime <= 0) {
       gameTimer.cancel();
     }
     _updateScreen();
   }
 
-  void _updateTimer() {}
+  void _updateTimer() {
+    displayTime -= constants.framerate;
+  }
 
   Button? getButton(Offset pointerPos) {
     for (var button in buttons) {

@@ -40,12 +40,13 @@ class ScenePainter extends CustomPainter {
   }
 
   void paintText(Canvas canvas, Size size) {
-    final textStyle = TextStyle(
+    const textStyle = TextStyle(
       color: Colors.black,
       fontSize: 30,
     );
     TextSpan textSpan = TextSpan(
-        text: "${Stage().displayMinutes}:${Stage().displaySeconds}",
+        text:
+            "${Stage().displayTime ~/ 60000}:${(Stage().displayTime ~/ 1000) % 60}",
         style: textStyle);
     final textPainter = TextPainter(
       text: textSpan,
