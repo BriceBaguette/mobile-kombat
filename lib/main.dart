@@ -11,7 +11,9 @@ Future main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-  runApp(const MaterialApp(title: 'Mobile Kombat', home: MainMenu()));
+  runApp(ChangeNotifierProvider(
+      create: (BuildContext context) => Stage(),
+      child: const MaterialApp(title: 'Mobile Kombat', home: MainMenu())));
 }
 
 class MainMenu extends StatelessWidget {
@@ -93,10 +95,8 @@ class MainMenu extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                ChangeNotifierProvider(
-                                    create: (BuildContext context) => Stage(),
-                                    child: const Scaffold(body: GameScene())),
+                            builder: ((context) =>
+                                const Scaffold(body: GameScene())),
                           ));
                     },
                   ),
