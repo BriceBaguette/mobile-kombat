@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:ffi';
 
 import '../models/cosmetics.dart';
-import '../models/character.dart';
 
 /*
 *== Inventory ===================================================
@@ -23,18 +21,21 @@ class Inventory extends StatelessWidget {
   Inventory({super.key});
 
   final List<Widget> articles = [
-    Cosmetics('test1', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test2', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test3', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test4', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test5', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test6', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test7', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test8', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test9', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test10', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test11', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
-    Cosmetics('test12', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics('test1', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics('test2', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics('test3', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics('test4', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics('test5', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics('test6', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics('test7', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics('test8', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics('test9', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics(
+        'test10', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics(
+        'test11', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
+    const Cosmetics(
+        'test12', [0, 0, 0], 'assets/images/R.png', 'H', "gen", 100),
   ];
 
   @override
@@ -43,8 +44,8 @@ class Inventory extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 40,
-        leading: Container(
-          child: Row(children: [
+        leading: Row(
+          children: [
             IconButton(
               icon: const Icon(Icons.arrow_back_ios),
               onPressed: () {
@@ -57,22 +58,22 @@ class Inventory extends StatelessWidget {
               },
               tooltip: 'Inventory',
             ),
-          ]),
+          ],
         ),
-        actions: [],
-        title: Text("Inventory"),
+        actions: const [],
+        title: const Text("Inventory"),
         centerTitle: true,
       ),
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Container(
+            SizedBox(
                 width: 180,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text("GenericName1"),
+                    const Text("GenericName1"),
                     Image.asset('assets/images/10522.png'),
                     Container()
                   ],
@@ -89,7 +90,7 @@ class Inventory extends StatelessWidget {
                     border: Border.all(
                       color: Colors.blueGrey.shade300,
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Text(
                     'hi',
@@ -122,7 +123,8 @@ class Inventory extends StatelessWidget {
                       border: Border.all(
                         color: Colors.blueGrey.shade300,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
                   child: Image.asset(
                     'assets/images/919490.png',
                     scale: 10,
@@ -132,7 +134,7 @@ class Inventory extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
+            SizedBox(
               width: 350,
               child: Expanded(
                   child: ListView(
