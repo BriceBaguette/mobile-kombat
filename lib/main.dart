@@ -37,39 +37,33 @@ class MainMenu extends StatelessWidget {
                   width: 100,
                   height: 50,
                   child: ElevatedButton(
-                    child: const Text('Inventory'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Inventory()),
-                      );
-                    },
-                  ),
+                      child: const Text('Inventory'),
+                      onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Inventory()),
+                          )),
                 ),
                 SizedBox(
                   width: 100,
                   height: 50,
                   child: ElevatedButton(
-                    child: const Text('Shop'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Inventory()),
-                      );
-                    },
-                  ),
+                      child: const Text('Shop'),
+                      onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Inventory()),
+                          )),
                 ),
                 SizedBox(
                   width: 100,
                   height: 50,
                   child: ElevatedButton(
                     child: const Text('Stats'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Inventory()),
-                      );
-                    },
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Inventory()),
+                    ),
                   ),
                 ),
               ],
@@ -90,16 +84,13 @@ class MainMenu extends StatelessWidget {
                   width: 150,
                   height: 75,
                   child: ElevatedButton(
-                    child: const Text('Play'),
-                    onPressed: () {
-                      Navigator.push(
+                      child: const Text('Play'),
+                      onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: ((context) =>
                                 const Scaffold(body: GameScene())),
-                          ));
-                    },
-                  ),
+                          ))),
                 )
               ],
             ),

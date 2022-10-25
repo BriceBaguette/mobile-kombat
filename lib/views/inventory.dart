@@ -136,10 +136,9 @@ class Inventory extends StatelessWidget {
             ),
             SizedBox(
               width: 350,
-              child: Expanded(
-                  child: ListView(
+              child: ListView(
                 children: articles,
-              )),
+              ),
             ),
           ],
         ),

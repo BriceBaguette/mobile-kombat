@@ -15,16 +15,16 @@ class ScenePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (var element in characterList) {
-      for (var element in groundList) {
-        paintImage(
-            canvas: canvas,
-            image: element.groundImg,
-            rect: element.bbox,
-            fit: BoxFit.fill);
-      }
       paintImage(
           canvas: canvas,
           image: element.image,
+          rect: element.bbox,
+          fit: BoxFit.fill);
+    }
+    for (var element in groundList) {
+      paintImage(
+          canvas: canvas,
+          image: element.groundImg,
           rect: element.bbox,
           fit: BoxFit.fill);
     }

@@ -125,6 +125,9 @@ class Stage extends ChangeNotifier {
     }
     _updateTimer();
     if (displayTime <= 0) {
+      characters.removeRange(0, characters.length);
+      grounds.removeRange(0, grounds.length);
+      buttons.removeRange(0, buttons.length);
       gameTimer.cancel();
       gameOver = true;
     }
