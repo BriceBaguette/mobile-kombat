@@ -4,6 +4,7 @@ class Constant {
   final double w;
   final double h;
   final int framerate = 16;
+  final time = 15000;
   late Rect leftButtonPosition;
   late Rect rightButtonPosition;
   late Rect jumpButtonPosition;

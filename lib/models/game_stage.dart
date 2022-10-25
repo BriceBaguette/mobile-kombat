@@ -37,7 +37,7 @@ class Stage extends ChangeNotifier {
   List<int> characterLife = [100, 100];
   late Timer gameTimer;
   late Constant constants;
-  int displayTime = 15000;
+  late int displayTime;
   bool gameOver = false;
   bool get ready => _ready && !_loading;
 
@@ -73,7 +73,7 @@ class Stage extends ChangeNotifier {
 
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     constants = Constant(w: window.size.width, h: window.size.height);
-
+    displayTime = constants.time;
     characters.add(
       StickMan(
           image: imgMap[AssetList.characterImg]!,
@@ -105,6 +105,13 @@ class Stage extends ChangeNotifier {
         Timer.periodic(Duration(milliseconds: constants.framerate), (timer) {
       _stage!.updateGame();
     });
+  }
+
+  void reset() {
+    gameOver = false;
+    displayTime = constants.time;
+    _loading = true;
+    _loadImages();
   }
 
   void move(Character character, String dir, bool isMoving) {
@@ -141,5 +148,9 @@ class Stage extends ChangeNotifier {
           ground.bbox.contains(charPosRight)) return true;
     }
     return false;
+  }
+
+  void setReady(bool bool) {
+    _ready = bool;
   }
 }

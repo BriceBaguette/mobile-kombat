@@ -12,6 +12,9 @@ class GameScene extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, Stage scene, _) {
       if (!scene.ready) {
+        if (scene.gameOver) {
+          scene.reset();
+        }
         return Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -22,6 +25,7 @@ class GameScene extends StatelessWidget {
             ]));
       } else {
         if (scene.gameOver) {
+          scene.setReady(false);
           Navigator.of(
             context,
             rootNavigator: true,
