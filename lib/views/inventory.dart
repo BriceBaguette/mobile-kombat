@@ -86,17 +86,17 @@ class Inventory extends StatelessWidget {
                   height: 80,
                   width: 80,
                   decoration: BoxDecoration(
-                    color: Colors.blueGrey.shade200,
-                    border: Border.all(
-                      color: Colors.blueGrey.shade300,
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Text(
-                    'hi',
-                    style: Theme.of(context).textTheme.headline4,
-                    textScaleFactor: 0.8,
-                    textAlign: TextAlign.center,
+                      color: Colors.blueGrey.shade200,
+                      border: Border.all(
+                        color: Colors.blueGrey.shade300,
+                      ),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  child: Image.asset(
+                    'assets/images/R.png',
+                    scale: 2.5,
+                    color: Colors.blueGrey.withOpacity(0.5),
+                    colorBlendMode: BlendMode.modulate,
                   ),
                 ),
                 Container(

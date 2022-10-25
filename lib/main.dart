@@ -4,8 +4,6 @@ import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:provider/provider.dart';
 import 'models/game_stage.dart';
 import 'views/inventory.dart';
-//import 'game.dart';
-//import 'stats.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

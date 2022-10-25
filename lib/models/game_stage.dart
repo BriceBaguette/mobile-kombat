@@ -37,7 +37,7 @@ class Stage extends ChangeNotifier {
   List<int> characterLife = [100, 100];
   late Timer gameTimer;
   late Constant constants;
-  int displayTime = 180000;
+  int displayTime = 15000;
   bool gameOver = false;
   bool get ready => _ready && !_loading;
 
