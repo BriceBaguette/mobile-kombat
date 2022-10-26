@@ -26,6 +26,13 @@ class ScenePainter extends CustomPainter {
           image: element.image,
           rect: element.bbox,
           fit: BoxFit.fill);
+      if (element.usingAbility) {
+        paintImage(
+            canvas: canvas,
+            image: element.abilityImage(),
+            rect: element.abilityRange(),
+            fit: BoxFit.fill);
+      }
     }
     for (var element in buttonList) {
       paintImage(

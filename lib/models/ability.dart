@@ -12,7 +12,7 @@ class SwordStrike extends Ability {
   @override
   Rect range(Rect characterHitBox, String facing) {
     var left = characterHitBox.left;
-    var top = characterHitBox.top / 2;
+    var top = characterHitBox.top + characterHitBox.height / 2;
     var width = characterHitBox.width;
     var height = characterHitBox.height / 3;
 
@@ -20,10 +20,10 @@ class SwordStrike extends Ability {
 
     switch (facing) {
       case 'RIGHT':
-        range.translate(characterHitBox.width, 0);
+        range = range.translate(characterHitBox.width, 0);
         break;
       case 'LEFT':
-        range.translate(-width, 0);
+        range = range.translate(-width, 0);
         break;
       default:
         break;
