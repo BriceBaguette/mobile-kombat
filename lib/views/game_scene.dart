@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/controller.dart';
-import 'package:flutter_application_1/views/canvas.dart';
+import 'package:mobile_kombat/controller.dart';
+import 'package:mobile_kombat/views/canvas.dart';
 import 'package:provider/provider.dart';
 
 import '../models/game_stage.dart';
@@ -12,6 +12,9 @@ class GameScene extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, Stage scene, _) {
       if (!scene.ready) {
+        if (scene.gameOver) {
+          scene.reset();
+        }
         return Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -21,6 +24,15 @@ class GameScene extends StatelessWidget {
               ),
             ]));
       } else {
+        if (scene.gameOver) {
+          scene.setReady(false);
+          Navigator.of(
+            context,
+            rootNavigator: true,
+          ).pop(
+            context,
+          );
+        }
         return Listener(
             onPointerDown: (details) => Controller().onTapStart(details),
             onPointerMove: (details) => Controller().onDrag(details),

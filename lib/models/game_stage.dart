@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/constant.dart';
+import 'package:mobile_kombat/constant.dart';
 
 import 'dart:ui' as ui;
 
-import 'package:flutter_application_1/models/character.dart';
+import 'package:mobile_kombat/models/character.dart';
 
 import 'custom_buttons.dart';
 import 'ground.dart';
@@ -39,6 +39,8 @@ class Stage extends ChangeNotifier {
   List<int> characterLife = [100, 100];
   late Timer gameTimer;
   late Constant constants;
+  late int displayTime;
+  bool gameOver = false;
   bool get ready => _ready && !_loading;
 
   factory Stage() {
@@ -73,7 +75,7 @@ class Stage extends ChangeNotifier {
 
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     constants = Constant(w: window.size.width, h: window.size.height);
-
+    displayTime = constants.time;
     characters.add(
       StickMan(
           image: imgMap[AssetList.characterImg]!,
@@ -104,9 +106,17 @@ class Stage extends ChangeNotifier {
     _ready = true;
     _loading = false;
     _updateScreen();
-    gameTimer = Timer.periodic(const Duration(milliseconds: 16), (timer) {
+    gameTimer =
+        Timer.periodic(Duration(milliseconds: constants.framerate), (timer) {
       _stage!.updateGame();
     });
+  }
+
+  void reset() {
+    gameOver = false;
+    displayTime = constants.time;
+    _loading = true;
+    _loadImages();
   }
 
   void move(Character character, String dir, bool isMoving) {
@@ -118,7 +128,19 @@ class Stage extends ChangeNotifier {
     for (var character in _stage!.characters) {
       character.update();
     }
+    _updateTimer();
+    if (displayTime <= 0) {
+      characters.removeRange(0, characters.length);
+      grounds.removeRange(0, grounds.length);
+      buttons.removeRange(0, buttons.length);
+      gameTimer.cancel();
+      gameOver = true;
+    }
     _updateScreen();
+  }
+
+  void _updateTimer() {
+    displayTime -= constants.framerate;
   }
 
   Button? getButton(Offset pointerPos) {
@@ -134,5 +156,9 @@ class Stage extends ChangeNotifier {
           ground.bbox.contains(charPosRight)) return true;
     }
     return false;
+  }
+
+  void setReady(bool bool) {
+    _ready = bool;
   }
 }

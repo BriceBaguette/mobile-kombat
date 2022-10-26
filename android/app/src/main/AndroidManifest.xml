@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_application_1">
+    package="com.mobile_kombat">
    <application
         android:label="Mobile Kombat"
         android:name="${applicationName}"

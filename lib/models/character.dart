@@ -20,8 +20,8 @@ class StickMan extends Character {
   @override
   Rect bbox;
   @override
-  double speed;
-  String facing;
+  double speed = 5;
+  String facing = 'RIGHT';
   double upSpeed = 0;
   var isMoving = false;
   ui.Image mainAbImage;
@@ -45,7 +45,7 @@ class StickMan extends Character {
     if (isGrounded() & (upSpeed >= 0)) {
       setJumpSpeed(0);
     } else {
-      setJumpSpeed(upSpeed + 0.05);
+      setJumpSpeed(upSpeed + 0.1);
     }
     bbox =
         Rect.fromLTWH(bbox.left, bbox.top + upSpeed, bbox.width, bbox.height);
