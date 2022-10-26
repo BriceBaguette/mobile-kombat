@@ -131,6 +131,13 @@ class Stage extends ChangeNotifier {
 
   void updateGame() {
     for (var character in _stage!.characters) {
+      for (var other in _stage!.characters) {
+        if (other != character &&
+            other.usingAbility &&
+            character.bbox.overlaps(other.abilityRange())) {
+          character.getDamage(other.abilityDamage());
+        }
+      }
       character.update();
     }
     _updateTimer();

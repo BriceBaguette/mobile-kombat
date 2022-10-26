@@ -16,6 +16,8 @@ class StickMan extends Character {
   }
 
   @override
+  int health = 100;
+  @override
   ui.Image image;
   @override
   Rect bbox;
@@ -88,9 +90,17 @@ class StickMan extends Character {
 
   @override
   Rect abilityRange() => abilityInProgress.range(bbox, facing);
+
+  @override
+  int abilityDamage() => abilityInProgress.power;
+
+  @override
+  void getDamage(int damage) => health -= damage;
 }
 
 abstract class Character {
+  get health => null;
+
   get speed => null;
 
   get image => null;
@@ -109,4 +119,6 @@ abstract class Character {
   void move();
   ui.Image abilityImage();
   Rect abilityRange();
+  int abilityDamage();
+  void getDamage(int damage);
 }
