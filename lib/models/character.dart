@@ -1,11 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
 
-import 'package:mobile_kombat/models/game_stage.dart';
+import 'package:flutter_application_1/models/game_stage.dart';
+import 'package:flutter_application_1/models/ability.dart';
 
 class StickMan extends Character {
   @override
-  StickMan({required this.image, required this.bbox});
+  StickMan(
+      {required this.image,
+      required this.bbox,
+      required this.speed,
+      required this.facing,
+      required this.mainAbImage}) {
+    mainAbility = SwordStrike(image: mainAbImage);
+  }
+
   @override
   ui.Image image;
   @override
@@ -15,6 +24,11 @@ class StickMan extends Character {
   String facing = 'RIGHT';
   double upSpeed = 0;
   var isMoving = false;
+  ui.Image mainAbImage;
+  late Ability mainAbility;
+  @override
+  bool usingAbility = false;
+  late Ability abilityInProgress;
 
   @override
   void setDirection(String direction) {
@@ -68,6 +82,12 @@ class StickMan extends Character {
         Offset(bbox.left, bbox.top + bbox.height))) return true;
     return false;
   }
+
+  @override
+  ui.Image abilityImage() => abilityInProgress.image;
+
+  @override
+  Rect abilityRange() => abilityInProgress.range(bbox, facing);
 }
 
 abstract class Character {
@@ -79,10 +99,14 @@ abstract class Character {
 
   get upspeed => null;
 
+  get usingAbility => null;
+
   bool isGrounded();
   void update();
   void setMovement(bool move);
   void setDirection(String direction);
   void setJumpSpeed(double value);
   void move();
+  ui.Image abilityImage();
+  Rect abilityRange();
 }

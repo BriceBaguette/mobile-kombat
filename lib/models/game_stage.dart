@@ -16,15 +16,17 @@ enum AssetList {
   rightButtonImg,
   leftButtonImg,
   baseGround,
-  jumpButtonImg
+  jumpButtonImg,
+  swordImg
 }
 
 const _sceneAssets = {
-  AssetList.characterImg: "assets/images/character.png",
-  AssetList.rightButtonImg: "assets/images/rightArrow.png",
-  AssetList.leftButtonImg: "assets/images/leftArrow.png",
-  AssetList.baseGround: "assets/images/baseGround.png",
-  AssetList.jumpButtonImg: "assets/images/jump.png"
+  AssetList.characterImg: "assets/character.png",
+  AssetList.rightButtonImg: "assets/rightArrow.png",
+  AssetList.leftButtonImg: "assets/leftArrow.png",
+  AssetList.baseGround: "assets/baseGround.png",
+  AssetList.jumpButtonImg: "assets/jump.png",
+  AssetList.swordImg: "assets/sword.png"
 };
 
 class Stage extends ChangeNotifier {
@@ -77,7 +79,10 @@ class Stage extends ChangeNotifier {
     characters.add(
       StickMan(
           image: imgMap[AssetList.characterImg]!,
-          bbox: Rect.fromLTWH(constants.w / 2, constants.h / 2, 64, 64)),
+          bbox: Rect.fromLTWH(constants.w / 2, constants.h / 2, 64, 64),
+          speed: 3,
+          facing: 'RIGHT',
+          mainAbImage: imgMap[AssetList.swordImg]!),
     );
     buttons
       ..add(MovingButton(
