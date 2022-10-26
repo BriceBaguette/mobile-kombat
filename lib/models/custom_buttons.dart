@@ -45,6 +45,25 @@ class JumpButton extends Button {
   }
 }
 
+class AttackButton extends Button {
+  final _scene = Stage();
+  @override
+  final ui.Image img;
+  @override
+  final Rect bbox;
+
+  AttackButton({required this.img, required this.bbox});
+  @override
+  void onTap() {
+    // TODO: implement onTap
+  }
+
+  @override
+  void onTapCancel() {
+    // TODO: implement onTapCancel
+  }
+}
+
 abstract class Button {
   get img => null;
 

@@ -17,16 +17,18 @@ enum AssetList {
   leftButtonImg,
   baseGround,
   jumpButtonImg,
-  swordImg
+  swordImg,
+  attackImg
 }
 
 const _sceneAssets = {
-  AssetList.characterImg: "assets/character.png",
-  AssetList.rightButtonImg: "assets/rightArrow.png",
-  AssetList.leftButtonImg: "assets/leftArrow.png",
-  AssetList.baseGround: "assets/baseGround.png",
-  AssetList.jumpButtonImg: "assets/jump.png",
-  AssetList.swordImg: "assets/sword.png"
+  AssetList.characterImg: "./assets/images/character.png",
+  AssetList.rightButtonImg: "./assets/images/rightArrow.png",
+  AssetList.leftButtonImg: "./assets/images/leftArrow.png",
+  AssetList.baseGround: "./assets/images/baseGround.png",
+  AssetList.jumpButtonImg: "./assets/images/jump.png",
+  AssetList.swordImg: "./assets/images/sword.png",
+  AssetList.attackImg: "./assets/images/attack.png"
 };
 
 class Stage extends ChangeNotifier {
@@ -95,7 +97,10 @@ class Stage extends ChangeNotifier {
           bbox: constants.rightButtonPosition))
       ..add(JumpButton(
           img: imgMap[AssetList.jumpButtonImg]!,
-          bbox: constants.jumpButtonPosition));
+          bbox: constants.jumpButtonPosition))
+      ..add(AttackButton(
+          img: imgMap[AssetList.attackImg]!,
+          bbox: constants.attackButtonPosition));
     grounds.add(Ground(
         bbox: Rect.fromLTWH(
             0,

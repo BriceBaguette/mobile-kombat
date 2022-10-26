@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/custom_buttons.dart';
 import 'package:mobile_kombat/models/ground.dart';
 
-import '../models/character.dart';
-import '../models/game_stage.dart';
+import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/game_stage.dart';
 
 class ScenePainter extends CustomPainter {
   List<Character> characterList;
