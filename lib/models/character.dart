@@ -17,6 +17,8 @@ class StickMan extends Character {
   }
 
   @override
+  int health = 100;
+  @override
   ui.Image image;
   @override
   ui.Image reversedImage;
@@ -25,7 +27,7 @@ class StickMan extends Character {
   @override
   double speed = 5;
   @override
-  String facing = 'RIGHT';
+  String facing;
   double upSpeed = 0;
   var isMoving = false;
   ui.Image mainAbImage;
@@ -116,6 +118,21 @@ class StickMan extends Character {
   Rect abilityRange() => abilityInProgress.range(bbox, facing);
 
   @override
+  int abilityDamage() => abilityInProgress.power;
+
+  @override
+  void getDamage(int damage) => health -= damage;
+
+  @override
+  void attack() {
+    usingAbility = true;
+    abilityInProgress = mainAbility;
+  }
+
+  @override
+  void endAttack() => usingAbility = false;
+
+  @override
   bool isAbove() {
     return (Stage()
             .characters[1]
@@ -129,6 +146,8 @@ class StickMan extends Character {
 }
 
 abstract class Character {
+  get health => null;
+
   get speed => null;
 
   get facing => null;
@@ -138,6 +157,8 @@ abstract class Character {
   get image => null;
 
   get bbox => null;
+
+  get facing => null;
 
   get upspeed => null;
 
@@ -153,4 +174,8 @@ abstract class Character {
   void move();
   ui.Image abilityImage();
   Rect abilityRange();
+  int abilityDamage();
+  void getDamage(int damage);
+  void attack();
+  void endAttack();
 }
