@@ -15,17 +15,32 @@ class ScenePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (var element in characterList) {
-      paintImage(
-          canvas: canvas,
-          image: element.image,
-          rect: element.bbox,
-          fit: BoxFit.fill);
-      if (element.usingAbility) {
+      if (element.facing == 'RIGHT') {
         paintImage(
             canvas: canvas,
-            image: element.abilityImage(),
-            rect: element.abilityRange(),
+            image: element.image,
+            rect: element.bbox,
             fit: BoxFit.fill);
+        if (element.usingAbility) {
+          paintImage(
+              canvas: canvas,
+              image: element.abilityImage(),
+              rect: element.abilityRange(),
+              fit: BoxFit.fill);
+        }
+      } else {
+        paintImage(
+            canvas: canvas,
+            image: element.reversedImage,
+            rect: element.bbox,
+            fit: BoxFit.fill);
+        if (element.usingAbility) {
+          paintImage(
+              canvas: canvas,
+              image: element.abilityImage(),
+              rect: element.abilityRange(),
+              fit: BoxFit.fill);
+        }
       }
     }
     for (var element in groundList) {

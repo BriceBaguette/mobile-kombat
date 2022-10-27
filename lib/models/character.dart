@@ -8,6 +8,7 @@ class StickMan extends Character {
   @override
   StickMan(
       {required this.image,
+      required this.reversedImage,
       required this.bbox,
       required this.speed,
       required this.facing,
@@ -18,9 +19,12 @@ class StickMan extends Character {
   @override
   ui.Image image;
   @override
+  ui.Image reversedImage;
+  @override
   Rect bbox;
   @override
   double speed = 5;
+  @override
   String facing = 'RIGHT';
   double upSpeed = 0;
   var isMoving = false;
@@ -126,6 +130,10 @@ class StickMan extends Character {
 
 abstract class Character {
   get speed => null;
+
+  get facing => null;
+
+  get reversedImage => null;
 
   get image => null;
 
