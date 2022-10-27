@@ -11,10 +11,12 @@ class StickMan extends Character {
       required this.bbox,
       required this.speed,
       required this.facing,
-      required this.mainAbImage}) {
-    mainAbility = SwordStrike(image: mainAbImage);
+      required mainAbilityImage,
+      required this.framerate}) {
+    mainAbility = SwordStrike(images: [mainAbilityImage]);
   }
 
+  late int framerate;
   @override
   int health = 100;
   @override
@@ -27,11 +29,14 @@ class StickMan extends Character {
   String facing;
   double upSpeed = 0;
   var isMoving = false;
-  ui.Image mainAbImage;
   late Ability mainAbility;
   @override
   bool usingAbility = false;
   late Ability abilityInProgress;
+  late List<ui.Image> abilityImages;
+  late int abilityFramesPerImage;
+  int abilityImagesOffset = 0;
+  late int abilityImageFramesOffset = 0;
 
   @override
   void setDirection(String direction) {
@@ -68,6 +73,18 @@ class StickMan extends Character {
           break;
         default:
           return;
+      }
+    }
+    if (usingAbility) {
+      if (abilityImageFramesOffset < abilityFramesPerImage) {
+        abilityImageFramesOffset++;
+      } else {
+        abilityImageFramesOffset = 0;
+        abilityImagesOffset++;
+        if (abilityImagesOffset == abilityImages.length) {
+          usingAbility = false;
+          abilityImagesOffset = 0;
+        }
       }
     }
     return;
@@ -109,7 +126,7 @@ class StickMan extends Character {
   }
 
   @override
-  ui.Image abilityImage() => abilityInProgress.image;
+  ui.Image abilityImage() => abilityImages[abilityImagesOffset];
 
   @override
   Rect abilityRange() => abilityInProgress.range(bbox, facing);
@@ -124,10 +141,11 @@ class StickMan extends Character {
   void attack() {
     usingAbility = true;
     abilityInProgress = mainAbility;
+    abilityImages = abilityInProgress.images;
+    abilityFramesPerImage = (abilityInProgress.duration /
+            (framerate.toDouble() * abilityImages.length.toDouble()))
+        .round();
   }
-
-  @override
-  void endAttack() => usingAbility = false;
 
   @override
   bool isAbove() {
@@ -172,5 +190,14 @@ abstract class Character {
   int abilityDamage();
   void getDamage(int damage);
   void attack();
-  void endAttack();
+
+  List<int> allocateFramesToImages(
+      int imageNb, double duration, double framerate) {
+    double framesPerImage = framerate * duration / imageNb.toDouble();
+    List<int> framesList = <int>[];
+    for (; imageNb > 0; imageNb--) {
+      framesList.add(framesPerImage.round());
+    }
+    return framesList;
+  }
 }

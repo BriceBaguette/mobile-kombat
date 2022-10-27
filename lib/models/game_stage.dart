@@ -91,20 +91,24 @@ class Stage extends ChangeNotifier {
   void stageSetup(imgMap) {
     displayTime = constants.time;
     characters
-      ..add(StickMan(
-          image: imgMap[AssetList.characterImg]!,
-          bbox: Rect.fromLTWH(constants.w / 4, constants.h / 2,
-              constants.w / 20, constants.w / 20 * constants.gokuRatio),
-          speed: 3,
-          facing: 'RIGHT',
-          mainAbImage: imgMap[AssetList.swordImg]!))
+      ..add(
+        StickMan(
+            image: imgMap[AssetList.characterImg]!,
+            bbox: Rect.fromLTWH(constants.w / 4, constants.h / 2,
+                constants.w / 20, constants.w / 20 * constants.gokuRatio),
+            speed: 3,
+            facing: 'RIGHT',
+            mainAbilityImage: imgMap[AssetList.swordImg]!,
+            framerate: constants.framerate),
+      )
       ..add(StickMan(
           image: imgMap[AssetList.characterImg]!,
           bbox: Rect.fromLTWH(constants.w - constants.w / 4, constants.h / 2,
               constants.w / 20, constants.w / 20 * constants.gokuRatio),
           speed: 3,
           facing: 'LEFT',
-          mainAbImage: imgMap[AssetList.swordImg]!));
+          mainAbilityImage: imgMap[AssetList.swordImg]!,
+          framerate: constants.framerate));
     buttons
       ..add(MovingButton(
           dir: 'LEFT',
