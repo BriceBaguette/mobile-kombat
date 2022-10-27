@@ -23,6 +23,7 @@ class StickMan extends Character {
   Rect bbox;
   @override
   double speed = 5;
+  @override
   String facing = 'RIGHT';
   double upSpeed = 0;
   var isMoving = false;
@@ -115,6 +116,8 @@ abstract class Character {
   get image => null;
 
   get bbox => null;
+
+  get facing => null;
 
   get upspeed => null;
 
