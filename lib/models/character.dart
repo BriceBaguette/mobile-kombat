@@ -16,12 +16,15 @@ class StickMan extends Character {
   }
 
   @override
+  int health = 100;
+  @override
   ui.Image image;
   @override
   Rect bbox;
   @override
   double speed = 5;
-  String facing = 'RIGHT';
+  @override
+  String facing;
   double upSpeed = 0;
   var isMoving = false;
   ui.Image mainAbImage;
@@ -42,6 +45,10 @@ class StickMan extends Character {
 
   @override
   void move() {
+    /* 
+    BUG TO FIX:
+    Can glitch in the ground.
+    */
     if (isGrounded() & (upSpeed >= 0)) {
       setJumpSpeed(0);
     } else {
@@ -49,7 +56,7 @@ class StickMan extends Character {
     }
     bbox =
         Rect.fromLTWH(bbox.left, bbox.top + upSpeed, bbox.width, bbox.height);
-    if (isMoving) {
+    if (isMoving && !isBlocked()) {
       switch (facing) {
         case 'RIGHT':
           bbox = Rect.fromLTWH(
@@ -78,9 +85,27 @@ class StickMan extends Character {
 
   @override
   bool isGrounded() {
-    if (Stage().isGround(Offset(bbox.left + bbox.width, bbox.top + bbox.height),
-        Offset(bbox.left, bbox.top + bbox.height))) return true;
-    return false;
+    return (Stage().isGround(Offset(bbox.right, bbox.bottom + upSpeed),
+            Offset(bbox.left, bbox.bottom + upSpeed)) ||
+        isAbove());
+  }
+
+  @override
+  bool isBlocked() {
+    switch (facing) {
+      case 'LEFT':
+        return Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.left - speed, bbox.bottom - 1));
+      case 'RIGHT':
+        return Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.right + speed, bbox.bottom - 1));
+      default:
+        return false;
+    }
   }
 
   @override
@@ -88,10 +113,43 @@ class StickMan extends Character {
 
   @override
   Rect abilityRange() => abilityInProgress.range(bbox, facing);
+
+  @override
+  int abilityDamage() => abilityInProgress.power;
+
+  @override
+  void getDamage(int damage) => health -= damage;
+
+  @override
+  void attack() {
+    usingAbility = true;
+    abilityInProgress = mainAbility;
+  }
+
+  @override
+  void endAttack() => usingAbility = false;
+
+  @override
+  bool isAbove() {
+    return (Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.left, bbox.bottom + upSpeed)) ||
+        Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.right, bbox.bottom + upSpeed)));
+  }
 }
 
 abstract class Character {
+  get health => null;
+
   get speed => null;
+
+  get facing => null;
+
+  get reversedImage => null;
 
   get image => null;
 
@@ -102,6 +160,8 @@ abstract class Character {
   get usingAbility => null;
 
   bool isGrounded();
+  bool isBlocked();
+  bool isAbove();
   void update();
   void setMovement(bool move);
   void setDirection(String direction);
@@ -109,4 +169,8 @@ abstract class Character {
   void move();
   ui.Image abilityImage();
   Rect abilityRange();
+  int abilityDamage();
+  void getDamage(int damage);
+  void attack();
+  void endAttack();
 }

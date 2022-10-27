@@ -55,12 +55,12 @@ class AttackButton extends Button {
   AttackButton({required this.img, required this.bbox});
   @override
   void onTap() {
-    // TODO: implement onTap
+    _scene.characters[0].attack();
   }
 
   @override
   void onTapCancel() {
-    // TODO: implement onTapCancel
+    _scene.characters[0].endAttack();
   }
 }
 

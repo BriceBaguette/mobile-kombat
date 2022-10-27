@@ -5,6 +5,7 @@ class Constant {
   final double h;
   final int framerate = 16;
   final time = 15000;
+  final double gokuRatio = 1.88;
   late Rect leftButtonPosition;
   late Rect rightButtonPosition;
   late Rect jumpButtonPosition;
