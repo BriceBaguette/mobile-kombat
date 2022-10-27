@@ -8,7 +8,6 @@ class StickMan extends Character {
   @override
   StickMan(
       {required this.image,
-      required this.reversedImage,
       required this.bbox,
       required this.speed,
       required this.facing,
@@ -20,8 +19,6 @@ class StickMan extends Character {
   int health = 100;
   @override
   ui.Image image;
-  @override
-  ui.Image reversedImage;
   @override
   Rect bbox;
   @override

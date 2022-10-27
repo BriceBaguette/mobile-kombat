@@ -23,14 +23,13 @@ enum AssetList {
 }
 
 const _sceneAssets = {
-  AssetList.characterImg: "./assets/images/goku_r.png",
+  AssetList.characterImg: "./assets/images/goku.png",
   AssetList.rightButtonImg: "./assets/images/rightArrow.png",
   AssetList.leftButtonImg: "./assets/images/leftArrow.png",
   AssetList.baseGround: "./assets/images/baseGround.png",
   AssetList.jumpButtonImg: "./assets/images/jump.png",
   AssetList.swordImg: "./assets/images/sword.png",
   AssetList.attackImg: "./assets/images/attack.png",
-  AssetList.reversedCharacterImg: "./assets/images/goku_l.png"
 };
 
 class Stage extends ChangeNotifier {
@@ -94,7 +93,6 @@ class Stage extends ChangeNotifier {
     characters
       ..add(StickMan(
           image: imgMap[AssetList.characterImg]!,
-          reversedImage: imgMap[AssetList.reversedCharacterImg]!,
           bbox: Rect.fromLTWH(constants.w / 4, constants.h / 2,
               constants.w / 20, constants.w / 20 * constants.gokuRatio),
           speed: 3,
@@ -102,7 +100,6 @@ class Stage extends ChangeNotifier {
           mainAbImage: imgMap[AssetList.swordImg]!))
       ..add(StickMan(
           image: imgMap[AssetList.characterImg]!,
-          reversedImage: imgMap[AssetList.reversedCharacterImg]!,
           bbox: Rect.fromLTWH(constants.w - constants.w / 4, constants.h / 2,
               constants.w / 20, constants.w / 20 * constants.gokuRatio),
           speed: 3,
