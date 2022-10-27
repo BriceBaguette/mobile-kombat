@@ -148,9 +148,6 @@ class StickMan extends Character {
   }
 
   @override
-  void endAttack() => usingAbility = false;
-
-  @override
   bool isAbove() {
     return (Stage()
             .characters[1]
