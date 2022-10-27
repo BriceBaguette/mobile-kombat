@@ -59,9 +59,7 @@ class AttackButton extends Button {
   }
 
   @override
-  void onTapCancel() {
-    _scene.characters[0].endAttack();
-  }
+  void onTapCancel() {}
 }
 
 abstract class Button {

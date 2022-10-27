@@ -5,9 +5,11 @@ class SwordStrike extends Ability {
   @override
   int power = 10;
   @override
-  ui.Image image;
+  List<ui.Image> images;
+  @override
+  double duration = 500; //millisec
 
-  SwordStrike({required this.image});
+  SwordStrike({required this.images});
 
   @override
   Rect range(Rect characterHitBox, String facing) {
@@ -36,7 +38,9 @@ class SwordStrike extends Ability {
 abstract class Ability {
   get power => null;
 
-  get image => null;
+  get images => null;
+
+  get duration => null;
 
   Rect range(Rect characterHitBox, String facing);
 }

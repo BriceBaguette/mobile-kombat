@@ -84,7 +84,8 @@ class Stage extends ChangeNotifier {
           bbox: Rect.fromLTWH(constants.w / 2, constants.h / 2, 64, 64),
           speed: 3,
           facing: 'RIGHT',
-          mainAbImage: imgMap[AssetList.swordImg]!),
+          mainAbilityImage: imgMap[AssetList.swordImg]!,
+          framerate: constants.framerate),
     );
     buttons
       ..add(MovingButton(
