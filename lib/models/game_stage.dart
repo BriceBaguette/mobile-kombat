@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,17 +19,18 @@ enum AssetList {
   baseGround,
   jumpButtonImg,
   swordImg,
-  attackImg
+  attackImg,
+  reversedCharacterImg
 }
 
 const _sceneAssets = {
-  AssetList.characterImg: "./assets/images/character.png",
+  AssetList.characterImg: "./assets/images/goku.png",
   AssetList.rightButtonImg: "./assets/images/rightArrow.png",
   AssetList.leftButtonImg: "./assets/images/leftArrow.png",
   AssetList.baseGround: "./assets/images/baseGround.png",
   AssetList.jumpButtonImg: "./assets/images/jump.png",
   AssetList.swordImg: "./assets/images/sword.png",
-  AssetList.attackImg: "./assets/images/attack.png"
+  AssetList.attackImg: "./assets/images/attack.png",
 };
 
 class Stage extends ChangeNotifier {
@@ -36,6 +38,7 @@ class Stage extends ChangeNotifier {
   var characters = <Character>[];
   var buttons = <Button>[];
   var grounds = <Ground>[];
+  var imgMap = <AssetList, ui.Image>{};
   var _loading = true;
   var _ready = false;
   List<int> characterLife = [100, 100];
@@ -69,7 +72,6 @@ class Stage extends ChangeNotifier {
 
   Future<void> _loadImages() async {
     _ready = true;
-    var imgMap = <AssetList, ui.Image>{};
     for (var key in _sceneAssets.keys) {
       var img = await _loadImage(_sceneAssets[key]!);
       imgMap[key] = img;
@@ -77,6 +79,17 @@ class Stage extends ChangeNotifier {
 
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     constants = Constant(w: window.size.width, h: window.size.height);
+    stageSetup(imgMap);
+    _ready = true;
+    _loading = false;
+    _updateScreen();
+    gameTimer =
+        Timer.periodic(Duration(milliseconds: constants.framerate), (timer) {
+      _stage!.updateGame();
+    });
+  }
+
+  void stageSetup(imgMap) {
     displayTime = constants.time;
     characters.add(
       StickMan(
@@ -109,13 +122,6 @@ class Stage extends ChangeNotifier {
             constants.w,
             constants.h / 10),
         groundImg: imgMap[AssetList.baseGround]!));
-    _ready = true;
-    _loading = false;
-    _updateScreen();
-    gameTimer =
-        Timer.periodic(Duration(milliseconds: constants.framerate), (timer) {
-      _stage!.updateGame();
-    });
   }
 
   void reset() {

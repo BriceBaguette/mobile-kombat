@@ -26,7 +26,7 @@ class StickMan extends Character {
   @override
   double speed = 5;
   @override
-  String facing = 'RIGHT';
+  String facing;
   double upSpeed = 0;
   var isMoving = false;
   late Ability mainAbility;
@@ -50,6 +50,10 @@ class StickMan extends Character {
 
   @override
   void move() {
+    /* 
+    BUG TO FIX:
+    Can glitch in the ground.
+    */
     if (isGrounded() & (upSpeed >= 0)) {
       setJumpSpeed(0);
     } else {
@@ -57,7 +61,7 @@ class StickMan extends Character {
     }
     bbox =
         Rect.fromLTWH(bbox.left, bbox.top + upSpeed, bbox.width, bbox.height);
-    if (isMoving) {
+    if (isMoving && !isBlocked()) {
       switch (facing) {
         case 'RIGHT':
           bbox = Rect.fromLTWH(
@@ -98,9 +102,27 @@ class StickMan extends Character {
 
   @override
   bool isGrounded() {
-    if (Stage().isGround(Offset(bbox.left + bbox.width, bbox.top + bbox.height),
-        Offset(bbox.left, bbox.top + bbox.height))) return true;
-    return false;
+    return (Stage().isGround(Offset(bbox.right, bbox.bottom + upSpeed),
+            Offset(bbox.left, bbox.bottom + upSpeed)) ||
+        isAbove());
+  }
+
+  @override
+  bool isBlocked() {
+    switch (facing) {
+      case 'LEFT':
+        return Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.left - speed, bbox.bottom - 1));
+      case 'RIGHT':
+        return Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.right + speed, bbox.bottom - 1));
+      default:
+        return false;
+    }
   }
 
   @override
@@ -124,6 +146,21 @@ class StickMan extends Character {
             (framerate.toDouble() * abilityImages.length.toDouble()))
         .round();
   }
+
+  @override
+  void endAttack() => usingAbility = false;
+
+  @override
+  bool isAbove() {
+    return (Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.left, bbox.bottom + upSpeed)) ||
+        Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.right, bbox.bottom + upSpeed)));
+  }
 }
 
 abstract class Character {
@@ -131,17 +168,21 @@ abstract class Character {
 
   get speed => null;
 
+  get facing => null;
+
+  get reversedImage => null;
+
   get image => null;
 
   get bbox => null;
-
-  get facing => null;
 
   get upspeed => null;
 
   get usingAbility => null;
 
   bool isGrounded();
+  bool isBlocked();
+  bool isAbove();
   void update();
   void setMovement(bool move);
   void setDirection(String direction);
