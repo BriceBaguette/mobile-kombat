@@ -20,6 +20,10 @@ import '../models/cosmetics.dart';
 class Inventory extends StatelessWidget {
   Inventory({super.key});
 
+  final Map<String, Cosmetics> equipped = {
+    "H": Cosmetics(key: const ObjectKey('test1'),'test1', const [0, 0, 0, 0], 'assets/images/R.png', "F", "gen", 100, true),
+  };
+  
   final List<Cosmetics> articles = [
     Cosmetics(
         key: const ObjectKey('test1'),

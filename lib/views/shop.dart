@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 /*
 import 'dart:ffi';
 */
-import 'cosmetics.dart';
+import 'package:mobile_kombat/models/cosmetics.dart';
 /*
 import 'characters.dart';
 import 'inventory.dart';
