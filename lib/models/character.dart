@@ -96,6 +96,15 @@ class StickMan extends Character {
 
   @override
   void getDamage(int damage) => health -= damage;
+
+  @override
+  void attack() {
+    usingAbility = true;
+    abilityInProgress = mainAbility;
+  }
+
+  @override
+  void endAttack() => usingAbility = false;
 }
 
 abstract class Character {
@@ -121,4 +130,6 @@ abstract class Character {
   Rect abilityRange();
   int abilityDamage();
   void getDamage(int damage);
+  void attack();
+  void endAttack();
 }
