@@ -158,8 +158,6 @@ abstract class Character {
 
   get bbox => null;
 
-  get facing => null;
-
   get upspeed => null;
 
   get usingAbility => null;
