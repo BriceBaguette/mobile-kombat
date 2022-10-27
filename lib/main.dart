@@ -4,6 +4,7 @@ import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:provider/provider.dart';
 import 'models/game_stage.dart';
 import 'views/inventory.dart';
+import 'views/shop.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +53,7 @@ class MainMenu extends StatelessWidget {
                       onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Inventory()),
+                                builder: (context) => Shop()),
                           )),
                 ),
                 SizedBox(
