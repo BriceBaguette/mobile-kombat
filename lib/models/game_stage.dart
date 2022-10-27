@@ -36,6 +36,7 @@ class Stage extends ChangeNotifier {
   var characters = <Character>[];
   var buttons = <Button>[];
   var grounds = <Ground>[];
+  var imgMap = <AssetList, ui.Image>{};
   var _loading = true;
   var _ready = false;
   List<int> characterLife = [100, 100];
@@ -69,7 +70,6 @@ class Stage extends ChangeNotifier {
 
   Future<void> _loadImages() async {
     _ready = true;
-    var imgMap = <AssetList, ui.Image>{};
     for (var key in _sceneAssets.keys) {
       var img = await _loadImage(_sceneAssets[key]!);
       imgMap[key] = img;
@@ -77,15 +77,32 @@ class Stage extends ChangeNotifier {
 
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     constants = Constant(w: window.size.width, h: window.size.height);
+    stageSetup(imgMap);
+    _ready = true;
+    _loading = false;
+    _updateScreen();
+    gameTimer =
+        Timer.periodic(Duration(milliseconds: constants.framerate), (timer) {
+      _stage!.updateGame();
+    });
+  }
+
+  void stageSetup(imgMap) {
     displayTime = constants.time;
-    characters.add(
-      StickMan(
+    characters
+      ..add(StickMan(
           image: imgMap[AssetList.characterImg]!,
-          bbox: Rect.fromLTWH(constants.w / 2, constants.h / 2, 64, 64),
+          bbox: Rect.fromLTWH(constants.w / 4, constants.h / 2, 39, 64),
           speed: 3,
           facing: 'RIGHT',
-          mainAbImage: imgMap[AssetList.swordImg]!),
-    );
+          mainAbImage: imgMap[AssetList.swordImg]!))
+      ..add(StickMan(
+          image: imgMap[AssetList.characterImg]!,
+          bbox: Rect.fromLTWH(
+              constants.w - constants.w / 4, constants.h / 2, 39, 64),
+          speed: 3,
+          facing: 'LEFT',
+          mainAbImage: imgMap[AssetList.swordImg]!));
     buttons
       ..add(MovingButton(
           dir: 'LEFT',
@@ -108,13 +125,6 @@ class Stage extends ChangeNotifier {
             constants.w,
             constants.h / 10),
         groundImg: imgMap[AssetList.baseGround]!));
-    _ready = true;
-    _loading = false;
-    _updateScreen();
-    gameTimer =
-        Timer.periodic(Duration(milliseconds: constants.framerate), (timer) {
-      _stage!.updateGame();
-    });
   }
 
   void reset() {
