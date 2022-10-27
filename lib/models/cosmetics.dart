@@ -21,39 +21,54 @@ class Cosmetics extends StatelessWidget {
   final String _set;
   final int _price;
   final String _name;
+  final bool _inventory;
 
   const Cosmetics(this._name, this._modifiers, this._spriteDir, this._bodypart,
-      this._set, this._price,
+      this._set, this._price, this._inventory,
       {super.key});
 
   List<int> getModifiers() {
     return _modifiers;
   }
 
+  String getBodyPart(){
+    return _bodypart;
+  }
+
+  String getName(){
+    return _name;
+  }
+
+  String getImage(){
+    return _spriteDir;
+  }
+
+  String getSet(){
+    return _set;
+  }
+
+  int getPrice(){
+    return _price;
+  }
+
+  bool getInventory(){
+    return _inventory;
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.blueGrey.shade300,
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Row(
+  Widget build(BuildContext context){
+    return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          const SizedBox(width: 20,),
           Image.asset(_spriteDir, scale: 20),
+          const SizedBox(width: 30,),
           Text(_name),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text('$_price   '),
-              Image.asset('assets/images/2152687.png', scale: 5),
-              const Text('      '),
-            ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const []
           )
         ],
-      ),
     );
   }
 }
