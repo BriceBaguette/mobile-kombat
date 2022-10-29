@@ -15,7 +15,7 @@ class Constant {
     rightButtonPosition =
         Rect.fromLTWH(2 * w / 40 + w / 15, h - h / 9, w / 15, h / 10);
     jumpButtonPosition =
-        Rect.fromLTWH(w / 40, h - w / 20 - h / 10 - h / 40, w / 20, w / 20);
+        Rect.fromLTWH(w / 40, h - w / 20 - h / 9 - h / 15, w / 20, w / 20);
     attackButtonPosition =
         Rect.fromLTWH(w - w / 40 - w / 15, h - h / 9, w / 20, w / 20);
   }

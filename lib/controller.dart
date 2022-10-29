@@ -9,7 +9,7 @@ class Controller {
   static Controller? _controller;
 
   late ui.Offset pointerPos;
-  Button? button;
+  List<Button> buttons = [];
   final _scene = Stage();
 
   factory Controller() {
@@ -21,28 +21,41 @@ class Controller {
 
   void onTapStart(PointerDownEvent details) {
     pointerPos = details.localPosition;
-    button = _scene.getButton(pointerPos);
+    var button = _scene.getButton(pointerPos);
     if (button != null) {
-      button!.onTap();
+      if (!buttons.contains(button)) {
+        buttons.add(button);
+        button.onTap();
+      }
     }
   }
 
   void onDrag(PointerMoveEvent details) {
     pointerPos = details.localPosition;
+    var button = _scene.getButton(pointerPos);
     if (button != null) {
-      button!.onTapCancel();
-    }
-    button = _scene.getButton(pointerPos);
-    if (button != null) {
-      button!.onTap();
+      if (!buttons.contains(button)) {
+        if (buttons.isNotEmpty) {
+          buttons.removeAt(0).onTapCancel();
+        }
+        buttons.add(button);
+        button.onTap();
+      } else if (buttons.isNotEmpty) {
+        buttons.insert(0, buttons.removeAt(buttons.indexOf(button)));
+      }
+    } else if (buttons.isNotEmpty) {
+      buttons.removeAt(0).onTapCancel();
     }
   }
 
   void onTapStop(PointerUpEvent details) {
     pointerPos = details.localPosition;
-    button = _scene.getButton(pointerPos);
+    var button = _scene.getButton(pointerPos);
     if (button != null) {
-      button!.onTapCancel();
+      if (buttons.contains(button)) {
+        button.onTapCancel();
+        buttons.remove(button);
+      }
     }
   }
 }
