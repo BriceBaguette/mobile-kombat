@@ -13,6 +13,7 @@ class StickMan extends Character {
       required this.facing,
       required this.framerate}) {
     image = Loader().imgMap[AssetList.characterImg]!;
+    _dodge = LightDodge();
     _quickAttack = LightQuick();
     _airAttack = LightAir();
     _staticAttack = LightStatic();
@@ -140,10 +141,10 @@ class StickMan extends Character {
   void getDamage(int damage) => health -= damage;
 
   @override
-  void attack({bool quick = false}) {
+  void attack({bool quick = false, bool dodge = false}) {
     if (!usingAbility) {
       usingAbility = true;
-      abilityInProgress = determineAttack(quick);
+      abilityInProgress = determineAttack(quick, dodge);
       abilityImages = abilityInProgress.images;
       abilityFramesPerImage = (abilityInProgress.duration /
               (framerate.toDouble() * abilityImages.length.toDouble()))
@@ -195,6 +196,8 @@ abstract class Character {
 
   late Ability _floorAttack;
 
+  late Ability _dodge;
+
   bool isGrounded();
   bool isBlocked();
   bool isAbove();
@@ -207,9 +210,12 @@ abstract class Character {
   Rect abilityRange();
   int abilityDamage();
   void getDamage(int damage);
-  void attack({bool quick = false});
+  void attack({bool quick = false, bool dodge = false});
 
-  Ability determineAttack(bool quick) {
+  Ability determineAttack(bool quick, bool dodge) {
+    if (dodge) {
+      return _dodge;
+    }
     if (quick) {
       return _quickAttack;
     }

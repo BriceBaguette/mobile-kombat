@@ -71,9 +71,18 @@ class Stage extends ChangeNotifier {
       ..add(JumpButton(
           img: imgMap[AssetList.jumpButtonImg]!,
           bbox: Constant().jumpButtonPosition))
+      ..add(FloorButton(
+          img: imgMap[AssetList.floorButtonImg]!,
+          bbox: Constant().floorButtonPosition))
       ..add(AttackButton(
-          img: imgMap[AssetList.attackImg]!,
-          bbox: Constant().attackButtonPosition));
+          img: imgMap[AssetList.heavyAttackImg]!,
+          bbox: Constant().attackButtonPosition))
+      ..add(QuickAttackButton(
+          img: imgMap[AssetList.quickAttackImg]!,
+          bbox: Constant().quickAttackButtonPosition))
+      ..add(DodgeButton(
+          img: imgMap[AssetList.dodgeImg]!,
+          bbox: Constant().dodgeButtonPosition));
     grounds.add(Ground(
         bbox: Rect.fromLTWH(
             0,
