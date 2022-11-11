@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/views/game_scene.dart';
+import 'package:mobile_kombat/views/loading_screen.dart';
 import 'package:provider/provider.dart';
 import 'models/game_stage.dart';
 import 'views/inventory.dart';
@@ -12,9 +14,10 @@ Future main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-  runApp(ChangeNotifierProvider(
-      create: (BuildContext context) => Stage(),
-      child: const MaterialApp(title: 'Mobile Kombat', home: MainMenu())));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (BuildContext context) => Loader()),
+    ChangeNotifierProvider(create: (BuildContext context) => Stage()),
+  ], child: const MaterialApp(title: 'Mobile Kombat', home: MainMenu())));
 }
 
 class MainMenu extends StatelessWidget {
@@ -38,12 +41,13 @@ class MainMenu extends StatelessWidget {
                   width: 100,
                   height: 50,
                   child: ElevatedButton(
-                      child: const Text('Inventory'),
-                      onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Inventory()),
-                          )),
+                    child: const Text('Inventory'),
+                    onPressed: () =>
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Inventory()));
+                    }),
+                  ),
                 ),
                 SizedBox(
                   width: 100,
@@ -52,8 +56,7 @@ class MainMenu extends StatelessWidget {
                       child: const Text('Shop'),
                       onPressed: () => Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => Shop()),
+                            MaterialPageRoute(builder: (context) => Shop()),
                           )),
                 ),
                 SizedBox(
@@ -82,17 +85,20 @@ class MainMenu extends StatelessWidget {
                   height: 275,
                 ),
                 SizedBox(
-                  width: 150,
-                  height: 75,
-                  child: ElevatedButton(
+                    width: 150,
+                    height: 75,
+                    child: ElevatedButton(
                       child: const Text('Play'),
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: ((context) =>
-                                const Scaffold(body: GameScene())),
-                          ))),
-                )
+                      onPressed: () =>
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: ((context) =>
+                                  const Scaffold(body: LoaderScreen())),
+                            ));
+                      }),
+                    ))
               ],
             ),
           ],
