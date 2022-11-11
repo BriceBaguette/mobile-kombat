@@ -3,24 +3,29 @@ import 'dart:ui' as ui;
 
 import 'package:mobile_kombat/models/game_stage.dart';
 import 'package:mobile_kombat/models/ability.dart';
+import 'loader.dart';
 
 class StickMan extends Character {
   @override
   StickMan(
-      {required this.image,
-      required this.bbox,
+      {required this.bbox,
       required this.speed,
       required this.facing,
       required mainAbilityImage,
       required this.framerate}) {
-    mainAbility = SwordStrike(images: [mainAbilityImage]);
+    image = Loader().imgMap[AssetList.characterImg]!;
+    _quickAttack = LightQuick();
+    _airAttack = LightAir();
+    _staticAttack = LightStatic();
+    _horizontalAttack = LightHorizontal();
+    _floorAttack = LightFloor();
   }
 
   late int framerate;
   @override
   int health = 100;
   @override
-  ui.Image image;
+  late ui.Image image;
   @override
   Rect bbox;
   @override
@@ -28,8 +33,6 @@ class StickMan extends Character {
   @override
   String facing;
   double upSpeed = 0;
-  var isMoving = false;
-  late Ability mainAbility;
   @override
   bool usingAbility = false;
   late Ability abilityInProgress;
@@ -138,13 +141,15 @@ class StickMan extends Character {
   void getDamage(int damage) => health -= damage;
 
   @override
-  void attack() {
-    usingAbility = true;
-    abilityInProgress = mainAbility;
-    abilityImages = abilityInProgress.images;
-    abilityFramesPerImage = (abilityInProgress.duration /
-            (framerate.toDouble() * abilityImages.length.toDouble()))
-        .round();
+  void attack({bool quick = false}) {
+    if (!usingAbility) {
+      usingAbility = true;
+      abilityInProgress = determineAttack(quick);
+      abilityImages = abilityInProgress.images;
+      abilityFramesPerImage = (abilityInProgress.duration /
+              (framerate.toDouble() * abilityImages.length.toDouble()))
+          .round();
+    }
   }
 
   @override
@@ -177,6 +182,20 @@ abstract class Character {
 
   get usingAbility => null;
 
+  bool isMoving = false;
+
+  bool isFloor = false;
+
+  late Ability _quickAttack;
+
+  late Ability _airAttack;
+
+  late Ability _staticAttack;
+
+  late Ability _horizontalAttack;
+
+  late Ability _floorAttack;
+
   bool isGrounded();
   bool isBlocked();
   bool isAbove();
@@ -189,7 +208,23 @@ abstract class Character {
   Rect abilityRange();
   int abilityDamage();
   void getDamage(int damage);
-  void attack();
+  void attack({bool quick = false});
+
+  Ability determineAttack(bool quick) {
+    if (quick) {
+      return _quickAttack;
+    }
+    if (!isGrounded()) {
+      return _airAttack;
+    }
+    if (isFloor) {
+      return _floorAttack;
+    }
+    if (isMoving) {
+      return _horizontalAttack;
+    }
+    return _staticAttack;
+  }
 
   List<int> allocateFramesToImages(
       int imageNb, double duration, double framerate) {
