@@ -11,7 +11,6 @@ class StickMan extends Character {
       {required this.bbox,
       required this.speed,
       required this.facing,
-      required mainAbilityImage,
       required this.framerate}) {
     image = Loader().imgMap[AssetList.characterImg]!;
     _quickAttack = LightQuick();

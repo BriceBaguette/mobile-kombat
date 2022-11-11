@@ -47,21 +47,17 @@ class Stage extends ChangeNotifier {
     characters
       ..add(
         StickMan(
-            image: imgMap[AssetList.characterImg]!,
             bbox: Rect.fromLTWH(Constant().w / 4, Constant().h / 2,
                 Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
             speed: 3,
             facing: 'RIGHT',
-            mainAbilityImage: imgMap[AssetList.swordImg]!,
             framerate: Constant().framerate),
       )
       ..add(StickMan(
-          image: imgMap[AssetList.characterImg]!,
           bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
               Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
           speed: 3,
           facing: 'LEFT',
-          mainAbilityImage: imgMap[AssetList.swordImg]!,
           framerate: Constant().framerate));
     buttons
       ..add(MovingButton(
