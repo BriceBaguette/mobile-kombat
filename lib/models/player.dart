@@ -26,6 +26,6 @@ class Player {
   }
 
   resetHealth() {
-    this.health = 100;
+    health = 100;
   }
 }
