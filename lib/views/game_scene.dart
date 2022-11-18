@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/controller.dart';
-import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/views/canvas.dart';
 import 'package:provider/provider.dart';
 

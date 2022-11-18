@@ -45,16 +45,7 @@ class Stage extends ChangeNotifier {
     });
     displayTime = Constant().time;
     characters
-      ..add(
-        StickMan(
-            image: imgMap[AssetList.characterImg]!,
-            bbox: Rect.fromLTWH(Constant().w / 4, Constant().h / 2,
-                Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
-            speed: 3,
-            facing: 'RIGHT',
-            mainAbilityImage: imgMap[AssetList.swordImg]!,
-            framerate: Constant().framerate),
-      )
+      ..add(Player().character)
       ..add(StickMan(
           image: imgMap[AssetList.characterImg]!,
           bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,

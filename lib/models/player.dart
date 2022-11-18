@@ -2,14 +2,30 @@ import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/cosmetics.dart';
 
 class Player {
-  Player(
-      {required this.character,
-      required this.cosmetics,
-      required this.username,
-      required this.health});
+  static Player? _player;
 
-  Character character;
-  List<Cosmetics> cosmetics;
-  String username;
-  double health;
+  factory Player() {
+    _player ??= Player._hidden();
+    return _player!;
+  }
+  late Character character;
+  late List<Cosmetics> cosmetics;
+  late String username;
+  double health = 100;
+
+  Player._hidden() {
+    resetHealth();
+  }
+
+  setCharacter(character) {
+    this.character = character;
+  }
+
+  setCosmetics(cosmetics) {
+    this.cosmetics = cosmetics;
+  }
+
+  resetHealth() {
+    this.health = 100;
+  }
 }

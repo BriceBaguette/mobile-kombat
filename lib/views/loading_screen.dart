@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_kombat/models/game_stage.dart';
 import 'package:mobile_kombat/models/loader.dart';
+import 'package:mobile_kombat/views/main_menu.dart';
 import 'package:provider/provider.dart';
-
-import 'package:mobile_kombat/views/game_scene.dart';
 
 class LoaderScreen extends StatelessWidget {
   const LoaderScreen({super.key});
@@ -16,10 +14,9 @@ class LoaderScreen extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: ((context) => const Scaffold(body: GameScene())),
+                builder: ((context) => const Scaffold(body: MainMenu())),
               ));
         });
-        Navigator.of(context, rootNavigator: true).pop(context);
       }
       return Center(
           child: Column(
