@@ -62,6 +62,62 @@ class AttackButton extends Button {
   void onTapCancel() {}
 }
 
+class QuickAttackButton extends Button {
+  final _scene = Stage();
+  @override
+  final ui.Image img;
+  @override
+  final Rect bbox;
+
+  QuickAttackButton({required this.img, required this.bbox});
+  @override
+  void onTap() {
+    _scene.characters[0].attack(quick: true);
+  }
+
+  @override
+  void onTapCancel() {}
+}
+
+class DodgeButton extends Button {
+  final _scene = Stage();
+  @override
+  final ui.Image img;
+  @override
+  final Rect bbox;
+
+  DodgeButton({required this.img, required this.bbox});
+  @override
+  void onTap() {
+    _scene.characters[0].attack(dodge: true);
+  }
+
+  @override
+  void onTapCancel() {}
+}
+
+class FloorButton extends Button {
+  final _scene = Stage();
+  @override
+  final ui.Image img;
+  @override
+  final Rect bbox;
+
+  FloorButton({required this.img, required this.bbox});
+
+  @override
+  void onTap() {
+    if (_scene.characters[0].isGrounded() && _scene.characters[0].isMoving) {
+      _scene.characters[0].isFloor = true;
+    }
+  }
+
+  @override
+  void onTapCancel() {
+    _scene.characters[0].isFloor = false;
+  }
+}
+
 abstract class Button {
   get img => null;
 
