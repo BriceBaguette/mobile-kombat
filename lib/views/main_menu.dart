@@ -14,12 +14,10 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     Player player = Player();
     Character character = StickMan(
-        image: Loader().imgMap[AssetList.characterImg]!,
         bbox: Rect.fromLTWH(Constant().w / 4, Constant().h / 2,
             Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
         speed: 3,
         facing: 'RIGHT',
-        mainAbilityImage: Loader().imgMap[AssetList.swordImg]!,
         framerate: Constant().framerate);
     player.setCharacter(character);
     return MaterialApp(
