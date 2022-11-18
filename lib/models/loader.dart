@@ -10,8 +10,11 @@ enum AssetList {
   leftButtonImg,
   baseGround,
   jumpButtonImg,
+  floorButtonImg,
   swordImg,
-  attackImg,
+  quickAttackImg,
+  dodgeImg,
+  heavyAttackImg,
   reversedCharacterImg
 }
 
@@ -21,8 +24,11 @@ const _sceneAssets = {
   AssetList.leftButtonImg: "./assets/images/leftArrow.png",
   AssetList.baseGround: "./assets/images/baseGround.png",
   AssetList.jumpButtonImg: "./assets/images/jump.png",
+  AssetList.floorButtonImg: "./assets/images/arrowDown.png",
   AssetList.swordImg: "./assets/images/sword.png",
-  AssetList.attackImg: "./assets/images/attack.png",
+  AssetList.quickAttackImg: "./assets/images/quickAttack.png",
+  AssetList.dodgeImg: "./assets/images/dodge.png",
+  AssetList.heavyAttackImg: "./assets/images/heavyAttack.png",
 };
 
 class Loader extends ChangeNotifier {

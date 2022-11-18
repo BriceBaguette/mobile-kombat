@@ -47,12 +47,10 @@ class Stage extends ChangeNotifier {
     characters
       ..add(Player().character)
       ..add(StickMan(
-          image: imgMap[AssetList.characterImg]!,
           bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
               Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
           speed: 3,
           facing: 'LEFT',
-          mainAbilityImage: imgMap[AssetList.swordImg]!,
           framerate: Constant().framerate));
     buttons
       ..add(MovingButton(
@@ -66,9 +64,18 @@ class Stage extends ChangeNotifier {
       ..add(JumpButton(
           img: imgMap[AssetList.jumpButtonImg]!,
           bbox: Constant().jumpButtonPosition))
+      ..add(FloorButton(
+          img: imgMap[AssetList.floorButtonImg]!,
+          bbox: Constant().floorButtonPosition))
       ..add(AttackButton(
-          img: imgMap[AssetList.attackImg]!,
-          bbox: Constant().attackButtonPosition));
+          img: imgMap[AssetList.heavyAttackImg]!,
+          bbox: Constant().attackButtonPosition))
+      ..add(QuickAttackButton(
+          img: imgMap[AssetList.quickAttackImg]!,
+          bbox: Constant().quickAttackButtonPosition))
+      ..add(DodgeButton(
+          img: imgMap[AssetList.dodgeImg]!,
+          bbox: Constant().dodgeButtonPosition));
     grounds.add(Ground(
         bbox: Rect.fromLTWH(
             0,
