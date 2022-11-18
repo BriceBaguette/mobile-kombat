@@ -11,11 +11,7 @@ class LoaderScreen extends StatelessWidget {
     return Consumer(builder: (context, Loader loader, _) {
       if (loader.ready) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: ((context) => const Scaffold(body: MainMenu())),
-              ));
+          Navigator.pushNamed(context, 'menu');
         });
       }
       return Center(

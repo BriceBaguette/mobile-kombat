@@ -6,6 +6,7 @@ import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/models/player.dart';
 import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:mobile_kombat/views/loading_screen.dart';
+import 'package:mobile_kombat/views/main_menu.dart';
 import 'package:provider/provider.dart';
 import 'models/game_stage.dart';
 import 'views/inventory.dart';
@@ -31,6 +32,12 @@ class LaunchingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: Scaffold(body: LoaderScreen()));
+    return MaterialApp(initialRoute: 'loader', routes: {
+      'loader': (context) => const LoaderScreen(),
+      'menu': (context) => const Scaffold(body: MainMenu()),
+      'gamestage': (context) => const Scaffold(body: GameScene()),
+      'inventory': (context) => Inventory(),
+      'shop': (context) => Shop()
+    });
   }
 }

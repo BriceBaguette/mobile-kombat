@@ -99,12 +99,9 @@ class Inventory extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
-              Navigator.of(
-                context,
-                rootNavigator: true,
-              ).pop(
-                context,
-              );
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(context).popAndPushNamed('menu');
+              });
             },
             tooltip: 'Inventory',
           ),

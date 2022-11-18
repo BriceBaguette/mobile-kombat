@@ -16,7 +16,7 @@ class GameScene extends StatelessWidget {
       } else if (scene.gameOver) {
         scene.setReady(false);
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context, rootNavigator: true).pop(context);
+          Navigator.of(context).popAndPushNamed('menu');
         });
       }
       return Listener(
