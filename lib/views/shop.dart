@@ -105,32 +105,26 @@ class Shop extends StatelessWidget {
         false),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 40,
-        leading: Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  Navigator.of(
-                    context,
-                    rootNavigator: true,
-                  ).pop(context,);
-                },
-                tooltip: 'Shop',
-              ),
-            ]
-        ),
+        leading: Row(children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(context).popAndPushNamed('menu');
+              });
+            },
+            tooltip: 'Shop',
+          ),
+        ]),
         actions: const [],
         title: const Text("Shop"),
         centerTitle: true,
-
-
       ),
       body: Center(
         child: Row(
@@ -148,8 +142,7 @@ class Shop extends StatelessWidget {
                 )),
             SizedBox(
               width: 350,
-              child:
-              Expanded(
+              child: Expanded(
                 child: ListView.builder(
                     itemCount: articles.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -158,70 +151,80 @@ class Shop extends StatelessWidget {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
-                                  title: Center(child: Text(articles[index].getName())),
-                                  content: Padding(padding: const EdgeInsets.all(10), child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(articles[index].getImage()),
-                                      Text("Set: ${articles[index].getSet()}\n"
-                                          "Speed: ${articles[index].getModifiers()[0]}\n"
-                                          "Resistance:${articles[index].getModifiers()[1]}\n"
-                                          "Attack Speed: ${articles[index].getModifiers()[2]}\n"
-                                          "Strength: ${articles[index].getModifiers()[3]}\n"),
-                                    ],
-                                  ),),
-                                  actions: [
-                                    Text("Price: ${articles[index].getPrice()}"),
-                                    Image.asset("assets/images/2152687.png", scale: 5,),
-                                    const SizedBox(width: 40,),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        _buy(articles[index]);
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text('Buy'),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text('Close'),
-                                    ),
-                                  ],
-                                )
-                            );
+                                      title: Center(
+                                          child:
+                                              Text(articles[index].getName())),
+                                      content: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Image.asset(
+                                                articles[index].getImage()),
+                                            Text(
+                                                "Set: ${articles[index].getSet()}\n"
+                                                "Speed: ${articles[index].getModifiers()[0]}\n"
+                                                "Resistance:${articles[index].getModifiers()[1]}\n"
+                                                "Attack Speed: ${articles[index].getModifiers()[2]}\n"
+                                                "Strength: ${articles[index].getModifiers()[3]}\n"),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: [
+                                        Text(
+                                            "Price: ${articles[index].getPrice()}"),
+                                        Image.asset(
+                                          "assets/images/2152687.png",
+                                          scale: 5,
+                                        ),
+                                        const SizedBox(
+                                          width: 40,
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            _buy(articles[index]);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Buy'),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Close'),
+                                        ),
+                                      ],
+                                    ));
                           },
                           child: Container(
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Colors.blueGrey.shade300,
                                 ),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10)),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
                               ),
-                              child:
-                              Padding(
+                              child: Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                      articles[index],
-                                      Text(articles[index].getPrice().toString()),
-                                      Image.asset("assets/images/2152687.png", scale: 5),
-                                      ElevatedButton(
-                                        child: const Text('Buy'),
-                                        onPressed: () {
-                                          _buy(articles[index]);
-                                        },
-                                      ),
+                                    articles[index],
+                                    Text(articles[index].getPrice().toString()),
+                                    Image.asset("assets/images/2152687.png",
+                                        scale: 5),
+                                    ElevatedButton(
+                                      child: const Text('Buy'),
+                                      onPressed: () {
+                                        _buy(articles[index]);
+                                      },
+                                    ),
                                   ],
                                 ),
-                              )
-                          )
-                      );
-                    }
-                ),
+                              )));
+                    }),
               ),
             ),
           ],
@@ -230,7 +233,7 @@ class Shop extends StatelessWidget {
     );
   }
 
-  void _buy(Cosmetics c){}
+  void _buy(Cosmetics c) {}
 }
 /*
 * ==Sandbox======================================================

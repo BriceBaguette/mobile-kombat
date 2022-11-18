@@ -12,36 +12,21 @@ class GameScene extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, Stage scene, _) {
       if (!scene.ready) {
-        if (scene.gameOver) {
-          scene.reset();
-        }
-        return Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const <Widget>[
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-              ),
-            ]));
-      } else {
-        if (scene.gameOver) {
-          scene.setReady(false);
-          Navigator.of(
-            context,
-            rootNavigator: true,
-          ).pop(
-            context,
-          );
-        }
-        return Listener(
-            onPointerDown: (details) => Controller().onTapStart(details),
-            onPointerMove: (details) => Controller().onDrag(details),
-            onPointerUp: (details) => Controller().onTapStop(details),
-            child: CustomPaint(
-                size: Size.infinite,
-                painter: ScenePainter(
-                    scene.characters, scene.buttons, scene.grounds)));
+        scene.reset();
+      } else if (scene.gameOver) {
+        scene.setReady(false);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).popAndPushNamed('menu');
+        });
       }
+      return Listener(
+          onPointerDown: (details) => Controller().onTapStart(details),
+          onPointerMove: (details) => Controller().onDrag(details),
+          onPointerUp: (details) => Controller().onTapStop(details),
+          child: CustomPaint(
+              size: Size.infinite,
+              painter: ScenePainter(
+                  scene.characters, scene.buttons, scene.grounds)));
     });
   }
 }

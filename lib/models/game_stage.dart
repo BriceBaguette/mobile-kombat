@@ -1,48 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mobile_kombat/constant.dart';
 
-import 'dart:ui' as ui;
+import 'package:mobile_kombat/models/constant.dart';
 
 import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/player.dart';
 
 import 'custom_buttons.dart';
 import 'ground.dart';
-
-enum AssetList {
-  characterImg,
-  rightButtonImg,
-  leftButtonImg,
-  baseGround,
-  jumpButtonImg,
-  swordImg,
-  attackImg,
-  reversedCharacterImg
-}
-
-const _sceneAssets = {
-  AssetList.characterImg: "./assets/images/goku.png",
-  AssetList.rightButtonImg: "./assets/images/rightArrow.png",
-  AssetList.leftButtonImg: "./assets/images/leftArrow.png",
-  AssetList.baseGround: "./assets/images/baseGround.png",
-  AssetList.jumpButtonImg: "./assets/images/jump.png",
-  AssetList.swordImg: "./assets/images/sword.png",
-  AssetList.attackImg: "./assets/images/attack.png",
-};
+import 'loader.dart';
 
 class Stage extends ChangeNotifier {
   static Stage? _stage;
+  var players = <Player>[];
   var characters = <Character>[];
   var buttons = <Button>[];
   var grounds = <Ground>[];
-  var imgMap = <AssetList, ui.Image>{};
   var _loading = true;
   var _ready = false;
-  List<int> characterLife = [100, 100];
   late Timer gameTimer;
-  late Constant constants;
   late int displayTime;
   bool gameOver = false;
   bool get ready => _ready && !_loading;
@@ -52,9 +29,7 @@ class Stage extends ChangeNotifier {
     return _stage!;
   }
 
-  Stage._hidden() {
-    _loadImages();
-  }
+  Stage._hidden();
 
   void _updateScreen() {
     if (ready) {
@@ -62,82 +37,61 @@ class Stage extends ChangeNotifier {
     }
   }
 
-  Future<ui.Image> _loadImage(String path) async {
-    var imgData = await rootBundle.load(path);
-    var codec = await ui.instantiateImageCodec(imgData.buffer.asUint8List());
-    var imgf = await codec.getNextFrame();
-    return imgf.image;
-  }
-
-  Future<void> _loadImages() async {
+  void _stageSetup(imgMap) {
     _ready = true;
-    for (var key in _sceneAssets.keys) {
-      var img = await _loadImage(_sceneAssets[key]!);
-      imgMap[key] = img;
-    }
-
-    var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
-    constants = Constant(w: window.size.width, h: window.size.height);
-    stageSetup(imgMap);
-    _ready = true;
-    _loading = false;
-    _updateScreen();
     gameTimer =
-        Timer.periodic(Duration(milliseconds: constants.framerate), (timer) {
+        Timer.periodic(Duration(milliseconds: Constant().framerate), (timer) {
       _stage!.updateGame();
     });
-  }
-
-  void stageSetup(imgMap) {
-    displayTime = constants.time;
+    displayTime = Constant().time;
     characters
-      ..add(
-        StickMan(
-            image: imgMap[AssetList.characterImg]!,
-            bbox: Rect.fromLTWH(constants.w / 4, constants.h / 2,
-                constants.w / 20, constants.w / 20 * constants.gokuRatio),
-            speed: 3,
-            facing: 'RIGHT',
-            mainAbilityImage: imgMap[AssetList.swordImg]!,
-            framerate: constants.framerate),
-      )
+      ..add(Player().character)
       ..add(StickMan(
-          image: imgMap[AssetList.characterImg]!,
-          bbox: Rect.fromLTWH(constants.w - constants.w / 4, constants.h / 2,
-              constants.w / 20, constants.w / 20 * constants.gokuRatio),
+          bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
+              Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
           speed: 3,
           facing: 'LEFT',
-          mainAbilityImage: imgMap[AssetList.swordImg]!,
-          framerate: constants.framerate));
+          framerate: Constant().framerate));
     buttons
       ..add(MovingButton(
           dir: 'LEFT',
           img: imgMap[AssetList.leftButtonImg]!,
-          bbox: constants.leftButtonPosition))
+          bbox: Constant().leftButtonPosition))
       ..add(MovingButton(
           dir: 'RIGHT',
           img: imgMap[AssetList.rightButtonImg]!,
-          bbox: constants.rightButtonPosition))
+          bbox: Constant().rightButtonPosition))
       ..add(JumpButton(
           img: imgMap[AssetList.jumpButtonImg]!,
-          bbox: constants.jumpButtonPosition))
+          bbox: Constant().jumpButtonPosition))
+      ..add(FloorButton(
+          img: imgMap[AssetList.floorButtonImg]!,
+          bbox: Constant().floorButtonPosition))
       ..add(AttackButton(
-          img: imgMap[AssetList.attackImg]!,
-          bbox: constants.attackButtonPosition));
+          img: imgMap[AssetList.heavyAttackImg]!,
+          bbox: Constant().attackButtonPosition))
+      ..add(QuickAttackButton(
+          img: imgMap[AssetList.quickAttackImg]!,
+          bbox: Constant().quickAttackButtonPosition))
+      ..add(DodgeButton(
+          img: imgMap[AssetList.dodgeImg]!,
+          bbox: Constant().dodgeButtonPosition));
     grounds.add(Ground(
         bbox: Rect.fromLTWH(
             0,
-            constants.h / 2 + _stage!.characters[0].bbox.height,
-            constants.w,
-            constants.h / 10),
+            Constant().h / 2 + _stage!.characters[0].bbox.height,
+            Constant().w,
+            Constant().h / 10),
         groundImg: imgMap[AssetList.baseGround]!));
+    _loading = false;
+    _stage!._updateScreen();
   }
 
   void reset() {
     gameOver = false;
-    displayTime = constants.time;
+    displayTime = Constant().time;
     _loading = true;
-    _loadImages();
+    _stageSetup(Loader().imgMap);
   }
 
   void move(Character character, String dir, bool isMoving) {
@@ -146,29 +100,31 @@ class Stage extends ChangeNotifier {
   }
 
   void updateGame() {
-    for (var character in _stage!.characters) {
-      for (var other in _stage!.characters) {
-        if (other != character &&
-            other.usingAbility &&
-            character.bbox.overlaps(other.abilityRange())) {
-          character.getDamage(other.abilityDamage());
+    if (Stage().ready) {
+      for (var character in _stage!.characters) {
+        for (var other in _stage!.characters) {
+          if (other != character &&
+              other.usingAbility &&
+              character.bbox.overlaps(other.abilityRange())) {
+            character.getDamage(other.abilityDamage());
+          }
         }
+        character.update();
       }
-      character.update();
+      _updateTimer();
+      if (displayTime <= 0) {
+        characters.removeRange(0, characters.length);
+        grounds.removeRange(0, grounds.length);
+        buttons.removeRange(0, buttons.length);
+        gameTimer.cancel();
+        gameOver = true;
+      }
+      _updateScreen();
     }
-    _updateTimer();
-    if (displayTime <= 0) {
-      characters.removeRange(0, characters.length);
-      grounds.removeRange(0, grounds.length);
-      buttons.removeRange(0, buttons.length);
-      gameTimer.cancel();
-      gameOver = true;
-    }
-    _updateScreen();
   }
 
   void _updateTimer() {
-    displayTime -= constants.framerate;
+    displayTime -= Constant().framerate;
   }
 
   Button? getButton(Offset pointerPos) {
