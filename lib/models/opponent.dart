@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/cosmetics.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/game_stage.dart';
@@ -14,9 +13,6 @@ class DummyBot extends Opponent {
 
   @override
   void getActions() {}
-
-  @override
-  void reset() {}
 }
 
 class SmartBot extends Opponent {
@@ -37,7 +33,7 @@ class SmartBot extends Opponent {
   }
 
   void makeJump() {
-    if (random.nextDouble() < 0.01 && character.isGrounded()) {
+    if (random.nextDouble() < 0.005 && character.isGrounded()) {
       character.setJumpSpeed(-5);
     }
   }

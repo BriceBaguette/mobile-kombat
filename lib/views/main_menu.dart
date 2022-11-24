@@ -5,7 +5,6 @@ import 'package:mobile_kombat/models/game_stage.dart';
 import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
-import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:mobile_kombat/views/inventory.dart';
 import 'package:mobile_kombat/views/shop.dart';
 
@@ -14,18 +13,6 @@ class MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Stage scene = Stage();
-    Opponent opponent = SmartBot(
-        character: StickMan(
-            bbox: Rect.fromLTWH(
-                Constant().w - Constant().w / 4,
-                Constant().h / 2,
-                Constant().w / 20,
-                Constant().w / 20 * Constant().gokuRatio),
-            speed: 3,
-            facing: 'LEFT',
-            framerate: Constant().framerate));
-    scene.setOpponent(opponent);
     Player player = Player();
     Character character = StickMan(
         bbox: Rect.fromLTWH(Constant().w / 4, Constant().h / 2,
@@ -34,6 +21,7 @@ class MainMenu extends StatelessWidget {
         facing: 'RIGHT',
         framerate: Constant().framerate);
     player.setCharacter(character);
+    Opponent opponent;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -96,7 +84,88 @@ class MainMenu extends StatelessWidget {
               height: 75,
               child: ElevatedButton(
                   child: const Text('Play'),
-                  onPressed: () => Navigator.pushNamed(context, 'gamestage')),
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (BuildContext ctx) => AlertDialog(
+                              title: const Text("Select game mode"),
+                              actions: [
+                                Align(
+                                    child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ElevatedButton(
+                                        onPressed: () => {
+                                              opponent = DummyBot(
+                                                  character: StickMan(
+                                                      bbox: Rect.fromLTWH(
+                                                          Constant().w -
+                                                              Constant().w / 4,
+                                                          Constant().h / 2,
+                                                          Constant().w / 20,
+                                                          Constant().w /
+                                                              20 *
+                                                              Constant()
+                                                                  .gokuRatio),
+                                                      speed: 3,
+                                                      facing: 'LEFT',
+                                                      framerate: Constant()
+                                                          .framerate)),
+                                              Stage().setOpponent(opponent),
+                                              Navigator.of(ctx).pop(),
+                                              Navigator.pushNamed(
+                                                  context, 'gamestage')
+                                            },
+                                        child: const Text("Training")),
+                                    ElevatedButton(
+                                        onPressed: () => {
+                                              opponent = SmartBot(
+                                                  character: StickMan(
+                                                      bbox: Rect.fromLTWH(
+                                                          Constant().w -
+                                                              Constant().w / 4,
+                                                          Constant().h / 2,
+                                                          Constant().w / 20,
+                                                          Constant().w /
+                                                              20 *
+                                                              Constant()
+                                                                  .gokuRatio),
+                                                      speed: 3,
+                                                      facing: 'LEFT',
+                                                      framerate: Constant()
+                                                          .framerate)),
+                                              Stage().setOpponent(opponent),
+                                              Navigator.of(ctx).pop(),
+                                              Navigator.pushNamed(
+                                                  context, 'gamestage')
+                                            },
+                                        child: const Text("Play vs bot")),
+                                    ElevatedButton(
+                                        onPressed: () => {
+                                              opponent = DummyBot(
+                                                  character: StickMan(
+                                                      bbox: Rect.fromLTWH(
+                                                          Constant().w -
+                                                              Constant().w / 4,
+                                                          Constant().h / 2,
+                                                          Constant().w / 20,
+                                                          Constant().w /
+                                                              20 *
+                                                              Constant()
+                                                                  .gokuRatio),
+                                                      speed: 3,
+                                                      facing: 'LEFT',
+                                                      framerate: Constant()
+                                                          .framerate)),
+                                              Stage().setOpponent(opponent),
+                                              Navigator.of(ctx).pop(),
+                                              Navigator.pushNamed(
+                                                  context, 'gamestage')
+                                            },
+                                        child: const Text("Play online"))
+                                  ],
+                                ))
+                              ]))),
             )
           ],
         ),

@@ -23,8 +23,10 @@ Future main() async {
         ChangeNotifierProvider(create: (BuildContext context) => Loader()),
         ChangeNotifierProvider(create: (BuildContext context) => Stage()),
       ],
-      child:
-          const MaterialApp(title: 'Mobile Kombat', home: LaunchingScreen())));
+      child: const MaterialApp(
+          title: 'Mobile Kombat',
+          debugShowCheckedModeBanner: false,
+          home: LaunchingScreen())));
 }
 
 class LaunchingScreen extends StatelessWidget {
