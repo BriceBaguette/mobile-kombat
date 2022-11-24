@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/constant.dart';
+import 'package:mobile_kombat/models/game_stage.dart';
 import 'package:mobile_kombat/models/loader.dart';
+import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
 import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:mobile_kombat/views/inventory.dart';
@@ -12,6 +14,18 @@ class MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Stage scene = Stage();
+    Opponent opponent = SmartBot(
+        character: StickMan(
+            bbox: Rect.fromLTWH(
+                Constant().w - Constant().w / 4,
+                Constant().h / 2,
+                Constant().w / 20,
+                Constant().w / 20 * Constant().gokuRatio),
+            speed: 3,
+            facing: 'LEFT',
+            framerate: Constant().framerate));
+    scene.setOpponent(opponent);
     Player player = Player();
     Character character = StickMan(
         bbox: Rect.fromLTWH(Constant().w / 4, Constant().h / 2,
