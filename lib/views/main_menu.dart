@@ -34,41 +34,36 @@ class MainMenu extends StatelessWidget {
               width: 100,
               height: 50,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
                 child: const Text('Inventory'),
                 onPressed: () =>
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Inventory()));
-                }),
-              ),
+                    //WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.pushNamed(context, 'inventory')),
+                //}),
+
             ),
             SizedBox(
               width: 100,
               height: 50,
               child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
                   child: const Text('Shop'),
-                  onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Shop()),
-                      )),
+                  onPressed: () => Navigator.pushNamed(context, 'shop')),
             ),
             SizedBox(
               width: 100,
               height: 50,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
                 child: const Text('Stats'),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Inventory()),
-                ),
-              ),
+                onPressed: () => Navigator.pushNamed(context, 'statistics')),
             ),
           ],
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Image.asset('./assets/images/10522.png', scale: 2.5),
+            Image.asset('./assets/images/GenericGuy.png', scale: 2.5),
           ],
         ),
         Column(
@@ -81,6 +76,7 @@ class MainMenu extends StatelessWidget {
               width: 150,
               height: 75,
               child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
                   child: const Text('Play'),
                   onPressed: () => Navigator.pushNamed(context, 'gamestage')),
             )

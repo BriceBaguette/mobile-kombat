@@ -41,8 +41,8 @@ class Stage extends ChangeNotifier {
     _ready = true;
     gameTimer =
         Timer.periodic(Duration(milliseconds: Constant().framerate), (timer) {
-      _stage!.updateGame();
-    });
+          _stage!.updateGame();
+        });
     displayTime = Constant().time;
     characters
       ..add(Player().character)
