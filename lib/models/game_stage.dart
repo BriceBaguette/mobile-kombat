@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/constant.dart';
 
 import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
 
 import 'custom_buttons.dart';
@@ -13,10 +14,10 @@ import 'loader.dart';
 
 class Stage extends ChangeNotifier {
   static Stage? _stage;
-  var players = <Player>[];
   var characters = <Character>[];
   var buttons = <Button>[];
   var grounds = <Ground>[];
+  Opponent? _opponent;
   var _loading = true;
   var _ready = false;
   late Timer gameTimer;
@@ -46,12 +47,7 @@ class Stage extends ChangeNotifier {
     displayTime = Constant().time;
     characters
       ..add(Player().character)
-      ..add(StickMan(
-          bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
-              Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
-          speed: 3,
-          facing: 'LEFT',
-          framerate: Constant().framerate));
+      ..add(_opponent!.character);
     buttons
       ..add(MovingButton(
           dir: 'LEFT',
@@ -101,6 +97,7 @@ class Stage extends ChangeNotifier {
 
   void updateGame() {
     if (Stage().ready) {
+      _opponent!.getActions();
       for (var character in _stage!.characters) {
         for (var other in _stage!.characters) {
           if (other != character &&
@@ -144,5 +141,13 @@ class Stage extends ChangeNotifier {
 
   void setReady(bool bool) {
     _ready = bool;
+  }
+
+  Rect getPlayerPosition() {
+    return Player().character.bbox;
+  }
+
+  void setOpponent(Opponent opponent) {
+    _opponent = opponent;
   }
 }
