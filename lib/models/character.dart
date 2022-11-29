@@ -9,9 +9,9 @@ class StickMan extends Character {
   @override
   StickMan(
       {required this.bbox,
-      required this.speed,
-      required this.facing,
-      required this.framerate}) {
+        required this.speed,
+        required this.facing,
+        required this.framerate}) {
     image = Loader().imgMap[AssetList.characterImg]!;
     _dodge = LightDodge();
     _quickAttack = LightQuick();
@@ -102,7 +102,7 @@ class StickMan extends Character {
   @override
   bool isGrounded() {
     return (Stage().isGround(Offset(bbox.right, bbox.bottom + upSpeed),
-            Offset(bbox.left, bbox.bottom + upSpeed)) ||
+        Offset(bbox.left, bbox.bottom + upSpeed)) ||
         isAbove());
   }
 
@@ -147,7 +147,7 @@ class StickMan extends Character {
       abilityInProgress = determineAttack(quick, dodge);
       abilityImages = abilityInProgress.images;
       abilityFramesPerImage = (abilityInProgress.duration /
-              (framerate.toDouble() * abilityImages.length.toDouble()))
+          (framerate.toDouble() * abilityImages.length.toDouble()))
           .round();
     }
   }
