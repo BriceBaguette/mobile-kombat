@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/controller.dart';
-import 'package:mobile_kombat/models/character.dart';
-import 'package:mobile_kombat/models/constant.dart';
-import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/views/canvas.dart';
 import 'package:provider/provider.dart';
 
