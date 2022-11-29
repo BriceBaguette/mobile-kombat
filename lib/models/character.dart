@@ -53,10 +53,6 @@ class StickMan extends Character {
 
   @override
   void move() {
-    /* 
-    BUG TO FIX:
-    Can glitch in the ground.
-    */
     if (isGrounded() & (upSpeed >= 0)) {
       setJumpSpeed(0);
     } else {
@@ -112,20 +108,24 @@ class StickMan extends Character {
 
   @override
   bool isBlocked() {
-    switch (facing) {
-      case 'LEFT':
-        return Stage()
-            .characters[1]
-            .bbox
-            .contains(Offset(bbox.left - speed, bbox.bottom - 1));
-      case 'RIGHT':
-        return Stage()
-            .characters[1]
-            .bbox
-            .contains(Offset(bbox.right + speed, bbox.bottom - 1));
-      default:
-        return false;
+    bool isBlocked = false;
+    for (var others in Stage().characters) {
+      if (others != this) {
+        switch (facing) {
+          case 'LEFT':
+            isBlocked = others.bbox
+                .contains(Offset(bbox.left - speed, bbox.bottom - 1));
+            break;
+          case 'RIGHT':
+            isBlocked = others.bbox
+                .contains(Offset(bbox.right + speed, bbox.bottom - 1));
+            break;
+          default:
+            return false;
+        }
+      }
     }
+    return isBlocked;
   }
 
   @override
@@ -154,14 +154,15 @@ class StickMan extends Character {
 
   @override
   bool isAbove() {
-    return (Stage()
-            .characters[1]
-            .bbox
-            .contains(Offset(bbox.left, bbox.bottom + upSpeed)) ||
-        Stage()
-            .characters[1]
-            .bbox
-            .contains(Offset(bbox.right, bbox.bottom + upSpeed)));
+    bool isAbove = false;
+    for (var others in Stage().characters) {
+      if (others != this) {
+        isAbove =
+            others.bbox.contains(Offset(bbox.left, bbox.bottom + upSpeed)) ||
+                others.bbox.contains(Offset(bbox.right, bbox.bottom + upSpeed));
+      }
+    }
+    return isAbove;
   }
 }
 
