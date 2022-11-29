@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/game_stage.dart';
-import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
-import 'package:mobile_kombat/views/inventory.dart';
-import 'package:mobile_kombat/views/shop.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
@@ -36,19 +33,20 @@ class MainMenu extends StatelessWidget {
               width: 100,
               height: 50,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
-                child: const Text('Inventory'),
-                onPressed: () =>
-                    //WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Navigator.pushNamed(context, 'inventory')),
-                //}),
-
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red[900]),
+                  child: const Text('Inventory'),
+                  onPressed: () =>
+                      //WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.pushNamed(context, 'inventory')),
+              //}),
             ),
             SizedBox(
               width: 100,
               height: 50,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red[900]),
                   child: const Text('Shop'),
                   onPressed: () => Navigator.pushNamed(context, 'shop')),
             ),
@@ -56,9 +54,10 @@ class MainMenu extends StatelessWidget {
               width: 100,
               height: 50,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
-                child: const Text('Stats'),
-                onPressed: () => Navigator.pushNamed(context, 'statistics')),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red[900]),
+                  child: const Text('Stats'),
+                  onPressed: () => Navigator.pushNamed(context, 'statistics')),
             ),
           ],
         ),
@@ -78,7 +77,8 @@ class MainMenu extends StatelessWidget {
               width: 150,
               height: 75,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red[900]),
                   child: const Text('Play'),
                   onPressed: () => showDialog(
                       context: context,
