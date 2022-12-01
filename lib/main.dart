@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_kombat/firebase_options.dart';
 import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:mobile_kombat/views/loading_screen.dart';
@@ -14,6 +16,9 @@ import 'views/inventory.dart';
 import 'views/shop.dart';
 
 Future main() async {
+  /*await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );*/
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
