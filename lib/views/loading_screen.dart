@@ -11,7 +11,7 @@ class LoaderScreen extends StatelessWidget {
     return Consumer(builder: (context, Loader loader, _) {
       if (loader.ready) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushNamed(context, 'menu');
+          Navigator.pushNamed(context, 'login');
         });
       }
       return Center(

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "568278540801",
+    "firebase_url": "https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mobile-kombat",
+    "storage_bucket": "mobile-kombat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568278540801:android:857287c9288e3e09065600",
+        "android_client_info": {
+          "package_name": "com.mobile_kombat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568278540801-02er3kthpt5105cvjdts23nf4d7mdcmh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByQwpOHXICPMgq3r-UYohba5kabC9W2Tc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568278540801-02er3kthpt5105cvjdts23nf4d7mdcmh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
