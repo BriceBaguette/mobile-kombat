@@ -11,8 +11,7 @@ class StickMan extends Character {
       {required this.bbox,
       required this.speed,
       required this.facing,
-      required fr}) {
-    framerate = fr;
+      required this.framerate}) {
     staticImages = [Loader().imgMap[AssetList.characterImg]!];
     movingImages = [Loader().imgMap[AssetList.characterImg]!];
     jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
