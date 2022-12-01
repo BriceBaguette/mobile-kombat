@@ -53,7 +53,6 @@ class StickMan extends Character {
   void setMovement(bool move) {
     isMoving = move;
     if (move) {
-      print(3);
       actionImagesOffset = 0;
       actionImageFramesOffset = 0;
       setAction(movingImages, movingDuration);
@@ -95,9 +94,7 @@ class StickMan extends Character {
   @override
   void update() {
     bool actionLoopBack = updateImage();
-    if (usingAbility) {
-      print(1);
-    }
+    if (usingAbility) {}
     if (actionLoopBack && usingAbility) {
       usingAbility = false;
       setAction(staticImages, staticDuration);
@@ -109,7 +106,6 @@ class StickMan extends Character {
 
   @override
   void setJumpSpeed(double value) {
-    print(4);
     upSpeed = value;
     actionImagesOffset = 0;
     actionImageFramesOffset = 0;
@@ -155,7 +151,6 @@ class StickMan extends Character {
   void attack({bool quick = false, bool dodge = false}) {
     if (!usingAbility) {
       usingAbility = true;
-      print(2);
       upSpeed = 0;
       isMoving = false;
       actionImagesOffset = 0;
@@ -296,7 +291,6 @@ abstract class Character {
   bool updateImage() {
     actionImageFramesOffset++;
     if (actionImageFramesOffset >= actionFramesPerImage) {
-      print(5);
       actionImageFramesOffset = 0;
       actionImagesOffset++;
       if (actionImagesOffset >= actionImages.length) {
