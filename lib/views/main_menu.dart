@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/constant.dart';
