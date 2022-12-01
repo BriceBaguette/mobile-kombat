@@ -109,6 +109,9 @@ class Stage extends ChangeNotifier {
               other.usingAbility &&
               character.bbox.overlaps(other.abilityRange())) {
             character.getDamage(other.abilityDamage());
+            if (character.health <= 0) {
+              gameOver = true;
+            }
           }
         }
         character.update();
