@@ -19,17 +19,9 @@ class ScenePainter extends CustomPainter {
       paintImage(
           canvas: canvas,
           image: element.image,
-          rect: element.bbox,
+          rect: element.getBox(),
           flipHorizontally: flip,
           fit: BoxFit.fill);
-      if (element.usingAbility) {
-        paintImage(
-            canvas: canvas,
-            image: element.abilityImage(),
-            rect: element.abilityRange(),
-            flipHorizontally: flip,
-            fit: BoxFit.fill);
-      }
     }
     for (var element in groundList) {
       paintImage(

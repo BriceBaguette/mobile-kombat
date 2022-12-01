@@ -11,8 +11,16 @@ class StickMan extends Character {
       {required this.bbox,
       required this.speed,
       required this.facing,
-      required this.framerate}) {
-    image = Loader().imgMap[AssetList.characterImg]!;
+      required fr}) {
+    framerate = fr;
+    staticImages = [Loader().imgMap[AssetList.characterImg]!];
+    movingImages = [Loader().imgMap[AssetList.characterImg]!];
+    jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
+    staticDuration = 500;
+    movingDuration = 500;
+    jumpingDuration = 500;
+    setAction(staticImages, staticDuration);
+    image = staticImages[actionImagesOffset];
     _dodge = LightDodge();
     _quickAttack = LightQuick();
     _airAttack = LightAir();
@@ -21,6 +29,7 @@ class StickMan extends Character {
     _floorAttack = LightFloor();
   }
 
+  @override
   late int framerate;
   @override
   int health = 100;
@@ -35,11 +44,6 @@ class StickMan extends Character {
   double upSpeed = 0;
   @override
   bool usingAbility = false;
-  late Ability abilityInProgress;
-  late List<ui.Image> abilityImages;
-  late int abilityFramesPerImage;
-  int abilityImagesOffset = 0;
-  late int abilityImageFramesOffset = 0;
 
   @override
   void setDirection(String direction) {
@@ -49,6 +53,12 @@ class StickMan extends Character {
   @override
   void setMovement(bool move) {
     isMoving = move;
+    if (move) {
+      actionImagesOffset = 0;
+      actionImageFramesOffset = 0;
+      setAction(movingImages, movingDuration);
+      image = actionImages[actionImagesOffset];
+    }
   }
 
   @override
@@ -78,29 +88,28 @@ class StickMan extends Character {
           return;
       }
     }
-    if (usingAbility) {
-      if (abilityImageFramesOffset < abilityFramesPerImage) {
-        abilityImageFramesOffset++;
-      } else {
-        abilityImageFramesOffset = 0;
-        abilityImagesOffset++;
-        if (abilityImagesOffset == abilityImages.length) {
-          usingAbility = false;
-          abilityImagesOffset = 0;
-        }
-      }
-    }
     return;
   }
 
   @override
   void update() {
+    bool actionLoopBack = updateImage();
+    if (actionLoopBack && usingAbility) {
+      usingAbility = false;
+      setAction(staticImages, staticDuration);
+    }
+    image = actionImages[actionImagesOffset];
+
     move();
   }
 
   @override
   void setJumpSpeed(double value) {
     upSpeed = value;
+    actionImagesOffset = 0;
+    actionImageFramesOffset = 0;
+    setAction(jumpingImages, jumpingDuration);
+    image = actionImages[actionImagesOffset];
   }
 
   @override
@@ -129,9 +138,6 @@ class StickMan extends Character {
   }
 
   @override
-  ui.Image abilityImage() => abilityImages[abilityImagesOffset];
-
-  @override
   Rect abilityRange() => abilityInProgress.range(bbox, facing);
 
   @override
@@ -145,10 +151,7 @@ class StickMan extends Character {
     if (!usingAbility) {
       usingAbility = true;
       abilityInProgress = determineAttack(quick, dodge);
-      abilityImages = abilityInProgress.images;
-      abilityFramesPerImage = (abilityInProgress.duration /
-              (framerate.toDouble() * abilityImages.length.toDouble()))
-          .round();
+      setAction(abilityInProgress.images, abilityInProgress.duration);
     }
   }
 
@@ -172,8 +175,6 @@ abstract class Character {
 
   get facing => null;
 
-  get reversedImage => null;
-
   get image => null;
 
   get bbox => null;
@@ -182,9 +183,23 @@ abstract class Character {
 
   get usingAbility => null;
 
+  late int framerate;
+
   bool isMoving = false;
 
   bool isFloor = false;
+
+  late List<ui.Image> staticImages;
+
+  late List<ui.Image> movingImages;
+
+  late List<ui.Image> jumpingImages;
+
+  late int staticDuration;
+
+  late int movingDuration;
+
+  late int jumpingDuration;
 
   late Ability _quickAttack;
 
@@ -198,6 +213,16 @@ abstract class Character {
 
   late Ability _dodge;
 
+  late Ability abilityInProgress;
+
+  late List<ui.Image> actionImages;
+
+  late int actionFramesPerImage;
+
+  int actionImagesOffset = 0;
+
+  int actionImageFramesOffset = 0;
+
   bool isGrounded();
   bool isBlocked();
   bool isAbove();
@@ -206,11 +231,28 @@ abstract class Character {
   void setDirection(String direction);
   void setJumpSpeed(double value);
   void move();
-  ui.Image abilityImage();
   Rect abilityRange();
   int abilityDamage();
   void getDamage(int damage);
   void attack({bool quick = false, bool dodge = false});
+
+  Rect getBox() {
+    if (usingAbility) {
+      return Rect.fromLTWH(
+          bbox.left,
+          bbox.top,
+          bbox.width * abilityInProgress.bboxWidthRatio,
+          bbox.height * abilityInProgress.bboxHeightRatio);
+    }
+    return bbox;
+  }
+
+  void setAction(List<ui.Image> images, int duration) {
+    actionImages = images;
+    actionFramesPerImage =
+        (duration / (framerate.toDouble() * actionImages.length.toDouble()))
+            .round();
+  }
 
   Ability determineAttack(bool quick, bool dodge) {
     if (dodge) {
@@ -239,5 +281,19 @@ abstract class Character {
       framesList.add(framesPerImage.round());
     }
     return framesList;
+  }
+
+  bool updateImage() {
+    if (actionImageFramesOffset < actionFramesPerImage) {
+      actionImageFramesOffset++;
+    } else {
+      actionImageFramesOffset = 0;
+      actionImagesOffset++;
+      if (actionImagesOffset == actionImages.length) {
+        actionImagesOffset = 0;
+        return true;
+      }
+    }
+    return false;
   }
 }

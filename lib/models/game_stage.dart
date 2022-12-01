@@ -95,8 +95,10 @@ class Stage extends ChangeNotifier {
   }
 
   void move(Character character, String dir, bool isMoving) {
-    character.setDirection(dir);
-    character.setMovement(isMoving);
+    if (!character.usingAbility) {
+      character.setDirection(dir);
+      character.setMovement(isMoving);
+    }
   }
 
   void updateGame() {

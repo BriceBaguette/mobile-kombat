@@ -34,7 +34,8 @@ class JumpButton extends Button {
 
   @override
   void onTap() {
-    if (_scene.characters[0].isGrounded()) {
+    if (_scene.characters[0].isGrounded() &&
+        !_scene.characters[0].usingAbility) {
       _scene.characters[0].setJumpSpeed(-4);
     }
   }

@@ -10,6 +10,10 @@ class LightDodge extends Ability {
   late List<ui.Image> images;
   @override
   double duration = 500; //millisec
+  @override
+  double bboxHeightRatio = 1.0;
+  @override
+  double bboxWidthRatio = 1.0;
 
   LightDodge() {
     images = [Loader().imgMap[AssetList.swordImg]!];
@@ -46,6 +50,10 @@ class LightQuick extends Ability {
   late List<ui.Image> images;
   @override
   double duration = 500; //millisec
+  @override
+  double bboxHeightRatio = 1.0;
+  @override
+  double bboxWidthRatio = 1.0;
 
   LightQuick() {
     images = [Loader().imgMap[AssetList.swordImg]!];
@@ -82,6 +90,10 @@ class LightAir extends Ability {
   late List<ui.Image> images;
   @override
   double duration = 500; //millisec
+  @override
+  double bboxHeightRatio = 1.0;
+  @override
+  double bboxWidthRatio = 1.0;
 
   LightAir() {
     images = [Loader().imgMap[AssetList.swordImg]!];
@@ -118,6 +130,10 @@ class LightStatic extends Ability {
   late List<ui.Image> images;
   @override
   double duration = 500; //millisec
+  @override
+  double bboxHeightRatio = 1.0;
+  @override
+  double bboxWidthRatio = 1.0;
 
   LightStatic() {
     images = [Loader().imgMap[AssetList.swordImg]!];
@@ -154,6 +170,10 @@ class LightHorizontal extends Ability {
   late List<ui.Image> images;
   @override
   double duration = 500; //millisec
+  @override
+  double bboxHeightRatio = 1.0;
+  @override
+  double bboxWidthRatio = 1.0;
 
   LightHorizontal() {
     images = [Loader().imgMap[AssetList.swordImg]!];
@@ -190,6 +210,10 @@ class LightFloor extends Ability {
   late List<ui.Image> images;
   @override
   double duration = 500; //millisec
+  @override
+  double bboxHeightRatio = 1.0;
+  @override
+  double bboxWidthRatio = 1.0;
 
   LightFloor() {
     images = [Loader().imgMap[AssetList.swordImg]!];
@@ -225,6 +249,10 @@ abstract class Ability {
   get images => null;
 
   get duration => null;
+
+  get bboxHeightRatio => null;
+
+  get bboxWidthRatio => null;
 
   Rect range(Rect characterHitBox, String facing);
 }
