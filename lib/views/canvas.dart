@@ -57,12 +57,12 @@ class ScenePainter extends CustomPainter {
     if (((Stage().displayTime ~/ 1000) % 60) < 10) {
       textSpan = TextSpan(
           text:
-              "${Stage().displayTime ~/ 60000}:0${(Stage().displayTime ~/ 1000) % 60}",
+          "${Stage().displayTime ~/ 60000}:0${(Stage().displayTime ~/ 1000) % 60}",
           style: textStyle);
     } else {
       textSpan = TextSpan(
           text:
-              "${Stage().displayTime ~/ 60000}:${(Stage().displayTime ~/ 1000) % 60}",
+          "${Stage().displayTime ~/ 60000}:${(Stage().displayTime ~/ 1000) % 60}",
           style: textStyle);
     }
     final textPainter = TextPainter(
