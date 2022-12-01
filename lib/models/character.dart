@@ -3,16 +3,17 @@ import 'dart:ui' as ui;
 
 import 'package:mobile_kombat/models/game_stage.dart';
 import 'package:mobile_kombat/models/ability.dart';
+import 'constant.dart';
 import 'loader.dart';
 
 class StickMan extends Character {
   @override
-  StickMan(
-      {required this.bbox,
-        required this.speed,
-        required this.facing,
-        required this.framerate,
-      }) {
+  StickMan({
+    required this.bbox,
+    required this.speed,
+    required this.facing,
+    required this.framerate,
+  }) {
     image = Loader().imgMap[AssetList.characterImg]!;
     _dodge = LightDodge();
     _quickAttack = LightQuick();
@@ -42,60 +43,67 @@ class StickMan extends Character {
   int abilityImagesOffset = 0;
   late int abilityImageFramesOffset = 0;
 
-  int price=0;
-  int strength=0;
-  int aS=0;
-  int resistance=0;
+  int price = 0;
+  int strength = 0;
+  int aS = 0;
+  int resistance = 0;
   String imageDir = "assets/images/goku.png";
   String name = "Stickman";
 
   @override
-  String getImageDir(){
+  String getImageDir() {
     return imageDir;
   }
+
   @override
-  int getPrice(){
+  int getPrice() {
     return price;
   }
+
   @override
-  int getStrength(){
+  int getStrength() {
     return strength;
   }
+
   @override
-  int getAS(){
+  int getAS() {
     return aS;
   }
+
   @override
-  int getResistance(){
+  int getResistance() {
     return resistance;
   }
+
   @override
-  double getSpeed(){
+  double getSpeed() {
     return speed;
   }
+
   @override
-  String getName(){
+  String getName() {
     return name;
   }
 
   @override
-  void setStrength(int mod){
+  void setStrength(int mod) {
     strength = strength + mod;
   }
+
   @override
-  void setAS(int mod){
-  aS = aS + mod;
+  void setAS(int mod) {
+    aS = aS + mod;
   }
+
   @override
-  void setResistance(int mod){
+  void setResistance(int mod) {
     resistance = resistance + mod;
   }
+
   @override
-  void setSpeed(int mod){
+  void setSpeed(int mod) {
     speed = speed + mod;
   }
-
-
 
   @override
   void setDirection(String direction) {
@@ -158,7 +166,7 @@ class StickMan extends Character {
   @override
   bool isGrounded() {
     return (Stage().isGround(Offset(bbox.right, bbox.bottom + upSpeed),
-        Offset(bbox.left, bbox.bottom + upSpeed)) ||
+            Offset(bbox.left, bbox.bottom + upSpeed)) ||
         isAbove());
   }
 
@@ -177,10 +185,14 @@ class StickMan extends Character {
                 .contains(Offset(bbox.right + speed, bbox.bottom - 1));
             break;
           default:
-            return false;
+            break;
         }
       }
     }
+    if (bbox.left - speed <= 0 || bbox.right + speed >= Constant().w) {
+      isBlocked = true;
+    }
+
     return isBlocked;
   }
 
@@ -203,7 +215,7 @@ class StickMan extends Character {
       abilityInProgress = determineAttack(quick, dodge);
       abilityImages = abilityInProgress.images;
       abilityFramesPerImage = (abilityInProgress.duration /
-          (framerate.toDouble() * abilityImages.length.toDouble()))
+              (framerate.toDouble() * abilityImages.length.toDouble()))
           .round();
     }
   }
@@ -222,9 +234,7 @@ class StickMan extends Character {
   }
 }
 
-
 abstract class Character {
-
   get health => null;
 
   get speed => null;
@@ -314,12 +324,12 @@ abstract class Character {
   }
 }
 
-class CharacterWidget extends StatelessWidget{
+class CharacterWidget extends StatelessWidget {
   const CharacterWidget({super.key, required this.c});
   final Character c;
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -327,31 +337,22 @@ class CharacterWidget extends StatelessWidget{
         Text(c.getName()),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const []
-        )
+            children: const [])
       ],
     );
   }
 }
 
-
-
-
-
-
-
-
-
 /*======================= TEST  ===================================*/
 
 class StickMan2 extends Character {
   @override
-  StickMan2(
-      {required this.bbox,
-        required this.speed,
-        required this.facing,
-        required this.framerate,
-      }) {
+  StickMan2({
+    required this.bbox,
+    required this.speed,
+    required this.facing,
+    required this.framerate,
+  }) {
     image = Loader().imgMap[AssetList.characterImg]!;
     _dodge = LightDodge();
     _quickAttack = LightQuick();
@@ -381,60 +382,67 @@ class StickMan2 extends Character {
   int abilityImagesOffset = 0;
   late int abilityImageFramesOffset = 0;
 
-  int price=0;
-  int strength=0;
-  int aS=0;
-  int resistance=0;
+  int price = 0;
+  int strength = 0;
+  int aS = 0;
+  int resistance = 0;
   String imageDir = "assets/images/GenericGuy.png";
   String name = "Stickman2";
 
   @override
-  String getImageDir(){
+  String getImageDir() {
     return imageDir;
   }
+
   @override
-  int getPrice(){
+  int getPrice() {
     return price;
   }
+
   @override
-  int getStrength(){
+  int getStrength() {
     return strength;
   }
+
   @override
-  int getAS(){
+  int getAS() {
     return aS;
   }
+
   @override
-  int getResistance(){
+  int getResistance() {
     return resistance;
   }
+
   @override
-  double getSpeed(){
+  double getSpeed() {
     return speed;
   }
+
   @override
-  String getName(){
+  String getName() {
     return name;
   }
 
-
   @override
-  void setStrength(int mod){
+  void setStrength(int mod) {
     strength = strength + mod;
   }
+
   @override
-  void setAS(int mod){
+  void setAS(int mod) {
     aS = aS + mod;
   }
+
   @override
-  void setResistance(int mod){
+  void setResistance(int mod) {
     resistance = resistance + mod;
   }
+
   @override
-  void setSpeed(int mod){
+  void setSpeed(int mod) {
     speed = speed + mod;
   }
-
 
   @override
   void setDirection(String direction) {
@@ -497,7 +505,7 @@ class StickMan2 extends Character {
   @override
   bool isGrounded() {
     return (Stage().isGround(Offset(bbox.right, bbox.bottom + upSpeed),
-        Offset(bbox.left, bbox.bottom + upSpeed)) ||
+            Offset(bbox.left, bbox.bottom + upSpeed)) ||
         isAbove());
   }
 
@@ -542,7 +550,7 @@ class StickMan2 extends Character {
       abilityInProgress = determineAttack(quick, dodge);
       abilityImages = abilityInProgress.images;
       abilityFramesPerImage = (abilityInProgress.duration /
-          (framerate.toDouble() * abilityImages.length.toDouble()))
+              (framerate.toDouble() * abilityImages.length.toDouble()))
           .round();
     }
   }
