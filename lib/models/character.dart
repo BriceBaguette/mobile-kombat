@@ -102,6 +102,14 @@ class StickMan extends Character {
     image = actionImages[actionImagesOffset];
 
     move();
+
+    if (invincible) {
+      invincibilityDuration -= framerate;
+      if (invincibilityDuration <= 0) {
+        invincible = false;
+        invincibilityDuration = 0;
+      }
+    }
   }
 
   @override
@@ -228,6 +236,10 @@ abstract class Character {
 
   int actionImageFramesOffset = 0;
 
+  bool invincible = false;
+
+  double invincibilityDuration = 0;
+
   bool isGrounded();
   bool isBlocked();
   bool isAbove();
@@ -299,5 +311,25 @@ abstract class Character {
       }
     }
     return false;
+  }
+
+  double remainingAbilityDuration() {
+    if (!usingAbility) {
+      return 0.0;
+    }
+    return framerate.toDouble() *
+        ((actionFramesPerImage - actionImageFramesOffset) +
+                (actionFramesPerImage *
+                    (actionImages.length - actionImagesOffset)))
+            .toDouble();
+  }
+
+  void setInvincibilityFrame(double duration) {
+    invincible = true;
+    invincibilityDuration = duration;
+  }
+
+  bool isInvincible() {
+    return invincible;
   }
 }

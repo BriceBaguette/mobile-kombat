@@ -107,22 +107,22 @@ class Stage extends ChangeNotifier {
         for (var other in _stage!.characters) {
           if (other != character &&
               other.usingAbility &&
+              !character.isInvincible() &&
               character.bbox.overlaps(other.abilityRange())) {
             character.getDamage(other.abilityDamage());
             if (character.health <= 0) {
-              gameOver = true;
+              endGame();
+              _updateScreen();
             }
+            double invincibilityFrame = other.remainingAbilityDuration();
+            character.setInvincibilityFrame(invincibilityFrame);
           }
         }
         character.update();
       }
       _updateTimer();
       if (displayTime <= 0) {
-        characters.removeRange(0, characters.length);
-        grounds.removeRange(0, grounds.length);
-        buttons.removeRange(0, buttons.length);
-        gameTimer.cancel();
-        gameOver = true;
+        endGame();
       }
       _updateScreen();
     }
@@ -149,5 +149,13 @@ class Stage extends ChangeNotifier {
 
   void setReady(bool bool) {
     _ready = bool;
+  }
+
+  void endGame() {
+    characters.removeRange(0, characters.length);
+    grounds.removeRange(0, grounds.length);
+    buttons.removeRange(0, buttons.length);
+    gameTimer.cancel();
+    gameOver = true;
   }
 }
