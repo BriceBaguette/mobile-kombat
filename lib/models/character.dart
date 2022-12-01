@@ -53,6 +53,7 @@ class StickMan extends Character {
   void setMovement(bool move) {
     isMoving = move;
     if (move) {
+      print(3);
       actionImagesOffset = 0;
       actionImageFramesOffset = 0;
       setAction(movingImages, movingDuration);
@@ -66,9 +67,10 @@ class StickMan extends Character {
     BUG TO FIX:
     Can glitch in the ground.
     */
-    if (isGrounded() & (upSpeed >= 0)) {
-      setJumpSpeed(0);
-    } else {
+    if (isGrounded() && (upSpeed > 0.0)) {
+      setJumpSpeed(0.0);
+    }
+    if (!isGrounded() && !usingAbility) {
       setJumpSpeed(upSpeed + 0.1);
     }
     bbox =
@@ -93,6 +95,9 @@ class StickMan extends Character {
   @override
   void update() {
     bool actionLoopBack = updateImage();
+    if (usingAbility) {
+      print(1);
+    }
     if (actionLoopBack && usingAbility) {
       usingAbility = false;
       setAction(staticImages, staticDuration);
@@ -104,6 +109,7 @@ class StickMan extends Character {
 
   @override
   void setJumpSpeed(double value) {
+    print(4);
     upSpeed = value;
     actionImagesOffset = 0;
     actionImageFramesOffset = 0;
@@ -149,6 +155,11 @@ class StickMan extends Character {
   void attack({bool quick = false, bool dodge = false}) {
     if (!usingAbility) {
       usingAbility = true;
+      print(2);
+      upSpeed = 0;
+      isMoving = false;
+      actionImagesOffset = 0;
+      actionImageFramesOffset = 0;
       abilityInProgress = determineAttack(quick, dodge);
       setAction(abilityInProgress.images, abilityInProgress.duration);
     }
@@ -194,11 +205,11 @@ abstract class Character {
 
   late List<ui.Image> jumpingImages;
 
-  late int staticDuration;
+  late double staticDuration;
 
-  late int movingDuration;
+  late double movingDuration;
 
-  late int jumpingDuration;
+  late double jumpingDuration;
 
   late Ability _quickAttack;
 
@@ -246,7 +257,7 @@ abstract class Character {
     return bbox;
   }
 
-  void setAction(List<ui.Image> images, int duration) {
+  void setAction(List<ui.Image> images, double duration) {
     actionImages = images;
     actionFramesPerImage =
         (duration / (framerate.toDouble() * actionImages.length.toDouble()))
@@ -283,12 +294,12 @@ abstract class Character {
   }
 
   bool updateImage() {
-    if (actionImageFramesOffset < actionFramesPerImage) {
-      actionImageFramesOffset++;
-    } else {
+    actionImageFramesOffset++;
+    if (actionImageFramesOffset >= actionFramesPerImage) {
+      print(5);
       actionImageFramesOffset = 0;
       actionImagesOffset++;
-      if (actionImagesOffset == actionImages.length) {
+      if (actionImagesOffset >= actionImages.length) {
         actionImagesOffset = 0;
         return true;
       }
