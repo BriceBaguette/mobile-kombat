@@ -3,7 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mobile_kombat/controller_inventory.dart';
-
+import '../models/cosmetics.dart';
+import '../models/character.dart';
+import '../views/shop.dart';
+import '../models/constant.dart';
 /*
 *== Inventory ===================================================
 *
@@ -14,6 +17,8 @@ import 'package:mobile_kombat/controller_inventory.dart';
 * else
 *   equip option
 * (maybe drag n drop if not too complicated)
+*
+* => onWillAccept check HBF avec la dragTarget
 *
 * ===============================================================
 */
@@ -49,60 +54,94 @@ class Inventory extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 SizedBox(
-                    width: 180,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const Text("GenericName1"),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height - 100,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                top: 80,
-                                child: Image.asset(
-                                    'assets/images/GenericGuy.png',
-                                    height: 150),
-                              ),
-                              if (data.getEquippedItems()["H"] != null) ...[
+                  width: 180,
+                  child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                  title: Center(
+                                      child: Text(
+                                          data.getEquippedChar().getName())),
+                                  content:
+                                      PopUpShopChar(c: data.getEquippedChar()),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) => const ChangingCharacters()),
+                                        );
+                                      },
+                                      child: const Text('Change character'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Close'),
+                                    ),
+                                  ],
+                                ));
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(data.getEquippedChar().getName()),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height - 100,
+                            child: Stack(
+                              children: [
                                 Positioned(
-                                  top: 35,
-                                  right: 66,
+                                  top: 80,
+                                  left: 30,
                                   child: Image.asset(
+                                      data.getEquippedChar().getImageDir(),
+                                      height: 150),
+                                ),
+                                if (data.getEquippedItems()["H"] != null) ...[
+                                  Positioned(
+                                    top: 45,
+                                    right: 66,
+                                    child: Image.asset(
+                                        data
+                                                .getEquippedItems()["H"]
+                                                ?.getImage() ??
+                                            "",
+                                        height: 80),
+                                  ),
+                                ],
+                                if (data.getEquippedItems()["F"] != null) ...[
+                                  Positioned(
+                                    top: 170,
+                                    right: 80,
+                                    child: Image.asset(
                                       data
-                                              .getEquippedItems()["H"]
+                                              .getEquippedItems()["F"]
                                               ?.getImage() ??
                                           "",
-                                      height: 80),
-                                ),
-                              ],
-                              if (data.getEquippedItems()["F"] != null) ...[
-                                Positioned(
-                                  top: 160,
-                                  right: 80,
-                                  child: Image.asset(
-                                    data.getEquippedItems()["F"]?.getImage() ??
-                                        "",
-                                    scale: 10.5,
+                                      scale: 10.5,
+                                    ),
                                   ),
-                                ),
-                              ],
-                              if (data.getEquippedItems()["B"] != null) ...[
-                                Positioned(
-                                  top: 103,
-                                  right: 73,
-                                  child: Image.asset(
-                                    data.getEquippedItems()["B"]?.getImage() ??
-                                        "",
-                                    scale: 8,
+                                ],
+                                if (data.getEquippedItems()["B"] != null) ...[
+                                  Positioned(
+                                    top: 128,
+                                    right: 73,
+                                    child: Image.asset(
+                                      data
+                                              .getEquippedItems()["B"]
+                                              ?.getImage() ??
+                                          "",
+                                      scale: 8,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ],
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
-                    )),
+                        ],
+                      )),
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -332,5 +371,109 @@ class Inventory extends StatelessWidget {
             ),
           ),
         ));
+  }
+}
+
+class ChangingCharacters extends StatelessWidget {
+
+  const ChangingCharacters({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Colors.red[900],
+          toolbarHeight: 40,
+          leading: Row(children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.of(context).pushNamed('menu');
+              },
+              tooltip: 'changingcharacters',
+            ),
+          ]),
+        actions: const [],
+        title: const Text("Characters owned"),
+        centerTitle: true,
+      ),
+        body: Consumer<ControllerInventory>(
+            builder: (_, data, __) => Center(
+                child: Column(
+                  children:[
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height-100,
+                        width: MediaQuery.of(context).size.width-10,
+                        child: ListView.builder(
+                          itemCount: data.getItemsInvChar().length,
+                          itemBuilder:(BuildContext context, int index) {
+                            return GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            title: Center(child: Text(
+                                                data.getItemsInvChar()[index]
+                                                    .getName())),
+                                            content: PopUpShopChar(c: data.getItemsInvChar()[index]),
+                                            actions: [
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  data.equipChar(data
+                                                      .getItemsInvChar()[index]);
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Equip'),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Close'),
+                                              ),
+                                            ],
+                                          ));
+                                },
+                                child: Container(
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.blueGrey.shade300,),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    child:
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.only(right: 20),
+                                      child:
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          CharacterWidget(
+                                              c: data.getItemsInvChar()[index]),
+                                          //Make widget for character
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              data.equipChar(data
+                                                  .getItemsInvChar()[index]);
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Equip'),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                )
+                            );
+                          })
+                      )]
+                )
+            )
+        )
+    );
   }
 }
