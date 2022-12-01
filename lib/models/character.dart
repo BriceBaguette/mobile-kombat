@@ -189,7 +189,8 @@ class StickMan extends Character {
         }
       }
     }
-    if (bbox.left - speed <= 0 || bbox.right + speed >= Constant().w) {
+    if ((bbox.left - speed <= 0 && facing == 'LEFT') ||
+        (bbox.right + speed >= Constant().w && facing == 'RIGHT')) {
       isBlocked = true;
     }
 
