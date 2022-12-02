@@ -107,7 +107,7 @@ class Stage extends ChangeNotifier {
         for (var other in _stage!.characters) {
           if (other != character &&
               other.usingAbility &&
-              !character.isInvincible() &&
+              !character.isInvincible &&
               character.bbox.overlaps(other.abilityRange())) {
             character.getDamage(other.abilityDamage());
             if (character.health <= 0) {

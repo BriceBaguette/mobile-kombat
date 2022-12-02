@@ -12,14 +12,15 @@ class StickMan extends Character {
       required this.speed,
       required this.facing,
       required this.framerate}) {
-    staticImages = [Loader().imgMap[AssetList.characterImg]!];
-    movingImages = [Loader().imgMap[AssetList.characterImg]!];
-    jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
-    staticDuration = 500;
-    movingDuration = 500;
-    jumpingDuration = 500;
-    setAction(staticImages, staticDuration);
-    image = staticImages[actionImagesOffset];
+    health = 100;
+    _staticImages = [Loader().imgMap[AssetList.characterImg]!];
+    _movingImages = [Loader().imgMap[AssetList.characterImg]!];
+    _jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
+    _staticDuration = 500;
+    _movingDuration = 500;
+    _jumpingDuration = 500;
+    _setAction(_staticImages, _staticDuration);
+    image = _staticImages[_actionImagesOffset];
     _dodge = LightDodge();
     _quickAttack = LightQuick();
     _airAttack = LightAir();
@@ -31,50 +32,171 @@ class StickMan extends Character {
   @override
   late int framerate;
   @override
-  int health = 100;
+  Rect bbox;
   @override
-  late ui.Image image;
+  double speed;
+  @override
+  String facing;
+}
+
+class Light extends Character {
+  @override
+  Light(
+      {required this.bbox,
+      required this.speed,
+      required this.facing,
+      required this.framerate}) {
+    health = 100;
+    _staticImages = [Loader().imgMap[AssetList.characterImg]!];
+    _movingImages = [Loader().imgMap[AssetList.characterImg]!];
+    _jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
+    _staticDuration = 500;
+    _movingDuration = 500;
+    _jumpingDuration = 500;
+    _setAction(_staticImages, _staticDuration);
+    image = _staticImages[_actionImagesOffset];
+    _dodge = LightDodge();
+    _quickAttack = LightQuick();
+    _airAttack = LightAir();
+    _staticAttack = LightStatic();
+    _horizontalAttack = LightHorizontal();
+    _floorAttack = LightFloor();
+  }
+
+  @override
+  late int framerate;
   @override
   Rect bbox;
   @override
-  double speed = 5;
+  double speed;
   @override
   String facing;
-  double upSpeed = 0;
+}
+
+class Heavy extends Character {
   @override
-  bool usingAbility = false;
+  Heavy(
+      {required this.bbox,
+      required this.speed,
+      required this.facing,
+      required this.framerate}) {
+    health = 100;
+    _staticImages = [Loader().imgMap[AssetList.characterImg]!];
+    _movingImages = [Loader().imgMap[AssetList.characterImg]!];
+    _jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
+    _staticDuration = 500;
+    _movingDuration = 500;
+    _jumpingDuration = 500;
+    _setAction(_staticImages, _staticDuration);
+    image = _staticImages[_actionImagesOffset];
+    _dodge = HeavyDodge();
+    _quickAttack = HeavyQuick();
+    _airAttack = HeavyAir();
+    _staticAttack = HeavyStatic();
+    _horizontalAttack = HeavyHorizontal();
+    _floorAttack = HeavyFloor();
+  }
 
   @override
+  late int framerate;
+  @override
+  Rect bbox;
+  @override
+  double speed;
+  @override
+  String facing;
+}
+
+abstract class Character {
+  late int framerate;
+
+  late ui.Image image;
+  late Rect bbox;
+
+  late int health;
+  late double speed;
+  double _upSpeed = 0;
+
+  late String facing;
+  bool isMoving = false;
+  bool isFloor = false;
+  bool usingAbility = false;
+  bool isInvincible = false;
+
+  late List<ui.Image> _staticImages;
+  late List<ui.Image> _movingImages;
+  late List<ui.Image> _jumpingImages;
+  late double _staticDuration;
+  late double _movingDuration;
+  late double _jumpingDuration;
+
+  late Ability _quickAttack;
+  late Ability _airAttack;
+  late Ability _staticAttack;
+  late Ability _horizontalAttack;
+  late Ability _floorAttack;
+  late Ability _dodge;
+
+  late Ability _abilityInProgress;
+  late List<ui.Image> _actionImages;
+  late int _actionFramesPerImage;
+  int _actionImagesOffset = 0;
+  int _actionImageFramesOffset = 0;
+
+  double _invincibilityDuration = 0;
+
   void setDirection(String direction) {
     facing = direction;
   }
 
-  @override
   void setMovement(bool move) {
     isMoving = move;
     if (move) {
-      actionImagesOffset = 0;
-      actionImageFramesOffset = 0;
-      setAction(movingImages, movingDuration);
-      image = actionImages[actionImagesOffset];
+      _actionImagesOffset = 0;
+      _actionImageFramesOffset = 0;
+      _setAction(_movingImages, _movingDuration);
+      image = _actionImages[_actionImagesOffset];
     }
   }
 
-  @override
+  void setJumpSpeed(double value) {
+    _upSpeed = value;
+    _actionImagesOffset = 0;
+    _actionImageFramesOffset = 0;
+    _setAction(_jumpingImages, _jumpingDuration);
+    image = _actionImages[_actionImagesOffset];
+  }
+
+  void update() {
+    bool actionLoopBack = _updateImage();
+    if (usingAbility) {}
+    if (actionLoopBack && usingAbility) {
+      usingAbility = false;
+      _setAction(_staticImages, _staticDuration);
+    }
+    image = _actionImages[_actionImagesOffset];
+
+    move();
+
+    if (isInvincible) {
+      _invincibilityDuration -= framerate;
+      if (_invincibilityDuration <= 0) {
+        isInvincible = false;
+        _invincibilityDuration = 0;
+      }
+    }
+  }
+
   void move() {
-    /* 
-    BUG TO FIX:
-    Can glitch in the ground.
-    */
-    if (isGrounded() && (upSpeed > 0.0)) {
+    if (isGrounded() && (_upSpeed > 0.0)) {
       setJumpSpeed(0.0);
     }
     if (!isGrounded() && !usingAbility) {
-      setJumpSpeed(upSpeed + 0.1);
+      setJumpSpeed(_upSpeed + 0.1);
     }
     bbox =
-        Rect.fromLTWH(bbox.left, bbox.top + upSpeed, bbox.width, bbox.height);
-    if (isMoving && !isBlocked()) {
+        Rect.fromLTWH(bbox.left, bbox.top + _upSpeed, bbox.width, bbox.height);
+    if (isMoving && !_isBlocked()) {
       switch (facing) {
         case 'RIGHT':
           bbox = Rect.fromLTWH(
@@ -91,187 +213,37 @@ class StickMan extends Character {
     return;
   }
 
-  @override
-  void update() {
-    bool actionLoopBack = updateImage();
-    if (usingAbility) {}
-    if (actionLoopBack && usingAbility) {
-      usingAbility = false;
-      setAction(staticImages, staticDuration);
-    }
-    image = actionImages[actionImagesOffset];
-
-    move();
-
-    if (invincible) {
-      invincibilityDuration -= framerate;
-      if (invincibilityDuration <= 0) {
-        invincible = false;
-        invincibilityDuration = 0;
-      }
-    }
-  }
-
-  @override
-  void setJumpSpeed(double value) {
-    upSpeed = value;
-    actionImagesOffset = 0;
-    actionImageFramesOffset = 0;
-    setAction(jumpingImages, jumpingDuration);
-    image = actionImages[actionImagesOffset];
-  }
-
-  @override
-  bool isGrounded() {
-    return (Stage().isGround(Offset(bbox.right, bbox.bottom + upSpeed),
-            Offset(bbox.left, bbox.bottom + upSpeed)) ||
-        isAbove());
-  }
-
-  @override
-  bool isBlocked() {
-    switch (facing) {
-      case 'LEFT':
-        return Stage()
-            .characters[1]
-            .bbox
-            .contains(Offset(bbox.left - speed, bbox.bottom - 1));
-      case 'RIGHT':
-        return Stage()
-            .characters[1]
-            .bbox
-            .contains(Offset(bbox.right + speed, bbox.bottom - 1));
-      default:
-        return false;
-    }
-  }
-
-  @override
-  Rect abilityRange() => abilityInProgress.range(bbox, facing);
-
-  @override
-  int abilityDamage() => abilityInProgress.power;
-
-  @override
-  void getDamage(int damage) => health -= damage;
-
-  @override
-  void attack({bool quick = false, bool dodge = false}) {
-    if (!usingAbility) {
-      usingAbility = true;
-      upSpeed = 0;
-      isMoving = false;
-      actionImagesOffset = 0;
-      actionImageFramesOffset = 0;
-      abilityInProgress = determineAttack(quick, dodge);
-      setAction(abilityInProgress.images, abilityInProgress.duration);
-    }
-  }
-
-  @override
-  bool isAbove() {
-    return (Stage()
-            .characters[1]
-            .bbox
-            .contains(Offset(bbox.left, bbox.bottom + upSpeed)) ||
-        Stage()
-            .characters[1]
-            .bbox
-            .contains(Offset(bbox.right, bbox.bottom + upSpeed)));
-  }
-}
-
-abstract class Character {
-  get health => null;
-
-  get speed => null;
-
-  get facing => null;
-
-  get image => null;
-
-  get bbox => null;
-
-  get upspeed => null;
-
-  get usingAbility => null;
-
-  late int framerate;
-
-  bool isMoving = false;
-
-  bool isFloor = false;
-
-  late List<ui.Image> staticImages;
-
-  late List<ui.Image> movingImages;
-
-  late List<ui.Image> jumpingImages;
-
-  late double staticDuration;
-
-  late double movingDuration;
-
-  late double jumpingDuration;
-
-  late Ability _quickAttack;
-
-  late Ability _airAttack;
-
-  late Ability _staticAttack;
-
-  late Ability _horizontalAttack;
-
-  late Ability _floorAttack;
-
-  late Ability _dodge;
-
-  late Ability abilityInProgress;
-
-  late List<ui.Image> actionImages;
-
-  late int actionFramesPerImage;
-
-  int actionImagesOffset = 0;
-
-  int actionImageFramesOffset = 0;
-
-  bool invincible = false;
-
-  double invincibilityDuration = 0;
-
-  bool isGrounded();
-  bool isBlocked();
-  bool isAbove();
-  void update();
-  void setMovement(bool move);
-  void setDirection(String direction);
-  void setJumpSpeed(double value);
-  void move();
-  Rect abilityRange();
-  int abilityDamage();
-  void getDamage(int damage);
-  void attack({bool quick = false, bool dodge = false});
-
   Rect getBox() {
     if (usingAbility) {
       return Rect.fromLTWH(
           bbox.left,
           bbox.top,
-          bbox.width * abilityInProgress.bboxWidthRatio,
-          bbox.height * abilityInProgress.bboxHeightRatio);
+          bbox.width * _abilityInProgress.bboxWidthRatio,
+          bbox.height * _abilityInProgress.bboxHeightRatio);
     }
     return bbox;
   }
 
-  void setAction(List<ui.Image> images, double duration) {
-    actionImages = images;
-    actionFramesPerImage =
-        (duration / (framerate.toDouble() * actionImages.length.toDouble()))
+  void attack({bool quick = false, bool dodge = false}) {
+    if (!usingAbility) {
+      usingAbility = true;
+      _upSpeed = 0;
+      isMoving = false;
+      _actionImagesOffset = 0;
+      _actionImageFramesOffset = 0;
+      _abilityInProgress = _determineAttack(quick, dodge);
+      _setAction(_abilityInProgress.images, _abilityInProgress.duration);
+    }
+  }
+
+  void _setAction(List<ui.Image> images, double duration) {
+    _actionImages = images;
+    _actionFramesPerImage =
+        (duration / (framerate.toDouble() * _actionImages.length.toDouble()))
             .round();
   }
 
-  Ability determineAttack(bool quick, bool dodge) {
+  Ability _determineAttack(bool quick, bool dodge) {
     if (dodge) {
       return _dodge;
     }
@@ -290,23 +262,47 @@ abstract class Character {
     return _staticAttack;
   }
 
-  List<int> allocateFramesToImages(
-      int imageNb, double duration, double framerate) {
-    double framesPerImage = framerate * duration / imageNb.toDouble();
-    List<int> framesList = <int>[];
-    for (; imageNb > 0; imageNb--) {
-      framesList.add(framesPerImage.round());
-    }
-    return framesList;
+  bool isGrounded() {
+    return (Stage().isGround(Offset(bbox.right, bbox.bottom + _upSpeed),
+            Offset(bbox.left, bbox.bottom + _upSpeed)) ||
+        _isAbove());
   }
 
-  bool updateImage() {
-    actionImageFramesOffset++;
-    if (actionImageFramesOffset >= actionFramesPerImage) {
-      actionImageFramesOffset = 0;
-      actionImagesOffset++;
-      if (actionImagesOffset >= actionImages.length) {
-        actionImagesOffset = 0;
+  bool _isAbove() {
+    return (Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.left, bbox.bottom + _upSpeed)) ||
+        Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.right, bbox.bottom + _upSpeed)));
+  }
+
+  bool _isBlocked() {
+    switch (facing) {
+      case 'LEFT':
+        return Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.left - speed, bbox.bottom - 1));
+      case 'RIGHT':
+        return Stage()
+            .characters[1]
+            .bbox
+            .contains(Offset(bbox.right + speed, bbox.bottom - 1));
+      default:
+        return false;
+    }
+  }
+
+  bool _updateImage() {
+    _actionImageFramesOffset++;
+    if (_actionImageFramesOffset >= _actionFramesPerImage) {
+      _actionImageFramesOffset = 0;
+      _actionImagesOffset++;
+      if (_actionImagesOffset >= _actionImages.length) {
+        _actionImagesOffset = 0;
         return true;
       }
     }
@@ -318,18 +314,20 @@ abstract class Character {
       return 0.0;
     }
     return framerate.toDouble() *
-        ((actionFramesPerImage - actionImageFramesOffset) +
-                (actionFramesPerImage *
-                    (actionImages.length - actionImagesOffset)))
+        ((_actionFramesPerImage - _actionImageFramesOffset) +
+                (_actionFramesPerImage *
+                    (_actionImages.length - _actionImagesOffset)))
             .toDouble();
   }
 
+  void getDamage(int damage) => health -= damage;
+
   void setInvincibilityFrame(double duration) {
-    invincible = true;
-    invincibilityDuration = duration;
+    isInvincible = true;
+    _invincibilityDuration = duration;
   }
 
-  bool isInvincible() {
-    return invincible;
-  }
+  Rect abilityRange() => _abilityInProgress.range(bbox, facing);
+
+  int abilityDamage() => _abilityInProgress.power;
 }

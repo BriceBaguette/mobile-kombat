@@ -4,222 +4,158 @@ import 'dart:ui' as ui;
 import 'loader.dart';
 
 class LightDodge extends Ability {
-  @override
-  int power = 10;
-  @override
-  late List<ui.Image> images;
-  @override
-  double duration = 500; //millisec
-  @override
-  double bboxHeightRatio = 1.0;
-  @override
-  double bboxWidthRatio = 1.0;
-
   LightDodge() {
+    power = 10;
+    duration = 500; //millisec
+
     images = [Loader().imgMap[AssetList.swordImg]!];
-  }
 
-  @override
-  Rect range(Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
-
-    var range = Rect.fromLTWH(left, top, width, height);
-
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
-    }
-
-    return range;
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
   }
 }
 
 class LightQuick extends Ability {
-  @override
-  int power = 10;
-  @override
-  late List<ui.Image> images;
-  @override
-  double duration = 500; //millisec
-  @override
-  double bboxHeightRatio = 1.0;
-  @override
-  double bboxWidthRatio = 1.0;
-
   LightQuick() {
+    power = 10;
+    duration = 500; //millisec
+
     images = [Loader().imgMap[AssetList.swordImg]!];
-  }
 
-  @override
-  Rect range(Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
-
-    var range = Rect.fromLTWH(left, top, width, height);
-
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
-    }
-
-    return range;
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
   }
 }
 
 class LightAir extends Ability {
-  @override
-  int power = 10;
-  @override
-  late List<ui.Image> images;
-  @override
-  double duration = 500; //millisec
-  @override
-  double bboxHeightRatio = 1.0;
-  @override
-  double bboxWidthRatio = 1.0;
-
   LightAir() {
+    power = 10;
+    duration = 500; //millisec
+
     images = [Loader().imgMap[AssetList.swordImg]!];
-  }
 
-  @override
-  Rect range(Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
-
-    var range = Rect.fromLTWH(left, top, width, height);
-
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
-    }
-
-    return range;
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
   }
 }
 
 class LightStatic extends Ability {
-  @override
-  int power = 10;
-  @override
-  late List<ui.Image> images;
-  @override
-  double duration = 500; //millisec
-  @override
-  double bboxHeightRatio = 1.0;
-  @override
-  double bboxWidthRatio = 1.0;
-
   LightStatic() {
+    power = 10;
+    duration = 500; //millisec
+
     images = [Loader().imgMap[AssetList.swordImg]!];
-  }
 
-  @override
-  Rect range(Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
-
-    var range = Rect.fromLTWH(left, top, width, height);
-
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
-    }
-
-    return range;
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
   }
 }
 
 class LightHorizontal extends Ability {
-  @override
-  int power = 10;
-  @override
-  late List<ui.Image> images;
-  @override
-  double duration = 500; //millisec
-  @override
-  double bboxHeightRatio = 1.0;
-  @override
-  double bboxWidthRatio = 1.0;
-
   LightHorizontal() {
+    power = 10;
+    duration = 500; //millisec
+
     images = [Loader().imgMap[AssetList.swordImg]!];
-  }
 
-  @override
-  Rect range(Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
-
-    var range = Rect.fromLTWH(left, top, width, height);
-
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
-    }
-
-    return range;
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
   }
 }
 
 class LightFloor extends Ability {
-  @override
-  int power = 10;
-  @override
-  late List<ui.Image> images;
-  @override
-  double duration = 500; //millisec
-  @override
-  double bboxHeightRatio = 1.0;
-  @override
-  double bboxWidthRatio = 1.0;
-
   LightFloor() {
-    images = [Loader().imgMap[AssetList.swordImg]!];
-  }
+    power = 10;
+    duration = 500; //millisec
 
-  @override
+    images = [Loader().imgMap[AssetList.swordImg]!];
+
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
+  }
+}
+
+class HeavyDodge extends Ability {
+  HeavyDodge() {
+    power = 10;
+    duration = 500; //millisec
+
+    images = [Loader().imgMap[AssetList.swordImg]!];
+
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
+  }
+}
+
+class HeavyQuick extends Ability {
+  HeavyQuick() {
+    power = 10;
+    duration = 500; //millisec
+
+    images = [Loader().imgMap[AssetList.swordImg]!];
+
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
+  }
+}
+
+class HeavyAir extends Ability {
+  HeavyAir() {
+    power = 10;
+    duration = 500; //millisec
+
+    images = [Loader().imgMap[AssetList.swordImg]!];
+
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
+  }
+}
+
+class HeavyStatic extends Ability {
+  HeavyStatic() {
+    power = 10;
+    duration = 500; //millisec
+
+    images = [Loader().imgMap[AssetList.swordImg]!];
+
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
+  }
+}
+
+class HeavyHorizontal extends Ability {
+  HeavyHorizontal() {
+    power = 10;
+    duration = 500; //millisec
+
+    images = [Loader().imgMap[AssetList.swordImg]!];
+
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
+  }
+}
+
+class HeavyFloor extends Ability {
+  HeavyFloor() {
+    power = 10;
+    duration = 500; //millisec
+
+    images = [Loader().imgMap[AssetList.swordImg]!];
+
+    bboxHeightRatio = 1.0;
+    bboxWidthRatio = 1.0;
+  }
+}
+
+abstract class Ability {
+  late int power;
+  late double duration;
+
+  late List<ui.Image> images;
+
+  late double bboxHeightRatio;
+  late double bboxWidthRatio;
+
   Rect range(Rect characterHitBox, String facing) {
     var left = characterHitBox.left;
     var top = characterHitBox.top + characterHitBox.height / 2;
@@ -241,18 +177,4 @@ class LightFloor extends Ability {
 
     return range;
   }
-}
-
-abstract class Ability {
-  get power => null;
-
-  get images => null;
-
-  get duration => null;
-
-  get bboxHeightRatio => null;
-
-  get bboxWidthRatio => null;
-
-  Rect range(Rect characterHitBox, String facing);
 }
