@@ -49,7 +49,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '568278540801',
     projectId: 'mobile-kombat',
     authDomain: 'mobile-kombat.firebaseapp.com',
-    databaseURL: 'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'mobile-kombat.appspot.com',
     measurementId: 'G-N83F1Q2QV6',
   );
@@ -59,7 +60,8 @@ class DefaultFirebaseOptions {
     appId: '1:568278540801:android:857287c9288e3e09065600',
     messagingSenderId: '568278540801',
     projectId: 'mobile-kombat',
-    databaseURL: 'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'mobile-kombat.appspot.com',
   );
 
@@ -68,9 +70,11 @@ class DefaultFirebaseOptions {
     appId: '1:568278540801:ios:61d9fc13353c1afe065600',
     messagingSenderId: '568278540801',
     projectId: 'mobile-kombat',
-    databaseURL: 'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'mobile-kombat.appspot.com',
-    iosClientId: '568278540801-dnu9don3ji9401obv33uuqvcnm4v1dvc.apps.googleusercontent.com',
+    iosClientId:
+        '568278540801-dnu9don3ji9401obv33uuqvcnm4v1dvc.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 
@@ -79,9 +83,11 @@ class DefaultFirebaseOptions {
     appId: '1:568278540801:ios:61d9fc13353c1afe065600',
     messagingSenderId: '568278540801',
     projectId: 'mobile-kombat',
-    databaseURL: 'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL:
+        'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'mobile-kombat.appspot.com',
-    iosClientId: '568278540801-dnu9don3ji9401obv33uuqvcnm4v1dvc.apps.googleusercontent.com',
+    iosClientId:
+        '568278540801-dnu9don3ji9401obv33uuqvcnm4v1dvc.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 }

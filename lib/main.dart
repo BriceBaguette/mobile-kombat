@@ -16,10 +16,11 @@ import 'views/inventory.dart';
 import 'views/shop.dart';
 
 Future main() async {
-  /*await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );*/
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
@@ -44,7 +45,7 @@ class LaunchingScreen extends StatelessWidget {
       'login': (context) => const Scaffold(body: LoginPage()),
       'register': (context) => const Scaffold(body: RegisterPage()),
       'loader': (context) => const LoaderScreen(),
-      'menu': (context) => const Scaffold(body: MainMenu()),
+      'menu': (context) => Scaffold(body: MainMenu()),
       'gamestage': (context) => const Scaffold(body: GameScene()),
       'inventory': (context) => const Inventory(),
       'shop': (context) => const Shop(),

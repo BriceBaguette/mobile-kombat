@@ -14,7 +14,7 @@ import 'package:mobile_kombat/views/main_menu.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MainMenu());
+    await tester.pumpWidget(MainMenu());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

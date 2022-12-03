@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_kombat/models/auth.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -7,7 +8,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     String email = '';
     String password = '';
-
+    Auth auth = Auth();
     return Align(
         child: SizedBox(
             width: 600,
@@ -41,8 +42,10 @@ class LoginPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   child: (const Text('Sign in')),
-                  onPressed: () =>
-                      Navigator.of(context).popAndPushNamed('menu'),
+                  onPressed: () => {
+                    auth.signIn(email, password),
+                    Navigator.of(context).popAndPushNamed('menu'),
+                  },
                 ),
                 const SizedBox(
                   width: double.infinity,
