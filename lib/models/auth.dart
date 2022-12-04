@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mobile_kombat/models/database.dart';
 
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  final Database _database = Database();
 
   User? get currentUser => _firebaseAuth.currentUser;
 
@@ -14,6 +17,7 @@ class Auth {
         email: email,
         password: password,
       );
+      _database.addUser(credential);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -31,7 +35,6 @@ class Auth {
         email: email,
         password: password,
       );
-      print(credential);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');

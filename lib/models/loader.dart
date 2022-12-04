@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 
 import 'dart:ui' as ui;
 
+import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/constant.dart';
+
 enum AssetList {
   characterImg,
   rightButtonImg,
@@ -32,8 +35,10 @@ const _sceneAssets = {
 };
 
 class Loader extends ChangeNotifier {
+  final Constant _constant = Constant();
   static Loader? _loader;
   var imgMap = <AssetList, ui.Image>{};
+  List<Character> characterList = [];
   var _loading = true;
   var _ready = false;
   bool gameOver = false;
@@ -61,6 +66,12 @@ class Loader extends ChangeNotifier {
       var img = await _loadImage(_sceneAssets[key]!);
       imgMap[key] = img;
     }
+    characterList.add(StickMan(
+        bbox: Rect.fromLTWH(_constant.w / 4, _constant.h / 2, _constant.w / 20,
+            _constant.w / 20 * _constant.gokuRatio),
+        speed: 3,
+        facing: 'RIGHT',
+        framerate: _constant.framerate));
     _loading = false;
     notifyListeners();
   }
