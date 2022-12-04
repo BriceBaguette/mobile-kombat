@@ -12,8 +12,9 @@ class LoginPage extends StatelessWidget {
     return Align(
         child: SizedBox(
             width: 600,
-            height: 600,
-            child: Column(
+            height: 300,
+            child: SingleChildScrollView(
+                child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
@@ -62,6 +63,6 @@ class LoginPage extends StatelessWidget {
                       Navigator.of(context).popAndPushNamed('register'),
                 )
               ],
-            )));
+            ))));
   }
 }
