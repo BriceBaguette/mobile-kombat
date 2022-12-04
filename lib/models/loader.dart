@@ -6,29 +6,35 @@ import 'dart:ui' as ui;
 
 enum AssetList {
   characterImg,
+  swordImg,
+  baseGround,
+
   rightButtonImg,
   leftButtonImg,
-  baseGround,
   jumpButtonImg,
   floorButtonImg,
-  swordImg,
-  quickAttackImg,
-  dodgeImg,
-  heavyAttackImg,
-  reversedCharacterImg
+
+  quickAttackButtonImg,
+  dodgeButtonImg,
+  heavyAttackButtonImg,
+
+  heavyStatic_1,
+  heavyStatic_2
 }
 
 const _sceneAssets = {
   AssetList.characterImg: "./assets/images/goku.png",
-  AssetList.rightButtonImg: "./assets/images/rightArrow.png",
-  AssetList.leftButtonImg: "./assets/images/leftArrow.png",
-  AssetList.baseGround: "./assets/images/baseGround.png",
-  AssetList.jumpButtonImg: "./assets/images/jump.png",
-  AssetList.floorButtonImg: "./assets/images/arrowDown.png",
   AssetList.swordImg: "./assets/images/sword.png",
-  AssetList.quickAttackImg: "./assets/images/quickAttack.png",
-  AssetList.dodgeImg: "./assets/images/dodge.png",
-  AssetList.heavyAttackImg: "./assets/images/heavyAttack.png",
+  AssetList.baseGround: "./assets/images/baseGround.png",
+  AssetList.rightButtonImg: "./assets/images/buttons/rightArrow.png",
+  AssetList.leftButtonImg: "./assets/images/buttons/leftArrow.png",
+  AssetList.jumpButtonImg: "./assets/images/buttons/jump.png",
+  AssetList.floorButtonImg: "./assets/images/buttons/arrowDown.png",
+  AssetList.quickAttackButtonImg: "./assets/images/buttons/quickAttack.png",
+  AssetList.dodgeButtonImg: "./assets/images/buttons/dodge.png",
+  AssetList.heavyAttackButtonImg: "./assets/images/buttons/heavyAttack.png",
+  AssetList.heavyStatic_1: "./assets/images/heavy/heavy_static_1.png",
+  AssetList.heavyStatic_2: "./assets/images/heavy/heavy_static_2.png"
 };
 
 class Loader extends ChangeNotifier {

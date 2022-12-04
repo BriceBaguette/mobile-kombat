@@ -9,6 +9,10 @@ class Constant {
   final int framerate = 16;
   final time = 15000;
   final double gokuRatio = 1.88;
+
+  late double heavyWidth;
+  late double heavyHeight;
+
   late Rect leftButtonPosition;
   late Rect rightButtonPosition;
   late Rect jumpButtonPosition;
@@ -25,6 +29,10 @@ class Constant {
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     w = window.size.width;
     h = window.size.height;
+
+    heavyHeight = w / 20 * gokuRatio;
+    heavyWidth = (405 / 699) * heavyHeight;
+
     leftButtonPosition = Rect.fromLTWH(w / 40, h - h / 9, w / 15, h / 10);
     rightButtonPosition =
         Rect.fromLTWH(2 * w / 40 + w / 15, h - h / 9, w / 15, h / 10);

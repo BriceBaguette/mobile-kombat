@@ -15,11 +15,11 @@ class ScenePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (var element in characterList) {
-      bool flip = element.facing == 'LEFT' ? true : false;
+      bool flip = element.getFacing() == 'LEFT' ? true : false;
       paintImage(
           canvas: canvas,
           image: element.image,
-          rect: element.getBox(),
+          rect: element.getImageBox(),
           flipHorizontally: flip,
           fit: BoxFit.fill);
     }

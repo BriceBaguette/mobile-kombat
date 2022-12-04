@@ -68,18 +68,18 @@ class Stage extends ChangeNotifier {
           img: imgMap[AssetList.floorButtonImg]!,
           bbox: Constant().floorButtonPosition))
       ..add(AttackButton(
-          img: imgMap[AssetList.heavyAttackImg]!,
+          img: imgMap[AssetList.heavyAttackButtonImg]!,
           bbox: Constant().attackButtonPosition))
       ..add(QuickAttackButton(
-          img: imgMap[AssetList.quickAttackImg]!,
+          img: imgMap[AssetList.quickAttackButtonImg]!,
           bbox: Constant().quickAttackButtonPosition))
       ..add(DodgeButton(
-          img: imgMap[AssetList.dodgeImg]!,
+          img: imgMap[AssetList.dodgeButtonImg]!,
           bbox: Constant().dodgeButtonPosition));
     grounds.add(Ground(
         bbox: Rect.fromLTWH(
             0,
-            Constant().h / 2 + _stage!.characters[0].bbox.height,
+            Constant().h / 2 + Constant().w / 20 * Constant().gokuRatio,
             Constant().w,
             Constant().h / 10),
         groundImg: imgMap[AssetList.baseGround]!));
@@ -108,7 +108,7 @@ class Stage extends ChangeNotifier {
           if (other != character &&
               other.usingAbility &&
               !character.isInvincible &&
-              character.bbox.overlaps(other.abilityRange())) {
+              character.getHitBox().overlaps(other.abilityRange())) {
             character.getDamage(other.abilityDamage());
             if (character.health <= 0) {
               endGame();

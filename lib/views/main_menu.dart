@@ -13,9 +13,9 @@ class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Player player = Player();
-    Character character = StickMan(
+    Character character = Heavy(
         bbox: Rect.fromLTWH(Constant().w / 4, Constant().h / 2,
-            Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
+            Constant().heavyWidth, Constant().heavyHeight),
         speed: 3,
         facing: 'RIGHT',
         framerate: Constant().framerate);
