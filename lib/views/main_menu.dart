@@ -14,8 +14,12 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     Player player = Player();
     Character character = Heavy(
-        bbox: Rect.fromLTWH(Constant().w / 4, Constant().h / 2,
-            Constant().heavyWidth, Constant().heavyHeight),
+        bbox: Rect.fromLTWH(
+            Constant().leftPlatformBox.left +
+                Constant().leftPlatformBox.width / 2,
+            Constant().h / 2,
+            Constant().heavyWidth,
+            Constant().heavyHeight),
         speed: 3,
         facing: 'RIGHT',
         framerate: Constant().framerate);

@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 
 enum AssetList {
+  environmentImg,
+
   characterImg,
   jumpingImg,
   swordImg,
@@ -24,6 +26,7 @@ enum AssetList {
 }
 
 const _sceneAssets = {
+  AssetList.environmentImg: "./assets/images/environment.jpg",
   AssetList.characterImg: "./assets/images/goku.png",
   AssetList.jumpingImg: "./assets/images/jumping.png",
   AssetList.swordImg: "./assets/images/sword.png",

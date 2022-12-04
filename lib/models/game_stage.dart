@@ -6,6 +6,7 @@ import 'package:mobile_kombat/models/constant.dart';
 
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/player.dart';
+import 'package:mobile_kombat/views/canvas.dart';
 
 import 'custom_buttons.dart';
 import 'ground.dart';
@@ -13,6 +14,7 @@ import 'loader.dart';
 
 class Stage extends ChangeNotifier {
   static Stage? _stage;
+  var environmentImage = Loader().imgMap[AssetList.environmentImg]!;
   var players = <Player>[];
   var characters = <Character>[];
   var buttons = <Button>[];
@@ -47,8 +49,12 @@ class Stage extends ChangeNotifier {
     characters
       ..add(Player().character)
       ..add(StickMan(
-          bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
-              Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
+          bbox: Rect.fromLTWH(
+              Constant().rightPlatformBox.left +
+                  Constant().rightPlatformBox.width / 2,
+              Constant().h / 2,
+              Constant().w / 20,
+              Constant().w / 20 * Constant().gokuRatio),
           speed: 3,
           facing: 'LEFT',
           framerate: Constant().framerate));
@@ -76,13 +82,10 @@ class Stage extends ChangeNotifier {
       ..add(DodgeButton(
           img: imgMap[AssetList.dodgeButtonImg]!,
           bbox: Constant().dodgeButtonPosition));
-    grounds.add(Ground(
-        bbox: Rect.fromLTWH(
-            0,
-            Constant().h / 2 + Constant().w / 20 * Constant().gokuRatio,
-            Constant().w,
-            Constant().h / 10),
-        groundImg: imgMap[AssetList.baseGround]!));
+    grounds.add(Ground(bbox: Constant().leftPlatformBox));
+    grounds.add(Ground(bbox: Constant().rightPlatformBox));
+    grounds.add(Ground(bbox: Constant().middlePlatformBox));
+    grounds.add(Ground(bbox: Constant().upperPlatformBox));
     _loading = false;
     _stage!._updateScreen();
   }

@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+
+import 'package:mobile_kombat/models/constant.dart';
+
 import 'package:mobile_kombat/models/custom_buttons.dart';
 import 'package:mobile_kombat/models/ground.dart';
 
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/game_stage.dart';
 
+import 'dart:ui' as ui;
+
 class ScenePainter extends CustomPainter {
+  ui.Image environment;
   List<Character> characterList;
   List<Button> buttonList;
   List<Ground> groundList;
 
-  ScenePainter(this.characterList, this.buttonList, this.groundList);
+  ScenePainter(
+      this.environment, this.characterList, this.buttonList, this.groundList);
 
   @override
   void paint(Canvas canvas, Size size) {
+    paintImage(
+        canvas: canvas,
+        image: environment,
+        rect: Rect.fromLTWH(0, 0, Constant().w, Constant().h),
+        fit: BoxFit.fill);
     for (var element in characterList) {
       bool flip = element.getFacing() == 'LEFT' ? true : false;
       paintImage(
@@ -21,13 +33,6 @@ class ScenePainter extends CustomPainter {
           image: element.image,
           rect: element.getImageBox(),
           flipHorizontally: flip,
-          fit: BoxFit.fill);
-    }
-    for (var element in groundList) {
-      paintImage(
-          canvas: canvas,
-          image: element.groundImg,
-          rect: element.bbox,
           fit: BoxFit.fill);
     }
     for (var element in buttonList) {
