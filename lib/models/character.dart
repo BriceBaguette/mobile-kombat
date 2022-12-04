@@ -80,7 +80,7 @@ class Heavy extends Character {
       Loader().imgMap[AssetList.heavyStatic_2]!
     ];
     _movingImages = [Loader().imgMap[AssetList.heavyStatic_1]!];
-    _jumpingImages = [Loader().imgMap[AssetList.heavyStatic_1]!];
+    _jumpingImages = [Loader().imgMap[AssetList.jumpingImg]!];
     _staticDuration = 1000;
     _movingDuration = 500;
     _jumpingDuration = 500;

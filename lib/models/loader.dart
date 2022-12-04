@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 
 enum AssetList {
   characterImg,
+  jumpingImg,
   swordImg,
   baseGround,
 
@@ -24,6 +25,7 @@ enum AssetList {
 
 const _sceneAssets = {
   AssetList.characterImg: "./assets/images/goku.png",
+  AssetList.jumpingImg: "./assets/images/jumping.png",
   AssetList.swordImg: "./assets/images/sword.png",
   AssetList.baseGround: "./assets/images/baseGround.png",
   AssetList.rightButtonImg: "./assets/images/buttons/rightArrow.png",
