@@ -238,7 +238,7 @@ class MainMenu extends StatelessWidget {
                       ],
                     ));
           } else {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
         });
   }

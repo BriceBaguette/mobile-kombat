@@ -45,7 +45,12 @@ class RegisterPage extends StatelessWidget {
                   child: (const Text('Sign up')),
                   onPressed: () => {
                     auth.signUp(email, password),
-                    Navigator.of(context).popAndPushNamed('menu')
+                    if (auth.currentUser != null)
+                      {
+                        Navigator.of(context).popAndPushNamed('menu'),
+                      }
+                    else
+                      {}
                   },
                 ),
                 const SizedBox(

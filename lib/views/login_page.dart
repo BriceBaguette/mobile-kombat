@@ -44,7 +44,12 @@ class LoginPage extends StatelessWidget {
                   child: (const Text('Sign in')),
                   onPressed: () => {
                     auth.signIn(email, password),
-                    Navigator.of(context).popAndPushNamed('menu'),
+                    if (auth.currentUser != null)
+                      {
+                        Navigator.of(context).popAndPushNamed('menu'),
+                      }
+                    else
+                      {}
                   },
                 ),
                 const SizedBox(
