@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_kombat/models/auth.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -7,12 +8,13 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     String email = '';
     String password = '';
-
+    Auth auth = Auth();
     return Align(
         child: SizedBox(
             width: 600,
-            height: 600,
-            child: Column(
+            height: 300,
+            child: SingleChildScrollView(
+                child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
@@ -41,8 +43,15 @@ class LoginPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   child: (const Text('Sign in')),
-                  onPressed: () =>
-                      Navigator.of(context).popAndPushNamed('menu'),
+                  onPressed: () => {
+                    auth.signIn(email, password),
+                    if (auth.currentUser != null)
+                      {
+                        Navigator.of(context).popAndPushNamed('menu'),
+                      }
+                    else
+                      {}
+                  },
                 ),
                 const SizedBox(
                   width: double.infinity,
@@ -54,6 +63,6 @@ class LoginPage extends StatelessWidget {
                       Navigator.of(context).popAndPushNamed('register'),
                 )
               ],
-            )));
+            ))));
   }
 }

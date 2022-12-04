@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_kombat/firebase_options.dart';
 import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:mobile_kombat/views/loading_screen.dart';
@@ -15,6 +17,10 @@ import 'views/shop.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
@@ -39,7 +45,7 @@ class LaunchingScreen extends StatelessWidget {
       'login': (context) => const Scaffold(body: LoginPage()),
       'register': (context) => const Scaffold(body: RegisterPage()),
       'loader': (context) => const LoaderScreen(),
-      'menu': (context) => const Scaffold(body: MainMenu()),
+      'menu': (context) => Scaffold(body: MainMenu()),
       'gamestage': (context) => const Scaffold(body: GameScene()),
       'inventory': (context) => const Inventory(),
       'shop': (context) => const Shop(),

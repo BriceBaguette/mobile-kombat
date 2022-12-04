@@ -69,7 +69,9 @@ class Inventory extends StatelessWidget {
                                     ElevatedButton(
                                       onPressed: () {
                                         Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) => const ChangingCharacters()),
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ChangingCharacters()),
                                         );
                                       },
                                       child: const Text('Change character'),
@@ -375,53 +377,55 @@ class Inventory extends StatelessWidget {
 }
 
 class ChangingCharacters extends StatelessWidget {
-
   const ChangingCharacters({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
           backgroundColor: Colors.red[900],
           toolbarHeight: 40,
           leading: Row(children: [
             IconButton(
               icon: const Icon(Icons.arrow_back_ios),
               onPressed: () {
-                Navigator.of(context).pushNamed('menu');
+                Navigator.of(context).pop();
               },
               tooltip: 'changingcharacters',
             ),
           ]),
-        actions: const [],
-        title: const Text("Characters owned"),
-        centerTitle: true,
-      ),
+          actions: const [],
+          title: const Text("Characters owned"),
+          centerTitle: true,
+        ),
         body: Consumer<ControllerInventory>(
             builder: (_, data, __) => Center(
-                child: Column(
-                  children:[
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height-100,
-                        width: MediaQuery.of(context).size.width-10,
-                        child: ListView.builder(
+                    child: Column(children: [
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height - 100,
+                      width: MediaQuery.of(context).size.width - 10,
+                      child: ListView.builder(
                           itemCount: data.getItemsInvChar().length,
-                          itemBuilder:(BuildContext context, int index) {
+                          itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                                 onTap: () {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) =>
                                           AlertDialog(
-                                            title: Center(child: Text(
-                                                data.getItemsInvChar()[index]
+                                            title: Center(
+                                                child: Text(data
+                                                    .getItemsInvChar()[index]
                                                     .getName())),
-                                            content: PopUpShopChar(c: data.getItemsInvChar()[index]),
+                                            content: PopUpShopChar(
+                                                c: data
+                                                    .getItemsInvChar()[index]),
                                             actions: [
                                               ElevatedButton(
                                                 onPressed: () {
-                                                  data.equipChar(data
-                                                      .getItemsInvChar()[index]);
+                                                  data.equipChar(
+                                                      data.getItemsInvChar()[
+                                                          index]);
                                                   Navigator.of(context).pop();
                                                 },
                                                 child: const Text('Equip'),
@@ -439,18 +443,16 @@ class ChangingCharacters extends StatelessWidget {
                                     height: 100,
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: Colors.blueGrey.shade300,),
+                                        color: Colors.blueGrey.shade300,
+                                      ),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    child:
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(right: 20),
-                                      child:
-                                      Row(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           CharacterWidget(
                                               c: data.getItemsInvChar()[index]),
@@ -466,14 +468,8 @@ class ChangingCharacters extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                    )
-                                )
-                            );
-                          })
-                      )]
-                )
-            )
-        )
-    );
+                                    )));
+                          }))
+                ]))));
   }
 }
