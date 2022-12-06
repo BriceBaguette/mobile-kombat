@@ -10,6 +10,7 @@ class DummyBot extends Opponent {
     required super.character,
     /*required super.cosmetics*/
   });
+  String username = "Dummybot";
 
   @override
   void getActions() {}
@@ -23,6 +24,7 @@ class SmartBot extends Opponent {
     required super.character,
     /*required super.cosmetics*/
   });
+  String username = "Smartbot";
 
   @override
   void getActions() {
@@ -85,6 +87,7 @@ class SmartBot extends Opponent {
 
 abstract class Opponent {
   Character character;
+  late String username;
   //Cosmetics cosmetics;
   Opponent({
     required this.character,

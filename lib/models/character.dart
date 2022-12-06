@@ -34,6 +34,7 @@ class StickMan extends Character {
   double speed = 5;
   @override
   String facing;
+  @override
   double upSpeed = 0;
   @override
   bool usingAbility = false;
@@ -43,7 +44,7 @@ class StickMan extends Character {
   int abilityImagesOffset = 0;
   late int abilityImageFramesOffset = 0;
 
-  int price = 0;
+  int price = 1;
   int strength = 0;
   int aS = 0;
   int resistance = 0;
@@ -248,7 +249,7 @@ abstract class Character {
 
   get bbox => null;
 
-  get upspeed => null;
+  get upSpeed => null;
 
   get usingAbility => null;
 
@@ -383,7 +384,7 @@ class StickMan2 extends Character {
   int abilityImagesOffset = 0;
   late int abilityImageFramesOffset = 0;
 
-  int price = 0;
+  int price = 1;
   int strength = 0;
   int aS = 0;
   int resistance = 0;

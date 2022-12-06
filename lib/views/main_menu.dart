@@ -20,6 +20,17 @@ class MainMenu extends StatelessWidget {
 
   final User? user = Auth().currentUser;
   final _database = Database();
+  final _rtDb = RealTimeDB();
+  final _player = Player();
+
+  Future<List<Character>> dbInit() async {
+    List<Character> characters =
+    await _database.getCharacterFromUser(user!.uid);
+    _player.setCharacter(characters[0]);
+    _rtDb.createRoom(user!.uid);
+    _rtDb.joinRoom(user!.uid);
+    return characters;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +42,18 @@ class MainMenu extends StatelessWidget {
           if (snapshot.hasData) {
             player.setCharacter(snapshot.data[0]);
             return Consumer<ControllerInventory>(
-                builder: (_, data, __) => Row(
+                builder: (_, data, __) => Scaffold(
+                    body:Padding(padding:const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child:Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            Text(player.getUsername(), style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15)),
                             const SizedBox(
                               width: 50,
-                              height: 200,
+                              height: 150,
                             ),
                             SizedBox(
                               width: 100,
@@ -50,7 +64,7 @@ class MainMenu extends StatelessWidget {
                                   child: const Text('Inventory'),
                                   onPressed: () =>
                                       //WidgetsBinding.instance.addPostFrameCallback((_) {
-                                      Navigator.pushNamed(
+                                      Navigator.popAndPushNamed(
                                           context, 'inventory')),
                               //}),
                             ),
@@ -62,7 +76,7 @@ class MainMenu extends StatelessWidget {
                                       backgroundColor: Colors.red[900]),
                                   child: const Text('Shop'),
                                   onPressed: () =>
-                                      Navigator.pushNamed(context, 'shop')),
+                                      Navigator.popAndPushNamed(context, 'shop')),
                             ),
                             SizedBox(
                               width: 100,
@@ -71,7 +85,7 @@ class MainMenu extends StatelessWidget {
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.red[900]),
                                   child: const Text('Stats'),
-                                  onPressed: () => Navigator.pushNamed(
+                                  onPressed: () => Navigator.popAndPushNamed(
                                       context, 'statistics')),
                             ),
                           ],
@@ -128,8 +142,9 @@ class MainMenu extends StatelessWidget {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            Row(children:[Text(data.getGold().toString()),const Text("   "), Image.asset("./assets/images/Coins.png", width: 20)]),
                             Container(
-                              height: 275,
+                              height: 235,
                             ),
                             SizedBox(
                               width: 150,
@@ -175,7 +190,7 @@ class MainMenu extends StatelessWidget {
                                                                     Navigator.of(
                                                                             ctx)
                                                                         .pop(),
-                                                                    Navigator.pushNamed(
+                                                                    Navigator.popAndPushNamed(
                                                                         context,
                                                                         'gamestage')
                                                                   },
@@ -205,7 +220,7 @@ class MainMenu extends StatelessWidget {
                                                                     Navigator.of(
                                                                             ctx)
                                                                         .pop(),
-                                                                    Navigator.pushNamed(
+                                                                    Navigator.popAndPushNamed(
                                                                         context,
                                                                         'gamestage')
                                                                   },
@@ -225,7 +240,7 @@ class MainMenu extends StatelessWidget {
                                                                               opponent = DummyBot(character: StickMan(bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2, Constant().w / 20, Constant().w / 20 * Constant().gokuRatio), speed: 3, facing: 'LEFT', framerate: Constant().framerate)),
                                                                               Stage().setOpponent(opponent),
                                                                               Navigator.of(ctx).pop(),
-                                                                              Navigator.pushNamed(context, 'gamestage')
+                                                                              Navigator.popAndPushNamed(context, 'gamestage')
                                                                             },
                                                                     child: const Text(
                                                                         "Play online")))
@@ -236,7 +251,7 @@ class MainMenu extends StatelessWidget {
                           ],
                         ),
                       ],
-                    ));
+                    ))));
           } else {
             return const Center(child: CircularProgressIndicator());
           }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/loader.dart';
-import 'package:mobile_kombat/views/main_menu.dart';
 import 'package:provider/provider.dart';
 
 class LoaderScreen extends StatelessWidget {
@@ -11,7 +10,7 @@ class LoaderScreen extends StatelessWidget {
     return Consumer(builder: (context, Loader loader, _) {
       if (loader.ready) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushNamed(context, 'login');
+          Navigator.popAndPushNamed(context, 'login');
         });
       }
       return Center(

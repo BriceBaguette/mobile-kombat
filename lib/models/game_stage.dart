@@ -150,4 +150,15 @@ class Stage extends ChangeNotifier {
   void setOpponent(Opponent opponent) {
     _opponent = opponent;
   }
+/*=============================================================
+* TEST
+=============================================================*/
+  List<Character> getChar(){
+    return [Player().character,_opponent!.character];
+  }
+
+  Opponent getOp(){
+    return _opponent!;
+  }
+
 }

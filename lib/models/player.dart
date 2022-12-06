@@ -25,6 +25,10 @@ class Player {
     this.cosmetics = cosmetics;
   }
 
+  String getUsername(){
+    return "Alouette";//username
+  }
+
   resetHealth() {
     health = 100;
   }

@@ -4,7 +4,10 @@ import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/cosmetics.dart';
 import 'package:mobile_kombat/models/constant.dart';
 
+import 'models/player.dart';
+
 class ControllerInventory extends ChangeNotifier {
+  int _gold = 900;
   final List<Cosmetics> _articlesCosmetics = [
     Cosmetics(
         key: const ObjectKey('test1'),
@@ -92,6 +95,17 @@ class ControllerInventory extends ChangeNotifier {
   Character getEquippedChar(){
     return _equippedChar;
   }
+
+  int getGold(){
+    //set gold firebase
+    return _gold;
+  }
+
+  void updateGold(int mod){
+    _gold = _gold + mod;
+    notifyListeners();
+  }
+
 
   void addItem(Cosmetics c) {
     _itemsInvCosmetics.add(c);

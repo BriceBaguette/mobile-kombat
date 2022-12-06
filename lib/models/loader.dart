@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 
 import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/cosmetics.dart';
 import 'package:mobile_kombat/models/constant.dart';
 
 enum AssetList {
@@ -39,6 +40,7 @@ class Loader extends ChangeNotifier {
   static Loader? _loader;
   var imgMap = <AssetList, ui.Image>{};
   List<Character> characterList = [];
+  List<Cosmetics> cosmeticList = [];
   var _loading = true;
   var _ready = false;
   bool gameOver = false;
