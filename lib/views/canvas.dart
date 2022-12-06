@@ -26,7 +26,21 @@ class ScenePainter extends CustomPainter {
         image: environment,
         rect: Rect.fromLTWH(0, 0, Constant().w, Constant().h),
         fit: BoxFit.fill);
+
+    double i = 0;
     for (var element in characterList) {
+      var health = element.health;
+      var maxHealth = element.maxHealth;
+      var ratio = (health / maxHealth).toDouble();
+      var paint = Paint()
+        ..color = Color(0xffb71c1c)
+        ..style = PaintingStyle.fill;
+      var barBox = Rect.fromLTWH(
+          Constant().healthBarLeft,
+          Constant().healthBarTop + i,
+          Constant().healthBarMaxWidth * ratio,
+          Constant().healthBarHeight);
+      canvas.drawRect(barBox, paint);
       bool flip = element.getFacing() == 'LEFT' ? true : false;
       paintImage(
           canvas: canvas,
@@ -34,6 +48,8 @@ class ScenePainter extends CustomPainter {
           rect: element.getImageBox(),
           flipHorizontally: flip,
           fit: BoxFit.fill);
+
+      i += Constant().healthBarTop + Constant().healthBarHeight;
     }
     for (var element in buttonList) {
       paintImage(

@@ -204,7 +204,7 @@ abstract class Character {
     move();
 
     if (isInvincible) {
-      _invincibilityDuration -= _framerate;
+      _invincibilityDuration -= 1;
       if (_invincibilityDuration <= 0) {
         isInvincible = false;
         _invincibilityDuration = 0;
@@ -347,10 +347,8 @@ abstract class Character {
     if (!usingAbility) {
       return 0.0;
     }
-    return _framerate.toDouble() *
-        ((_actionFramesPerImage - _actionImageFramesOffset) +
-                (_actionFramesPerImage *
-                    (_actionImages.length - _actionImagesOffset)))
+    return (_actionFramesPerImage - _actionImageFramesOffset) +
+        (_actionFramesPerImage * (_actionImages.length - _actionImagesOffset))
             .toDouble();
   }
 
