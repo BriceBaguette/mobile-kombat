@@ -15,6 +15,7 @@ class StickMan extends Character {
     _framerate = framerate;
     _bbox = bbox;
     health = 100;
+    maxHealth = 100;
     _speed = speed;
     _facing = facing;
     _staticImages = [Loader().imgMap[AssetList.characterImg]!];
@@ -44,6 +45,7 @@ class Light extends Character {
     _framerate = framerate;
     _bbox = bbox;
     health = 100;
+    maxHealth = 100;
     _speed = speed;
     _facing = facing;
     _staticImages = [
@@ -84,6 +86,7 @@ class Heavy extends Character {
     _framerate = framerate;
     _bbox = bbox;
     health = 100;
+    maxHealth = 100;
     _speed = speed;
     _facing = facing;
     _staticImages = [
@@ -121,6 +124,7 @@ abstract class Character {
   late Rect _bbox;
 
   late int health;
+  late int maxHealth;
   late double _speed;
   double _upSpeed = 0;
 
@@ -352,7 +356,11 @@ abstract class Character {
 
   Rect getHitBox() => _bbox;
 
-  void getDamage(int damage) => health -= damage;
+  void getDamage(int damage, bool absolute) {
+    if (absolute || !isInvincible) {
+      health -= damage;
+    }
+  }
 
   void setInvincibilityFrame(double duration) {
     isInvincible = true;

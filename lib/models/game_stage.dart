@@ -112,14 +112,20 @@ class Stage extends ChangeNotifier {
               other.usingAbility &&
               !character.isInvincible &&
               character.getHitBox().overlaps(other.abilityRange())) {
-            character.getDamage(other.abilityDamage());
-            if (character.health <= 0) {
+            character.getDamage(other.abilityDamage(), false);
+            if (character.health <= 0 ||
+                character.getImageBox().top > Constant().h) {
               endGame();
               _updateScreen();
             }
             double invincibilityFrame = other.remainingAbilityDuration();
             character.setInvincibilityFrame(invincibilityFrame);
           }
+        }
+        if (character.getImageBox().top > Constant().h) {
+          character.getDamage(character.maxHealth, true);
+          endGame();
+          _updateScreen();
         }
         character.update();
       }
