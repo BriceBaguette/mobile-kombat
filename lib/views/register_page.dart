@@ -9,7 +9,7 @@ class RegisterPage extends StatelessWidget {
     String email = '';
     String password = '';
     Auth auth = Auth();
-
+    String nickname = '';
     return Align(
         child: SizedBox(
             width: 600,
@@ -38,6 +38,15 @@ class RegisterPage extends StatelessWidget {
                     validator: (String? value) {
                       return (null);
                     }),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: "nickname",
+                  ),
+                  onChanged: (value) => nickname = value,
+                  validator: (String? value) {
+                    return (value != null) ? null : 'Insert a nickname';
+                  },
+                ),
                 const SizedBox(
                   width: double.infinity,
                   height: 20,
@@ -45,7 +54,7 @@ class RegisterPage extends StatelessWidget {
                 ElevatedButton(
                   child: (const Text('Sign up')),
                   onPressed: () => {
-                    auth.signUp(email, password),
+                    auth.signUp(email, password, nickname),
                     if (auth.currentUser != null)
                       {
                         Navigator.of(context).popAndPushNamed('menu'),

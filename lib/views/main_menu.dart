@@ -20,15 +20,21 @@ class MainMenu extends StatelessWidget {
 
   final User? user = Auth().currentUser;
   final _database = Database();
+  final _rtDb = RealTimeDB();
 
   @override
   Widget build(BuildContext context) {
     Player player = Player();
     Opponent opponent;
     return FutureBuilder(
-        future: _database.getCharacterFromUser(user!.uid),
+        future: Future.wait([
+          _database.getCharacterFromUser(user!.uid),
+          _rtDb.createRoom(user!.uid),
+          _rtDb.joinRoom(user!.uid)
+        ]),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
+            print(snapshot.data);
             player.setCharacter(snapshot.data[0]);
             return Consumer<ControllerInventory>(
                 builder: (_, data, __) => Row(
@@ -50,7 +56,7 @@ class MainMenu extends StatelessWidget {
                                   child: const Text('Inventory'),
                                   onPressed: () =>
                                       //WidgetsBinding.instance.addPostFrameCallback((_) {
-                                      Navigator.pushNamed(
+                                      Navigator.popAndPushNamed(
                                           context, 'inventory')),
                               //}),
                             ),
