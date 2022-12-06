@@ -33,7 +33,7 @@ class ScenePainter extends CustomPainter {
       var maxHealth = element.maxHealth;
       var ratio = (health / maxHealth).toDouble();
       var paint = Paint()
-        ..color = Color(0xffb71c1c)
+        ..color = Color.fromARGB(255, 99, 8, 8)
         ..style = PaintingStyle.fill;
       var barBox = Rect.fromLTWH(
           Constant().healthBarLeft,

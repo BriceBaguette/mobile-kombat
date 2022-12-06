@@ -118,7 +118,7 @@ class Stage extends ChangeNotifier {
               endGame();
               _updateScreen();
             }
-            double invincibilityFrame = other.remainingAbilityDuration();
+            int invincibilityFrame = other.remainingAbilityDuration();
             character.setInvincibilityFrame(invincibilityFrame);
           }
         }

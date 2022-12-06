@@ -103,8 +103,8 @@ class Heavy extends Character {
       Loader().imgMap[AssetList.heavyJumping_1]!,
       Loader().imgMap[AssetList.heavyJumping_2]!
     ];
-    _staticDuration = 1000;
-    _movingDuration = 500;
+    _staticDuration = 1500;
+    _movingDuration = 750;
     _jumpingDuration = 500;
     _setAction(_staticImages, _staticDuration);
     image = _staticImages[_actionImagesOffset];
@@ -154,7 +154,7 @@ abstract class Character {
   int _actionImagesOffset = 0;
   int _actionImageFramesOffset = 0;
 
-  double _invincibilityDuration = 0;
+  int _invincibilityDuration = 0;
 
   void setDirection(String direction) {
     _facing = direction;
@@ -266,7 +266,7 @@ abstract class Character {
   void _setAction(List<ui.Image> images, double duration) {
     _actionImages = images;
     _actionFramesPerImage =
-        (duration / (_framerate.toDouble() * _actionImages.length.toDouble()))
+        ((duration / (_framerate.toDouble()) / _actionImages.length.toDouble()))
             .round();
   }
 
@@ -343,13 +343,13 @@ abstract class Character {
     return false;
   }
 
-  double remainingAbilityDuration() {
+  int remainingAbilityDuration() {
     if (!usingAbility) {
-      return 0.0;
+      return 0;
     }
     return (_actionFramesPerImage - _actionImageFramesOffset) +
-        (_actionFramesPerImage * (_actionImages.length - _actionImagesOffset))
-            .toDouble();
+        (_actionFramesPerImage *
+            (_actionImages.length - (_actionImagesOffset + 1)));
   }
 
   Rect getHitBox() => _bbox;
@@ -360,7 +360,7 @@ abstract class Character {
     }
   }
 
-  void setInvincibilityFrame(double duration) {
+  void setInvincibilityFrame(int duration) {
     isInvincible = true;
     _invincibilityDuration = duration;
   }
