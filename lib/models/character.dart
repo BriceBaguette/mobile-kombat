@@ -21,6 +21,7 @@ class StickMan extends Character {
     _staticImages = [Loader().imgMap[AssetList.characterImg]!];
     _movingImages = [Loader().imgMap[AssetList.characterImg]!];
     _jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
+    _getDamageImages = [Loader().imgMap[AssetList.characterImg]!];
     _staticDuration = 500;
     _movingDuration = 500;
     _jumpingDuration = 500;
@@ -62,6 +63,7 @@ class Light extends Character {
       Loader().imgMap[AssetList.lightJumping_1]!,
       Loader().imgMap[AssetList.lightJumping_2]!
     ];
+    _getDamageImages = [Loader().imgMap[AssetList.characterImg]!];
     _staticDuration = 500;
     _movingDuration = 500;
     _jumpingDuration = 500;
@@ -103,6 +105,7 @@ class Heavy extends Character {
       Loader().imgMap[AssetList.heavyJumping_1]!,
       Loader().imgMap[AssetList.heavyJumping_2]!
     ];
+    _getDamageImages = [Loader().imgMap[AssetList.characterImg]!];
     _staticDuration = 1500;
     _movingDuration = 750;
     _jumpingDuration = 500;
@@ -133,13 +136,16 @@ abstract class Character {
   bool isFloor = false;
   bool usingAbility = false;
   bool isInvincible = false;
+  bool isGettingDamage = false;
 
   late List<ui.Image> _staticImages;
   late List<ui.Image> _movingImages;
   late List<ui.Image> _jumpingImages;
+  late List<ui.Image> _getDamageImages;
   late double _staticDuration;
   late double _movingDuration;
   late double _jumpingDuration;
+  late double _getDamageDuration;
 
   late Ability _quickAttack;
   late Ability _airAttack;
@@ -155,6 +161,8 @@ abstract class Character {
   int _actionImageFramesOffset = 0;
 
   int _invincibilityDuration = 0;
+
+  double recoilSpeed = 10;
 
   void setDirection(String direction) {
     _facing = direction;
@@ -194,9 +202,15 @@ abstract class Character {
 
   void update() {
     bool actionLoopBack = _updateImage();
-    if (usingAbility) {}
     if (actionLoopBack && usingAbility) {
       usingAbility = false;
+      _setAction(_staticImages, _staticDuration);
+    }
+    if (actionLoopBack && isGettingDamage) {
+      print(2);
+      isGettingDamage = false;
+      isMoving = false;
+      _speed = 0;
       _setAction(_staticImages, _staticDuration);
     }
     image = _actionImages[_actionImagesOffset];
@@ -213,29 +227,55 @@ abstract class Character {
   }
 
   void move() {
-    if (isGrounded() && (_upSpeed > 0.0)) {
+    if (isGrounded() && _upSpeed > 0.0 && !isGettingDamage) {
       setJumpSpeed(0.0);
     }
-    if (!isGrounded() && !usingAbility) {
+    if (!isGrounded() && !usingAbility && !isGettingDamage) {
       setJumpSpeed(_upSpeed + 0.1);
     }
     _bbox = Rect.fromLTWH(
         _bbox.left, _bbox.top + _upSpeed, _bbox.width, _bbox.height);
     if (isMoving && !_isBlocked()) {
+      var speed = _speed;
+      if (isGettingDamage) {
+        print(1);
+        speed = -recoilSpeed;
+      }
       switch (_facing) {
         case 'RIGHT':
           _bbox = Rect.fromLTWH(
-              _bbox.left + _speed, _bbox.top, _bbox.width, _bbox.height);
+              _bbox.left + speed, _bbox.top, _bbox.width, _bbox.height);
           break;
         case 'LEFT':
           _bbox = Rect.fromLTWH(
-              _bbox.left - _speed, _bbox.top, _bbox.width, _bbox.height);
+              _bbox.left - speed, _bbox.top, _bbox.width, _bbox.height);
           break;
         default:
           return;
       }
     }
     return;
+  }
+
+  bool _isBlocked() {
+    for (var ground in Stage().grounds) {
+      if (bboxIntersect(ground.bbox)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool bboxIntersect(Rect otherBox) {
+    switch (_facing) {
+      case 'LEFT':
+        return otherBox.contains(Offset(_bbox.left - _speed, _bbox.bottom - 1));
+      case 'RIGHT':
+        return otherBox
+            .contains(Offset(_bbox.right + _speed, _bbox.bottom - 1));
+      default:
+        return false;
+    }
   }
 
   String getFacing() => _facing;
@@ -252,7 +292,7 @@ abstract class Character {
   }
 
   void attack({bool quick = false, bool dodge = false}) {
-    if (!usingAbility) {
+    if (!usingAbility && !isGettingDamage) {
       usingAbility = true;
       _upSpeed = 0;
       isMoving = false;
@@ -290,44 +330,8 @@ abstract class Character {
   }
 
   bool isGrounded() {
-    return (Stage().isGround(Offset(_bbox.right, _bbox.bottom + _upSpeed),
-            Offset(_bbox.left, _bbox.bottom + _upSpeed)) ||
-        _isAbove());
-  }
-
-  bool _isAbove() {
-    return (Stage()
-            .characters[1]
-            ._bbox
-            .contains(Offset(_bbox.left, _bbox.bottom + _upSpeed)) ||
-        Stage()
-            .characters[1]
-            ._bbox
-            .contains(Offset(_bbox.right, _bbox.bottom + _upSpeed)));
-  }
-
-  bool _isBlocked() {
-    if (bboxIntersect(Stage().characters[1]._bbox)) {
-      return true;
-    }
-    for (var ground in Stage().grounds) {
-      if (bboxIntersect(ground.bbox)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  bool bboxIntersect(Rect otherBox) {
-    switch (_facing) {
-      case 'LEFT':
-        return otherBox.contains(Offset(_bbox.left - _speed, _bbox.bottom - 1));
-      case 'RIGHT':
-        return otherBox
-            .contains(Offset(_bbox.right + _speed, _bbox.bottom - 1));
-      default:
-        return false;
-    }
+    return Stage().isGround(Offset(_bbox.right, _bbox.bottom + _upSpeed),
+        Offset(_bbox.left, _bbox.bottom + _upSpeed));
   }
 
   bool _updateImage() {
@@ -354,13 +358,25 @@ abstract class Character {
 
   Rect getHitBox() => _bbox;
 
-  void getDamage(int damage, bool absolute) {
+  void getDamage(int damage, int invincibilityFrame, int recoilDistance,
+      String fromDirection, bool absolute) {
     if (absolute || !isInvincible) {
       health -= damage;
+      _getDamageDuration = recoilDistance / recoilSpeed * _framerate;
+      _setInvincibilityFrame(invincibilityFrame);
+      _actionImagesOffset = 0;
+      _actionImageFramesOffset = 0;
+      _setAction(_getDamageImages, _getDamageDuration);
+      print(_getDamageDuration);
+      usingAbility = false;
+      isMoving = true;
+      _upSpeed = 0;
+      isGettingDamage = true;
+      _facing = fromDirection;
     }
   }
 
-  void setInvincibilityFrame(int duration) {
+  void _setInvincibilityFrame(int duration) {
     isInvincible = true;
     _invincibilityDuration = duration;
   }
@@ -368,4 +384,6 @@ abstract class Character {
   Rect abilityRange() => _abilityInProgress.range(_bbox, _facing);
 
   int abilityDamage() => _abilityInProgress.power;
+
+  int abilityRecoil() => _abilityInProgress.recoilDistance;
 }

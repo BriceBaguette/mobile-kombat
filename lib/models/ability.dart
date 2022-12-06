@@ -7,6 +7,7 @@ class LightDodge extends Ability {
   LightDodge() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 0;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -19,6 +20,7 @@ class LightQuick extends Ability {
   LightQuick() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -31,6 +33,7 @@ class LightAir extends Ability {
   LightAir() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -43,6 +46,7 @@ class LightStatic extends Ability {
   LightStatic() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -55,6 +59,7 @@ class LightHorizontal extends Ability {
   LightHorizontal() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -67,6 +72,7 @@ class LightFloor extends Ability {
   LightFloor() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -79,6 +85,7 @@ class HeavyDodge extends Ability {
   HeavyDodge() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 0;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -91,6 +98,7 @@ class HeavyQuick extends Ability {
   HeavyQuick() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -103,6 +111,7 @@ class HeavyAir extends Ability {
   HeavyAir() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -115,6 +124,7 @@ class HeavyStatic extends Ability {
   HeavyStatic() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -127,6 +137,7 @@ class HeavyHorizontal extends Ability {
   HeavyHorizontal() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -139,6 +150,7 @@ class HeavyFloor extends Ability {
   HeavyFloor() {
     power = 10;
     duration = 500; //millisec
+    recoilDistance = 40;
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
@@ -150,6 +162,7 @@ class HeavyFloor extends Ability {
 abstract class Ability {
   late int power;
   late double duration;
+  late int recoilDistance;
 
   late List<ui.Image> images;
 

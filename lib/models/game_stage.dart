@@ -98,7 +98,7 @@ class Stage extends ChangeNotifier {
   }
 
   void move(Character character, String dir, bool isMoving) {
-    if (!character.usingAbility) {
+    if (!character.usingAbility && !character.isGettingDamage) {
       character.setDirection(dir);
       character.setMovement(isMoving);
     }
@@ -112,18 +112,21 @@ class Stage extends ChangeNotifier {
               other.usingAbility &&
               !character.isInvincible &&
               character.getHitBox().overlaps(other.abilityRange())) {
-            character.getDamage(other.abilityDamage(), false);
-            if (character.health <= 0 ||
-                character.getImageBox().top > Constant().h) {
+            int invincibilityFrame = other.remainingAbilityDuration();
+            String fromDirection = 'LEFT';
+            if (character.getHitBox().left < other.getHitBox().left) {
+              fromDirection = 'RIGHT';
+            }
+            character.getDamage(other.abilityDamage(), invincibilityFrame,
+                other.abilityRecoil(), fromDirection, false);
+            if (character.health <= 0) {
               endGame();
               _updateScreen();
             }
-            int invincibilityFrame = other.remainingAbilityDuration();
-            character.setInvincibilityFrame(invincibilityFrame);
           }
         }
         if (character.getImageBox().top > Constant().h) {
-          character.getDamage(character.maxHealth, true);
+          character.getDamage(character.maxHealth, 0, 0, 'RIGHT', true);
           endGame();
           _updateScreen();
         }
