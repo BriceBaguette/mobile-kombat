@@ -46,9 +46,20 @@ class Light extends Character {
     health = 100;
     _speed = speed;
     _facing = facing;
-    _staticImages = [Loader().imgMap[AssetList.characterImg]!];
-    _movingImages = [Loader().imgMap[AssetList.characterImg]!];
-    _jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
+    _staticImages = [
+      Loader().imgMap[AssetList.lightStatic_1]!,
+      Loader().imgMap[AssetList.lightStatic_2]!
+    ];
+    _movingImages = [
+      Loader().imgMap[AssetList.lightMoving_1]!,
+      Loader().imgMap[AssetList.lightMoving_2]!,
+      Loader().imgMap[AssetList.lightMoving_3]!,
+      Loader().imgMap[AssetList.lightMoving_4]!
+    ];
+    _jumpingImages = [
+      Loader().imgMap[AssetList.lightJumping_1]!,
+      Loader().imgMap[AssetList.lightJumping_2]!
+    ];
     _staticDuration = 500;
     _movingDuration = 500;
     _jumpingDuration = 500;
@@ -79,8 +90,16 @@ class Heavy extends Character {
       Loader().imgMap[AssetList.heavyStatic_1]!,
       Loader().imgMap[AssetList.heavyStatic_2]!
     ];
-    _movingImages = [Loader().imgMap[AssetList.heavyStatic_1]!];
-    _jumpingImages = [Loader().imgMap[AssetList.jumpingImg]!];
+    _movingImages = [
+      Loader().imgMap[AssetList.heavyMoving_1]!,
+      Loader().imgMap[AssetList.heavyMoving_2]!,
+      Loader().imgMap[AssetList.heavyMoving_3]!,
+      Loader().imgMap[AssetList.heavyMoving_4]!
+    ];
+    _jumpingImages = [
+      Loader().imgMap[AssetList.heavyJumping_1]!,
+      Loader().imgMap[AssetList.heavyJumping_2]!
+    ];
     _staticDuration = 1000;
     _movingDuration = 500;
     _jumpingDuration = 500;

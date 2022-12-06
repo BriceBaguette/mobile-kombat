@@ -21,8 +21,23 @@ enum AssetList {
   dodgeButtonImg,
   heavyAttackButtonImg,
 
+  lightStatic_1,
+  lightStatic_2,
+  lightMoving_1,
+  lightMoving_2,
+  lightMoving_3,
+  lightMoving_4,
+  lightJumping_1,
+  lightJumping_2,
+
   heavyStatic_1,
-  heavyStatic_2
+  heavyStatic_2,
+  heavyMoving_1,
+  heavyMoving_2,
+  heavyMoving_3,
+  heavyMoving_4,
+  heavyJumping_1,
+  heavyJumping_2
 }
 
 const _sceneAssets = {
@@ -38,8 +53,22 @@ const _sceneAssets = {
   AssetList.quickAttackButtonImg: "./assets/images/buttons/quickAttack.png",
   AssetList.dodgeButtonImg: "./assets/images/buttons/dodge.png",
   AssetList.heavyAttackButtonImg: "./assets/images/buttons/heavyAttack.png",
+  AssetList.lightStatic_1: "./assets/images/light/light_static_1.png",
+  AssetList.lightStatic_2: "./assets/images/light/light_static_1.png",
+  AssetList.lightMoving_1: "./assets/images/light/light_moving_1.png",
+  AssetList.lightMoving_2: "./assets/images/light/light_moving_2.png",
+  AssetList.lightMoving_3: "./assets/images/light/light_moving_3.png",
+  AssetList.lightMoving_4: "./assets/images/light/light_moving_4.png",
+  AssetList.lightJumping_1: "./assets/images/light/light_static_1.png",
+  AssetList.lightJumping_2: "./assets/images/light/light_static_1.png",
   AssetList.heavyStatic_1: "./assets/images/heavy/heavy_static_1.png",
-  AssetList.heavyStatic_2: "./assets/images/heavy/heavy_static_2.png"
+  AssetList.heavyStatic_2: "./assets/images/heavy/heavy_static_2.png",
+  AssetList.heavyMoving_1: "./assets/images/heavy/heavy_moving_1.png",
+  AssetList.heavyMoving_2: "./assets/images/heavy/heavy_moving_2.png",
+  AssetList.heavyMoving_3: "./assets/images/heavy/heavy_moving_3.png",
+  AssetList.heavyMoving_4: "./assets/images/heavy/heavy_moving_4.png",
+  AssetList.heavyJumping_1: "./assets/images/jumping.png",
+  AssetList.heavyJumping_2: "./assets/images/jumping.png"
 };
 
 class Loader extends ChangeNotifier {

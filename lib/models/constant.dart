@@ -17,6 +17,9 @@ class Constant {
   late Rect middlePlatformBox;
   late Rect upperPlatformBox;
 
+  late double lightWidth;
+  late double lightHeight;
+
   late double heavyWidth;
   late double heavyHeight;
 
@@ -58,8 +61,11 @@ class Constant {
         (412 / environmentOriginalWidth) * w,
         (45 / environmentOriginalHeight) * h);
 
+    lightHeight = w / 20 * gokuRatio;
+    lightWidth = (345 / 923) * lightHeight;
+
     heavyHeight = w / 20 * gokuRatio;
-    heavyWidth = (405 / 699) * heavyHeight;
+    heavyWidth = (421 / 711) * heavyHeight;
 
     leftButtonPosition = Rect.fromLTWH(w / 40, h - h / 9, w / 15, h / 10);
     rightButtonPosition =
