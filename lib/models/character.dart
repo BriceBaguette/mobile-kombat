@@ -303,16 +303,23 @@ abstract class Character {
   }
 
   bool _isBlocked() {
+    if (bboxIntersect(Stage().characters[1]._bbox)) {
+      return true;
+    }
+    for (var ground in Stage().grounds) {
+      if (bboxIntersect(ground.bbox)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool bboxIntersect(Rect otherBox) {
     switch (_facing) {
       case 'LEFT':
-        return Stage()
-            .characters[1]
-            ._bbox
-            .contains(Offset(_bbox.left - _speed, _bbox.bottom - 1));
+        return otherBox.contains(Offset(_bbox.left - _speed, _bbox.bottom - 1));
       case 'RIGHT':
-        return Stage()
-            .characters[1]
-            ._bbox
+        return otherBox
             .contains(Offset(_bbox.right + _speed, _bbox.bottom - 1));
       default:
         return false;

@@ -44,22 +44,22 @@ class Constant {
         (200 / environmentOriginalWidth) * w,
         h * (1 - (116 / environmentOriginalHeight)),
         (228 / environmentOriginalWidth) * w,
-        (116 / environmentOriginalHeight) * h);
+        h);
     rightPlatformBox = Rect.fromLTWH(
         w * (1 - ((419) / environmentOriginalWidth)),
         h * (1 - (116 / environmentOriginalHeight)),
         (219 / environmentOriginalWidth) * w,
-        (116 / environmentOriginalHeight) * h);
+        h);
     middlePlatformBox = Rect.fromLTWH(
         (570 / environmentOriginalWidth) * w,
         h * (1 - (240 / environmentOriginalHeight)),
         (780 / environmentOriginalWidth) * w,
-        (240 / environmentOriginalHeight) * h);
+        h);
     upperPlatformBox = Rect.fromLTWH(
         (729 / environmentOriginalWidth) * w,
         (430 / environmentOriginalHeight) * h,
         (412 / environmentOriginalWidth) * w,
-        (45 / environmentOriginalHeight) * h);
+        1);
 
     lightHeight = w / 20 * gokuRatio;
     lightWidth = (345 / 923) * lightHeight;
