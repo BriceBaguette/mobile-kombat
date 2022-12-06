@@ -21,20 +21,25 @@ class MainMenu extends StatelessWidget {
   final User? user = Auth().currentUser;
   final _database = Database();
   final _rtDb = RealTimeDB();
+  final _player = Player();
+
+  Future<List<Character>> dbInit() async {
+    List<Character> characters =
+        await _database.getCharacterFromUser(user!.uid);
+    _player.setCharacter(characters[0]);
+    _rtDb.createRoom(user!.uid);
+    _rtDb.joinRoom(user!.uid);
+    return characters;
+  }
 
   @override
   Widget build(BuildContext context) {
     Player player = Player();
     Opponent opponent;
     return FutureBuilder(
-        future: Future.wait([
-          _database.getCharacterFromUser(user!.uid),
-          _rtDb.createRoom(user!.uid),
-          _rtDb.joinRoom(user!.uid)
-        ]),
+        future: dbInit(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            print(snapshot.data);
             player.setCharacter(snapshot.data[0]);
             return Consumer<ControllerInventory>(
                 builder: (_, data, __) => Row(

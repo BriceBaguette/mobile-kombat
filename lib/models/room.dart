@@ -36,10 +36,14 @@ class CharacterDb {
     upSpeed = json['upSpeed'];
   }
 
+  Map<String, dynamic> toJson() {
+    return {'facing': facing, 'health': health, 'id': id, 'upSpeed': upSpeed};
+  }
+
   CharacterDb.fromCharacter(Character character) {
     facing = character.facing;
     health = character.health;
     id = 0;
-    upSpeed = character.upspeed;
+    upSpeed = character.upSpeed;
   }
 }

@@ -34,6 +34,7 @@ class StickMan extends Character {
   double speed = 5;
   @override
   String facing;
+  @override
   double upSpeed = 0;
   @override
   bool usingAbility = false;
@@ -248,7 +249,7 @@ abstract class Character {
 
   get bbox => null;
 
-  get upspeed => null;
+  get upSpeed => null;
 
   get usingAbility => null;
 

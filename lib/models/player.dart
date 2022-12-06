@@ -10,7 +10,7 @@ class Player {
   }
   late Character character;
   late List<Cosmetics> cosmetics;
-  late String _username;
+  String _username = '';
   double health = 100;
 
   Player._hidden() {

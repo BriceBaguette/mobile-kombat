@@ -37,7 +37,8 @@ class Auth {
         email: email,
         password: password,
       );
-      Player().username = await _database.getUserName(credential.user!.uid);
+      var username = await _database.getUserName(credential.user!.uid);
+      Player().username = username;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');

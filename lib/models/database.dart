@@ -37,7 +37,7 @@ class Database {
   Future<String> getUserName(userId) async {
     var docSnap = await db.collection('users').doc(userId).get();
     var data = docSnap.data();
-    return data!["nickname"].cast<String>();
+    return data!["nickname"] as String;
   }
 }
 
@@ -48,7 +48,9 @@ class RealTimeDB {
   final userDatabase = Database();
   final _player = Player();
 
-  Future createRoom(userId) async {
+  Future<String> createRoom(userId) async {
+    CharacterDb character = CharacterDb.fromCharacter(_player.character);
+    var jsonChar = jsonEncode(CharacterDb.fromCharacter(_player.character));
     await ref.set({
       "rooms": [
         {
@@ -57,26 +59,28 @@ class RealTimeDB {
             {
               "userId": userId,
               "userName": _player.username,
-              "character":
-                  jsonEncode(CharacterDb.fromCharacter(_player.character)),
+              "character": jsonChar,
             }
           ]
         }
       ]
     });
+    return (userId);
   }
 
-  Future joinRoom(userId) async {
+  Future<String> joinRoom(userId) async {
     List<Room> rooms = [];
     final snapshot = await ref.get();
-    print(snapshot);
     if (snapshot.exists) {
-      Map<String, dynamic> json = snapshot.value! as Map<String, dynamic>;
+      print(snapshot.value!.toString());
+      Map<String, dynamic> json = jsonDecode(snapshot.value!.toString());
+      print(json['rooms']);
       for (var room in json['rooms']) {
+        print(room);
         rooms.add(Room.fromJson(room));
       }
     }
-    print(rooms);
+    return userId;
   }
 
   updateData() {}
