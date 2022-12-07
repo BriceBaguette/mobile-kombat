@@ -178,6 +178,7 @@ abstract class Character {
   final double _gravity = 0.1;
 
   late String _facing;
+  bool hasJumped = false;
   bool isMoving = false;
   bool usingAbility = false;
   bool _usingStaticAbility = false;
@@ -204,6 +205,9 @@ abstract class Character {
   late Ability _floorAttack;
   late Ability _dodge;
 
+  final double _dodgeCooldown = 3000;
+  late double dodgeRemainingCooldown = 0;
+
   late Ability _abilityInProgress;
   late List<ui.Image> _actionImages;
   late int _actionFramesPerImage;
@@ -219,9 +223,15 @@ abstract class Character {
   }
 
   void update() {
+    if (dodgeRemainingCooldown > 0) {
+      dodgeRemainingCooldown -= _framerate;
+    }
     bool actionLoopBack = _updateImage();
     image = _actionImages[_actionImagesOffset];
     if (actionLoopBack && usingAbility) {
+      if (_abilityInProgress == _dodge) {
+        dodgeRemainingCooldown = _dodgeCooldown;
+      }
       usingAbility = false;
       _usingStaticAbility = false;
       var move = isMoving;
@@ -247,6 +257,7 @@ abstract class Character {
   void move() {
     if (isGrounded() && _upSpeed > 0.0 && !isGettingDamage) {
       _upSpeed = 0;
+      hasJumped = false;
       if (!usingAbility) {
         var move = isMoving;
         setMovement(move);
@@ -282,8 +293,6 @@ abstract class Character {
   }
 
   void jump(double speed) {
-    _upSpeed = speed;
-
     _actionImagesOffset = 0;
     _actionImageFramesOffset = 0;
     if (speed == 0.0) {
@@ -293,8 +302,13 @@ abstract class Character {
         _setAction(_staticImages, _staticBbox, _staticDuration);
       }
     } else {
+      if (_upSpeed != 0.0) {
+        hasJumped = true;
+      }
       _setAction(_jumpingImages, _jumpingBbox, _jumpingDuration);
     }
+
+    _upSpeed = speed;
   }
 
   void setMovement(bool move) {
@@ -362,6 +376,7 @@ abstract class Character {
   Ability _determineAttack(bool quick, bool floor, bool dodge) {
     if (dodge) {
       _usingStaticAbility = false;
+      hasJumped = false;
       return _dodge;
     }
     if (quick) {

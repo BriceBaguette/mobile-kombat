@@ -42,7 +42,7 @@ class JumpButton extends Button {
 
   @override
   void onTap() {
-    if (_scene.characters[0].isGrounded() &&
+    if (!_scene.characters[0].hasJumped &&
         !_scene.characters[0].usingAbility &&
         !_scene.characters[0].isGettingDamage) {
       _scene.characters[0].jump(-6);
@@ -99,7 +99,9 @@ class DodgeButton extends Button {
   DodgeButton({required this.img, required this.bbox});
   @override
   void onTap() {
-    _scene.characters[0].attack(dodge: true);
+    if (_scene.characters[0].dodgeRemainingCooldown <= 0) {
+      _scene.characters[0].attack(dodge: true);
+    }
   }
 
   @override
