@@ -16,11 +16,17 @@ class Room {
 class UserDb {
   String userId = '';
   String userName = '';
+  late bool first;
   late CharacterDb character;
   UserDb.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     userName = json['userName'];
     character = CharacterDb.fromJson(json['character']);
+    if (json['first'] == 'true') {
+      first = true;
+    } else {
+      first = false;
+    }
   }
 }
 
@@ -29,16 +35,28 @@ class CharacterDb {
   int health = 100;
   int id = -1;
   double upSpeed = 0;
+  bool isMoving = false;
 
   CharacterDb.fromJson(json) {
     facing = json['facing'];
     health = int.parse(json['health']);
     id = int.parse(json['id']);
     upSpeed = double.parse(json['upSpeed']);
+    if (json['isMoving'] == 'true') {
+      isMoving = true;
+    } else {
+      isMoving = false;
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {'facing': facing, 'health': health, 'id': id, 'upSpeed': upSpeed};
+    return {
+      'facing': facing,
+      'health': health,
+      'id': id,
+      'upSpeed': upSpeed,
+      'isMoving': isMoving
+    };
   }
 
   CharacterDb.fromCharacter(Character character, {second = false}) {
@@ -50,5 +68,6 @@ class CharacterDb {
     health = character.health;
     id = Loader().getCharacterId(character);
     upSpeed = character.upSpeed;
+    isMoving = character.isMoving;
   }
 }

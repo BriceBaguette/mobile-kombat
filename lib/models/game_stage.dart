@@ -7,6 +7,7 @@ import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
+import 'package:mobile_kombat/models/room.dart';
 
 import 'custom_buttons.dart';
 import 'ground.dart';
@@ -22,6 +23,7 @@ class Stage extends ChangeNotifier {
   var _ready = false;
   late Timer gameTimer;
   late int displayTime;
+  late Room room;
   bool gameOver = false;
   bool get ready => _ready && !_loading;
 
@@ -88,6 +90,10 @@ class Stage extends ChangeNotifier {
     displayTime = Constant().time;
     _loading = true;
     _stageSetup(Loader().imgMap);
+  }
+
+  void setRoom(Room newRoom) {
+    room = newRoom;
   }
 
   void move(Character character, String dir, bool isMoving) {

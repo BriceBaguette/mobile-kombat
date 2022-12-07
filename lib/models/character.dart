@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile_kombat/models/database.dart';
 import 'dart:ui' as ui;
 
 import 'package:mobile_kombat/models/game_stage.dart';
@@ -22,7 +23,7 @@ class StickMan extends Character {
     _horizontalAttack = LightHorizontal();
     _floorAttack = LightFloor();
   }
-
+  final RealTimeDB _rtDb = RealTimeDB();
   late int framerate;
   @override
   int health = 100;
@@ -109,11 +110,13 @@ class StickMan extends Character {
   @override
   void setDirection(String direction) {
     facing = direction;
+    _rtDb.setDirection(move);
   }
 
   @override
   void setMovement(bool move) {
     isMoving = move;
+    _rtDb.setMovement(move);
   }
 
   @override

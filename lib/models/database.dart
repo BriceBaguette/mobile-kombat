@@ -5,8 +5,10 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:mobile_kombat/models/auth.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/constant.dart';
+import 'package:mobile_kombat/models/game_stage.dart';
 import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/models/player.dart';
 import 'package:mobile_kombat/models/room.dart';
@@ -92,11 +94,13 @@ class RealTimeDB {
                 "userId": room.users[0].userId,
                 "userName": room.users[0].userName,
                 "character": jsonEncode(room.users[0].character),
+                "first": true
               },
               {
                 "userId": userId,
                 "userName": _player.username,
                 "character": jsonChar,
+                "first": false
               }
             ]
           });
@@ -104,7 +108,6 @@ class RealTimeDB {
         }
       }
     }
-    print("create room");
     return await createRoom(userId);
   }
 
@@ -146,6 +149,12 @@ class RealTimeDB {
           '${string.substring(0, index + 1)}"${string.substring(index + 1, string.length)}';
       index = string.indexOf(RegExp(r'[0-9]}', caseSensitive: false));
     }
+    index = string.indexOf(RegExp(r'[A-Z]}', caseSensitive: false));
+    while (index > -1) {
+      string =
+          '${string.substring(0, index + 1)}"${string.substring(index + 1, string.length)}';
+      index = string.indexOf(RegExp(r'[A-Z]}', caseSensitive: false));
+    }
 
     string = string.replaceAll(',"{', ',{');
     return string;
@@ -172,26 +181,74 @@ class RealTimeDB {
   Future<Character?> getOpponentCharacter(
       UserDb user, String currentUserId) async {
     Character character = _loader.characterList[user.character.id].duplicate();
-    if (user.character.facing == 'LEFT') {
+    if (user.first == false) {
       character.setDirection('LEFT');
       character.setPosition(_constant.secondPlayerPosition);
-      print(_constant.firstPlayerPosition);
-      print(_constant.secondPlayerPosition);
+      Player().character.setDirection('RIGHT');
+      Player().character.setPosition(_constant.firstPlayerPosition);
+    } else {
+      character.setDirection('RIGHT');
+      character.setPosition(_constant.firstPlayerPosition);
+      Player().character.setDirection('LEFT');
+      Player().character.setPosition(_constant.secondPlayerPosition);
     }
     return character;
   }
 
-  Future<UserDb?> getOpponent(String roomId, String currentUserId) async {
+  Future<Room?> getRoom(roomId) async {
     Room? room = await waitOpponent(roomId);
     while (room == null) {
       Future.delayed(const Duration(milliseconds: 500));
       room = await waitOpponent(roomId);
     }
+    return room;
+  }
+
+  Future<UserDb?> getOpponent(Room room, String currentUserId) async {
     for (var user in room.users) {
       if (user.userId != currentUserId) {
         return user;
       }
     }
     return null;
+  }
+
+  Future createGameRoom(Room room) async {
+    DatabaseReference roomRef =
+        FirebaseDatabase.instance.ref(room.roomId.toString());
+    print('here');
+    roomRef.set({
+      room.users[0].userId: {'character': jsonEncode(room.users[0].character)},
+      room.users[1].userId: {'character': jsonEncode(room.users[1].character)}
+    });
+    print("there");
+  }
+
+  void initListener(Room room, userId) {
+    String id = '';
+    if (room.users[0].userId == userId) {
+      id = room.users[1].userId;
+    } else {
+      id = room.users[0].userId;
+    }
+    DatabaseReference listenerRef =
+        FirebaseDatabase.instance.ref('${room.roomId}/$id');
+    listenerRef.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      print(snapshot.value);
+    });
+  }
+
+  Future<void> setMovement(bool move) async {
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
+    ref.update({"isMoving": move});
+  }
+
+  Future<void> setDirection(facing) async {
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
+
+    ref.update({"facing": facing});
   }
 }
