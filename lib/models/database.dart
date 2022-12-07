@@ -72,16 +72,81 @@ class RealTimeDB {
     List<Room> rooms = [];
     final snapshot = await ref.get();
     if (snapshot.exists) {
-      print(snapshot.value!.toString());
-      Map<String, dynamic> json = jsonDecode(snapshot.value!.toString());
-      print(json['rooms']);
+      String jsonString = snapshotToJsonString(snapshot.value.toString());
+      Map<String, dynamic> json =
+          jsonDecode(jsonString) as Map<String, dynamic>;
       for (var room in json['rooms']) {
-        print(room);
         rooms.add(Room.fromJson(room));
       }
+      for (Room room in rooms) {
+        if ((room.users.length < 2)) {
+          var index = rooms.indexOf(room);
+          DatabaseReference refRoom =
+              FirebaseDatabase.instance.ref('/rooms/$index');
+          final snapshot = await refRoom.get();
+          if (snapshot.exists) {
+            var jsonChar =
+                jsonEncode(CharacterDb.fromCharacter(_player.character));
+            refRoom.update({
+              'users': [
+                {
+                  "userId": room.users[0].userId,
+                  "userName": room.users[0].userName,
+                  "character": jsonEncode(room.users[0].character),
+                },
+                {
+                  "userId": userId,
+                  "userName": _player.username,
+                  "character": jsonChar,
+                }
+              ]
+            });
+          }
+        }
+      }
+      return await createRoom(userId);
     }
     return userId;
   }
 
   updateData() {}
+
+  String snapshotToJsonString(String string) {
+    string = string.replaceAll(' ', '');
+    string = string.replaceAll('"', '');
+    string = string.replaceAll('{', '{"');
+    string = string.replaceAll(':', '":');
+    string = string.replaceAll(',', ',"');
+    var index = string.indexOf(RegExp(r':[A-Z]', caseSensitive: false));
+    while (index > -1) {
+      string =
+          '${string.substring(0, index + 1)}"${string.substring(index + 1, string.length)}';
+      index = string.indexOf(RegExp(r':[A-Z]', caseSensitive: false));
+    }
+    index = string.indexOf(RegExp(r'[A-Z],', caseSensitive: false));
+    while (index > -1) {
+      string =
+          '${string.substring(0, index + 1)}"${string.substring(index + 1, string.length)}';
+      index = string.indexOf(RegExp(r'[A-Z],', caseSensitive: false));
+    }
+    index = string.indexOf(RegExp(r':[0-9][A-Z]', caseSensitive: false));
+    while (index > -1) {
+      string =
+          '${string.substring(0, index + 1)}"${string.substring(index + 1, string.length)}';
+      index = string.indexOf(RegExp(r':[0-9][A-Z]', caseSensitive: false));
+    }
+    index = string.indexOf(RegExp(r'[A-Z][0-9],', caseSensitive: false));
+    while (index > -1) {
+      string =
+          '${string.substring(0, index + 2)}"${string.substring(index + 2, string.length)}';
+      index = string.indexOf(RegExp(r'[A-Z][0-9],', caseSensitive: false));
+    }
+    index = string.indexOf(RegExp(r'[A-Z][0-9]}', caseSensitive: false));
+    while (index > -1) {
+      string =
+          '${string.substring(0, index + 2)}"${string.substring(index + 2, string.length)}';
+      index = string.indexOf(RegExp(r'[A-Z][0-9]}', caseSensitive: false));
+    }
+    return string;
+  }
 }

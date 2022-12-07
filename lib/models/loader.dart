@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/constant.dart';
+import 'package:mobile_kombat/models/player.dart';
 
 enum AssetList {
   characterImg,
@@ -72,6 +73,7 @@ class Loader extends ChangeNotifier {
         speed: 3,
         facing: 'RIGHT',
         framerate: _constant.framerate));
+    Player().setCharacter(characterList[0]);
     _loading = false;
     notifyListeners();
   }

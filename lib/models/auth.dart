@@ -49,4 +49,9 @@ class Auth {
       print(e);
     }
   }
+
+  void initializeUser() async {
+    var username = await _database.getUserName(currentUser!.uid);
+    Player().username = username;
+  }
 }
