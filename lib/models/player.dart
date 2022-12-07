@@ -10,12 +10,14 @@ class Player {
   }
   late Character character;
   late List<Cosmetics> cosmetics;
-  late String username;
+  String _username = '';
   double health = 100;
 
   Player._hidden() {
     resetHealth();
   }
+  set username(nickname) => _username = nickname;
+  get username => _username;
 
   setCharacter(character) {
     this.character = character;

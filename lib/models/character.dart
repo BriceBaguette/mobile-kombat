@@ -11,20 +11,13 @@ class StickMan extends Character {
       {required int framerate,
       required Rect bbox,
       required String facing,
-      required double speed,
-      required double speedMod,
-      required double attackSpeedMod,
-      required int powerMod,
-      required int resistanceMod}) {
+      required double speed}) {
     _framerate = framerate;
     _bbox = bbox;
 
     health = 100;
     maxHealth = 100;
-    _speed = speed + speedMod;
-    _attackSpeedModificator = attackSpeedMod;
-    _powerModificator = powerMod;
-    _resistanceModificator = resistanceMod;
+    _speed = speed;
 
     _facing = facing;
 
@@ -56,20 +49,13 @@ class Light extends Character {
       {required int framerate,
       required Rect bbox,
       required String facing,
-      required double speed,
-      required double speedMod,
-      required double attackSpeedMod,
-      required int powerMod,
-      required int resistanceMod}) {
+      required double speed}) {
     _framerate = framerate;
     _bbox = bbox;
 
     health = 100;
     maxHealth = 100;
-    _speed = speed + speedMod;
-    _attackSpeedModificator = attackSpeedMod;
-    _powerModificator = powerMod;
-    _resistanceModificator = resistanceMod;
+    _speed = speed;
 
     _facing = facing;
 
@@ -112,20 +98,13 @@ class Heavy extends Character {
       {required int framerate,
       required Rect bbox,
       required String facing,
-      required double speed,
-      required double speedMod,
-      required double attackSpeedMod,
-      required int powerMod,
-      required int resistanceMod}) {
+      required double speed}) {
     _framerate = framerate;
     _bbox = bbox;
 
     health = 100;
     maxHealth = 100;
-    _speed = speed + speedMod;
-    _attackSpeedModificator = attackSpeedMod;
-    _powerModificator = powerMod;
-    _resistanceModificator = resistanceMod;
+    _speed = speed;
 
     _facing = facing;
     _staticImages = [
@@ -171,9 +150,9 @@ abstract class Character {
   late int maxHealth;
   late double _speed;
   double _upSpeed = 0;
-  late double _attackSpeedModificator;
-  late int _powerModificator;
-  late int _resistanceModificator;
+  late double _attackSpeedModificator = 0;
+  late int _powerModificator = 0;
+  late int _resistanceModificator = 0;
 
   final double _gravity = 0.1;
 
@@ -217,6 +196,57 @@ abstract class Character {
   int _invincibilityDuration = 0;
 
   double recoilSpeed = 10;
+
+  int price = 0;
+  int strength = 0;
+  int aS = 0;
+  int resistance = 0;
+  String imageDir = "assets/images/GenericGuy.png";
+  String name = "Stickman2";
+
+  String getImageDir() => imageDir;
+
+  int getPrice() {
+    return price;
+  }
+
+  int getStrength() {
+    return _powerModificator;
+  }
+
+  int getAS() {
+    return aS;
+  }
+
+  int getResistance() {
+    return resistance;
+  }
+
+  double getSpeed() {
+    return _speed;
+  }
+
+  double getUpSpeed() => _upSpeed;
+
+  String getName() {
+    return name;
+  }
+
+  void setStrength(int mod) {
+    _powerModificator = mod;
+  }
+
+  void setAS(int mod) {
+    _attackSpeedModificator = mod.toDouble();
+  }
+
+  void setResistance(int mod) {
+    resistance = resistance + mod;
+  }
+
+  void setSpeed(int mod) {
+    _speed = _speed + mod;
+  }
 
   void setDirection(String direction) {
     _facing = direction;
@@ -480,4 +510,23 @@ abstract class Character {
   int abilityDamage() => _abilityInProgress.power + _powerModificator;
 
   int abilityRecoil() => _abilityInProgress.recoilDistance;
+}
+
+class CharacterWidget extends StatelessWidget {
+  const CharacterWidget({super.key, required this.c});
+  final Character c;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Image.asset(c.getImageDir(), width: 70),
+        Text(c.getName()),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [])
+      ],
+    );
+  }
 }

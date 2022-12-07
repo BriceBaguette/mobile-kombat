@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/constant.dart';
 
 import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
 import 'package:mobile_kombat/views/canvas.dart';
 
@@ -15,10 +16,10 @@ import 'loader.dart';
 class Stage extends ChangeNotifier {
   static Stage? _stage;
   var environmentImage = Loader().imgMap[AssetList.environmentImg]!;
-  var players = <Player>[];
   var characters = <Character>[];
   var buttons = <Button>[];
   var grounds = <Ground>[];
+  Opponent? _opponent;
   var _loading = true;
   var _ready = false;
   late Timer gameTimer;
@@ -48,20 +49,7 @@ class Stage extends ChangeNotifier {
     displayTime = Constant().time;
     characters
       ..add(Player().character)
-      ..add(StickMan(
-          bbox: Rect.fromLTWH(
-              Constant().rightPlatformBox.left +
-                  Constant().rightPlatformBox.width / 2,
-              Constant().h / 2,
-              Constant().w / 20,
-              Constant().w / 20 * Constant().gokuRatio),
-          speed: 3,
-          facing: 'LEFT',
-          framerate: Constant().framerate,
-          speedMod: 0,
-          attackSpeedMod: 0,
-          powerMod: 0,
-          resistanceMod: 0));
+      ..add(_opponent!.character);
     buttons
       ..add(MovingButton(
           dir: 'LEFT',
@@ -103,6 +91,7 @@ class Stage extends ChangeNotifier {
 
   void updateGame() {
     if (Stage().ready) {
+      _opponent!.getActions();
       for (var character in _stage!.characters) {
         for (var other in _stage!.characters) {
           if (other != character &&
@@ -166,5 +155,13 @@ class Stage extends ChangeNotifier {
     buttons.removeRange(0, buttons.length);
     gameTimer.cancel();
     gameOver = true;
+  }
+
+  Rect getPlayerPosition() {
+    return Player().character.getHitBox();
+  }
+
+  void setOpponent(Opponent opponent) {
+    _opponent = opponent;
   }
 }

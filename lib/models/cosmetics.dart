@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 * resistanceModification: int
 * attackSpeedModification: int
 * strengthModification: int
-* bodypart: char: H/B/F
+* bodyPart: char: H/B/F
 * set: String
 * price: int
 *
@@ -17,13 +17,13 @@ class Cosmetics extends StatelessWidget {
   final List<int>
       _modifiers; //0:speed / 1:resistance / 2:attack speed / 3:strength
   final String _spriteDir;
-  final String _bodypart;
+  final String _bodyPart;
   final String _set;
   final int _price;
   final String _name;
-  final bool _inventory;
+  bool _inventory;
 
-  const Cosmetics(this._name, this._modifiers, this._spriteDir, this._bodypart,
+  Cosmetics(this._name, this._modifiers, this._spriteDir, this._bodyPart,
       this._set, this._price, this._inventory,
       {super.key});
 
@@ -32,7 +32,7 @@ class Cosmetics extends StatelessWidget {
   }
 
   String getBodyPart(){
-    return _bodypart;
+    return _bodyPart;
   }
 
   String getName(){
@@ -53,6 +53,10 @@ class Cosmetics extends StatelessWidget {
 
   bool getInventory(){
     return _inventory;
+  }
+
+  void setInventory(){
+    _inventory = true;
   }
 
   @override
