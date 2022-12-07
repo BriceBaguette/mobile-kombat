@@ -56,14 +56,14 @@ class ControllerInventory extends ChangeNotifier {
         framerate: Constant().framerate)
   ]; //get shop from Firebase
   final List<Character> _itemsInvChar = [
-    StickMan2(
+    StickMan(
         bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
             Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
         speed: 3,
         facing: 'LEFT',
         framerate: Constant().framerate)
   ]; // get inventory from Firebase
-  static Character _equippedChar = StickMan2(
+  static Character _equippedChar = StickMan(
       bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
           Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
       speed: 3,
@@ -89,7 +89,8 @@ class ControllerInventory extends ChangeNotifier {
   List<Character> getItemsInvChar() {
     return _itemsInvChar;
   }
-  Character getEquippedChar(){
+
+  Character getEquippedChar() {
     return _equippedChar;
   }
 
@@ -106,14 +107,14 @@ class ControllerInventory extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addStat(Cosmetics c){
+  void addStat(Cosmetics c) {
     _equippedChar.setStrength(c.getModifiers()[3]);
     _equippedChar.setResistance(c.getModifiers()[1]);
     _equippedChar.setSpeed(c.getModifiers()[0]);
     _equippedChar.setAS(c.getModifiers()[2]);
   }
 
-  void removeStat(Cosmetics c){
+  void removeStat(Cosmetics c) {
     _equippedChar.setStrength(-c.getModifiers()[3]);
     _equippedChar.setResistance(-c.getModifiers()[1]);
     _equippedChar.setSpeed(-c.getModifiers()[0]);

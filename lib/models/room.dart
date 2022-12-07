@@ -41,9 +41,9 @@ class CharacterDb {
   }
 
   CharacterDb.fromCharacter(Character character) {
-    facing = character.facing;
+    facing = character.getFacing();
     health = character.health;
     id = 0;
-    upSpeed = character.upSpeed;
+    upSpeed = character.getUpSpeed();
   }
 }
