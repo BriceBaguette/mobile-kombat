@@ -14,12 +14,20 @@ class MovingButton extends Button {
 
   @override
   void onTap() {
-    _scene.move(_scene.characters[0], dir, true);
+    var character = _scene.characters[0];
+    if (!character.usingAbility && !character.isGettingDamage) {
+      character.setDirection(dir);
+      character.setMovement(true);
+    }
   }
 
   @override
   void onTapCancel() {
-    _scene.move(_scene.characters[0], dir, false);
+    var character = _scene.characters[0];
+    if (!character.usingAbility && !character.isGettingDamage) {
+      character.setDirection(dir);
+      character.setMovement(false);
+    }
   }
 }
 

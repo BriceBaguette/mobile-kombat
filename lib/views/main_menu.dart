@@ -22,7 +22,11 @@ class MainMenu extends StatelessWidget {
             Constant().heavyHeight),
         speed: 3,
         facing: 'RIGHT',
-        framerate: Constant().framerate);
+        framerate: Constant().framerate,
+        speedMod: 0,
+        attackSpeedMod: 0,
+        powerMod: 0,
+        resistanceMod: 0);
     player.setCharacter(character);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,

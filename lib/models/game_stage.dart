@@ -57,7 +57,11 @@ class Stage extends ChangeNotifier {
               Constant().w / 20 * Constant().gokuRatio),
           speed: 3,
           facing: 'LEFT',
-          framerate: Constant().framerate));
+          framerate: Constant().framerate,
+          speedMod: 0,
+          attackSpeedMod: 0,
+          powerMod: 0,
+          resistanceMod: 0));
     buttons
       ..add(MovingButton(
           dir: 'LEFT',
@@ -95,13 +99,6 @@ class Stage extends ChangeNotifier {
     displayTime = Constant().time;
     _loading = true;
     _stageSetup(Loader().imgMap);
-  }
-
-  void move(Character character, String dir, bool isMoving) {
-    if (!character.usingAbility && !character.isGettingDamage) {
-      character.setDirection(dir);
-      character.setMovement(isMoving);
-    }
   }
 
   void updateGame() {

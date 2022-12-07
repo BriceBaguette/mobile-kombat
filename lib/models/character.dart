@@ -8,16 +8,26 @@ import 'loader.dart';
 class StickMan extends Character {
   @override
   StickMan(
-      {required Rect bbox,
-      required double speed,
+      {required int framerate,
+      required Rect bbox,
       required String facing,
-      required int framerate}) {
+      required double speed,
+      required double speedMod,
+      required double attackSpeedMod,
+      required int powerMod,
+      required int resistanceMod}) {
     _framerate = framerate;
     _bbox = bbox;
+
     health = 100;
     maxHealth = 100;
-    _speed = speed;
+    _speed = speed + speedMod;
+    _attackSpeedModificator = attackSpeedMod;
+    _powerModificator = powerMod;
+    _resistanceModificator = resistanceMod;
+
     _facing = facing;
+
     _staticImages = [Loader().imgMap[AssetList.characterImg]!];
     _movingImages = [Loader().imgMap[AssetList.characterImg]!];
     _jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
@@ -30,7 +40,7 @@ class StickMan extends Character {
     _movingDuration = 500;
     _jumpingDuration = 500;
     _setAction(_staticImages, _staticBbox, _staticDuration);
-    image = _staticImages[_actionImagesOffset];
+
     _dodge = LightDodge();
     _quickAttack = LightQuick();
     _airAttack = LightAir();
@@ -43,16 +53,26 @@ class StickMan extends Character {
 class Light extends Character {
   @override
   Light(
-      {required Rect bbox,
-      required double speed,
+      {required int framerate,
+      required Rect bbox,
       required String facing,
-      required int framerate}) {
+      required double speed,
+      required double speedMod,
+      required double attackSpeedMod,
+      required int powerMod,
+      required int resistanceMod}) {
     _framerate = framerate;
     _bbox = bbox;
+
     health = 100;
     maxHealth = 100;
-    _speed = speed;
+    _speed = speed + speedMod;
+    _attackSpeedModificator = attackSpeedMod;
+    _powerModificator = powerMod;
+    _resistanceModificator = resistanceMod;
+
     _facing = facing;
+
     _staticImages = [
       Loader().imgMap[AssetList.lightStatic_1]!,
       Loader().imgMap[AssetList.lightStatic_2]!
@@ -76,7 +96,7 @@ class Light extends Character {
     _movingDuration = 500;
     _jumpingDuration = 500;
     _setAction(_staticImages, _staticBbox, _staticDuration);
-    image = _staticImages[_actionImagesOffset];
+
     _dodge = LightDodge();
     _quickAttack = LightQuick();
     _airAttack = LightAir();
@@ -89,15 +109,24 @@ class Light extends Character {
 class Heavy extends Character {
   @override
   Heavy(
-      {required Rect bbox,
-      required double speed,
+      {required int framerate,
+      required Rect bbox,
       required String facing,
-      required int framerate}) {
+      required double speed,
+      required double speedMod,
+      required double attackSpeedMod,
+      required int powerMod,
+      required int resistanceMod}) {
     _framerate = framerate;
     _bbox = bbox;
+
     health = 100;
     maxHealth = 100;
-    _speed = speed;
+    _speed = speed + speedMod;
+    _attackSpeedModificator = attackSpeedMod;
+    _powerModificator = powerMod;
+    _resistanceModificator = resistanceMod;
+
     _facing = facing;
     _staticImages = [
       Loader().imgMap[AssetList.heavyStatic_1]!,
@@ -122,7 +151,7 @@ class Heavy extends Character {
     _movingDuration = 750;
     _jumpingDuration = 500;
     _setAction(_staticImages, _staticBbox, _staticDuration);
-    image = _staticImages[_actionImagesOffset];
+
     _dodge = HeavyDodge();
     _quickAttack = HeavyQuick();
     _airAttack = HeavyAir();
@@ -142,6 +171,10 @@ abstract class Character {
   late int maxHealth;
   late double _speed;
   double _upSpeed = 0;
+  late double _attackSpeedModificator;
+  late int _powerModificator;
+  late int _resistanceModificator;
+
   final double _gravity = 0.1;
 
   late String _facing;
@@ -322,7 +355,7 @@ abstract class Character {
       _actionImageFramesOffset = 0;
       _abilityInProgress = _determineAttack(quick, floor, dodge);
       _setAction(_abilityInProgress.images, getImageBox(),
-          _abilityInProgress.duration);
+          _abilityInProgress.duration - _attackSpeedModificator);
     }
   }
 
@@ -408,7 +441,7 @@ abstract class Character {
   void getDamage(int damage, int invincibilityFrame, int recoilDistance,
       String fromDirection, bool absolute) {
     if (absolute || !isInvincible) {
-      health -= damage;
+      health -= damage - _resistanceModificator;
       _getDamageDuration = recoilDistance / recoilSpeed * _framerate;
       _setInvincibilityFrame(invincibilityFrame);
       _actionImagesOffset = 0;
@@ -429,7 +462,7 @@ abstract class Character {
 
   Rect abilityRange() => _abilityInProgress.range(_bbox, _facing);
 
-  int abilityDamage() => _abilityInProgress.power;
+  int abilityDamage() => _abilityInProgress.power + _powerModificator;
 
   int abilityRecoil() => _abilityInProgress.recoilDistance;
 }
