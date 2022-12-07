@@ -20,7 +20,6 @@ enum AssetList {
   dodgeImg,
   heavyAttackImg,
   reversedCharacterImg,
-  hatImg,
 }
 
 const _sceneAssets = {
@@ -34,7 +33,6 @@ const _sceneAssets = {
   AssetList.quickAttackImg: "./assets/images/quickAttack.png",
   AssetList.dodgeImg: "./assets/images/dodge.png",
   AssetList.heavyAttackImg: "./assets/images/heavyAttack.png",
-  AssetList.hatImg: "./assets/images/hat.png"
 };
 
 class Loader extends ChangeNotifier {
