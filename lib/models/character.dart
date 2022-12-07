@@ -236,8 +236,14 @@ class StickMan extends Character {
   }
 
   @override
-  void setPosition(Rect bbox) {
-    bbox = bbox;
+  void setPosition(Rect newBbox) {
+    bbox = newBbox;
+  }
+
+  @override
+  Character duplicate() {
+    return StickMan(
+        bbox: bbox, speed: speed, facing: facing, framerate: framerate);
   }
 }
 
@@ -286,7 +292,7 @@ abstract class Character {
   void setAS(int mod);
   void setResistance(int mod);
   void setSpeed(int mod);
-  void setPosition(Rect bbox);
+  void setPosition(Rect newBbox);
   bool isGrounded();
   bool isBlocked();
   bool isAbove();
@@ -329,6 +335,8 @@ abstract class Character {
     }
     return framesList;
   }
+
+  Character duplicate();
 }
 
 class CharacterWidget extends StatelessWidget {
@@ -576,7 +584,13 @@ class StickMan2 extends Character {
   }
 
   @override
-  void setPosition(Rect bbox) {
-    bbox = bbox;
+  void setPosition(Rect newBbox) {
+    bbox = newBbox;
+  }
+
+  @override
+  Character duplicate() {
+    return StickMan2(
+        bbox: bbox, speed: speed, facing: facing, framerate: framerate);
   }
 }

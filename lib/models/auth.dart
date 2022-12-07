@@ -54,4 +54,8 @@ class Auth {
     var username = await _database.getUserName(currentUser!.uid);
     Player().username = username;
   }
+
+  void signout() {
+    _firebaseAuth.signOut();
+  }
 }

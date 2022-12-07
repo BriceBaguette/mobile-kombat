@@ -44,6 +44,5 @@ class Constant {
         Rect.fromLTWH(w / 4, h / 2, w / 20, w / 20 * gokuRatio);
     secondPlayerPosition =
         Rect.fromLTWH(w - w / 4, h / 2, w / 20, w / 20 * gokuRatio);
-    ;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/auth.dart';
 import 'package:mobile_kombat/models/character.dart';
@@ -117,8 +118,19 @@ class MainMenu extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    SizedBox(
+                        width: 150,
+                        height: 50,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red[900]),
+                            child: const Text('disconnect'),
+                            onPressed: () => {
+                                  Auth().signout(),
+                                  Navigator.of(context).popAndPushNamed('login')
+                                })),
                     Container(
-                      height: 275,
+                      height: 200,
                     ),
                     SizedBox(
                       width: 150,
@@ -241,17 +253,18 @@ class MainMenu extends StatelessWidget {
                                                                       AlertDialog(
                                                                         title: const Center(
                                                                             child:
-                                                                                Text("Select game mode")),
+                                                                                Text("Looking for opponent")),
                                                                         actions: [
                                                                           FutureBuilder(
-                                                                            future:
-                                                                                startGame(),
+                                                                            future: startGame().then((_) =>
+                                                                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                                                                  Navigator.pushNamed(context, 'gamestage');
+                                                                                })),
                                                                             builder:
                                                                                 (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                                                                              Navigator.pushNamed(context, 'gamestage');
-                                                                              return const CircularProgressIndicator();
+                                                                              return const Center(child: CircularProgressIndicator());
                                                                             },
-                                                                          )
+                                                                          ),
                                                                         ],
                                                                       )),
                                                         },
@@ -272,7 +285,10 @@ class MainMenu extends StatelessWidget {
     UserDb? opponentUser = await _rtDb.getOpponent(roomId, user!.uid);
     Character? opponentChar =
         await _rtDb.getOpponentCharacter(opponentUser!, user!.uid);
-
-    opponent = RealPlayer(username: "", character: opponentChar!);
+    opponent =
+        RealPlayer(username: opponentUser.userName, character: opponentChar!);
+    Stage().setOpponent(opponent);
+    Future.delayed(const Duration(seconds: 1));
+    return opponent;
   }
 }

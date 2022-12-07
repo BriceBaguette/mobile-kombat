@@ -16,12 +16,12 @@ class Database {
 
   final Loader _loader = Loader();
   void addUser(UserCredential cred, String nickname) {
-    List<int> _characterList = [];
-    _characterList.add(0);
+    List<int> characterList = [];
+    characterList.add(0);
     db
         .collection('users')
         .doc(cred.user!.uid)
-        .set({'ownedCharacter': _characterList, 'nickname': nickname});
+        .set({'ownedCharacter': characterList, 'nickname': nickname});
   }
 
   Future<List<Character>> getCharacterFromUser(String userUid) async {
@@ -51,7 +51,6 @@ class RealTimeDB {
   final _player = Player();
 
   Future<String> createRoom(userId) async {
-    CharacterDb character = CharacterDb.fromCharacter(_player.character);
     var jsonChar = jsonEncode(CharacterDb.fromCharacter(_player.character));
     await ref.set({
       "rooms": [
@@ -104,9 +103,9 @@ class RealTimeDB {
           return room.roomId;
         }
       }
-      return await createRoom(userId);
     }
-    return userId;
+    print("create room");
+    return await createRoom(userId);
   }
 
   updateData() {}
@@ -147,6 +146,7 @@ class RealTimeDB {
           '${string.substring(0, index + 2)}"${string.substring(index + 2, string.length)}';
       index = string.indexOf(RegExp(r'[A-Z][0-9]}', caseSensitive: false));
     }
+    string = string.replaceAll(',"{', ',{');
     return string;
   }
 
@@ -170,10 +170,12 @@ class RealTimeDB {
 
   Future<Character?> getOpponentCharacter(
       UserDb user, String currentUserId) async {
-    Character character = _loader.characterList[user.character.id];
+    Character character = _loader.characterList[user.character.id].duplicate();
     if (user.character.facing == 'LEFT') {
       character.setDirection('LEFT');
       character.setPosition(_constant.secondPlayerPosition);
+      print(_constant.firstPlayerPosition);
+      print(_constant.secondPlayerPosition);
     }
     return character;
   }
