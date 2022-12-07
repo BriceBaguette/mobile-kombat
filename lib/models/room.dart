@@ -1,4 +1,5 @@
 import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/loader.dart';
 
 class Room {
   String roomId = '';
@@ -40,10 +41,14 @@ class CharacterDb {
     return {'facing': facing, 'health': health, 'id': id, 'upSpeed': upSpeed};
   }
 
-  CharacterDb.fromCharacter(Character character) {
-    facing = character.facing;
+  CharacterDb.fromCharacter(Character character, {second = false}) {
+    if (!second) {
+      facing = 'LEFT';
+    } else {
+      facing = 'RIGHT';
+    }
     health = character.health;
-    id = 0;
+    id = Loader().getCharacterId(character);
     upSpeed = character.upSpeed;
   }
 }
