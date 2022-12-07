@@ -11,8 +11,11 @@ class LightDodge extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -24,8 +27,11 @@ class LightQuick extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -37,8 +43,11 @@ class LightAir extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -50,8 +59,11 @@ class LightStatic extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -63,8 +75,11 @@ class LightHorizontal extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -76,8 +91,11 @@ class LightFloor extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -89,8 +107,11 @@ class HeavyDodge extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -102,8 +123,11 @@ class HeavyQuick extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -115,8 +139,11 @@ class HeavyAir extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -128,8 +155,11 @@ class HeavyStatic extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -141,8 +171,11 @@ class HeavyHorizontal extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -154,8 +187,11 @@ class HeavyFloor extends Ability {
 
     images = [Loader().imgMap[AssetList.swordImg]!];
 
-    bboxHeightRatio = 1.0;
-    bboxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1.0;
+    imageBoxWidthRatio = 1.0;
+
+    hitBoxLeftOffset = 0;
+    hitBoxTopOffset = 0;
   }
 }
 
@@ -166,8 +202,11 @@ abstract class Ability {
 
   late List<ui.Image> images;
 
-  late double bboxHeightRatio;
-  late double bboxWidthRatio;
+  late double imageBoxHeightRatio;
+  late double imageBoxWidthRatio;
+
+  late double hitBoxLeftOffset;
+  late double hitBoxTopOffset;
 
   Rect range(Rect characterHitBox, String facing) {
     var left = characterHitBox.left;
