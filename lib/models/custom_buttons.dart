@@ -37,7 +37,7 @@ class JumpButton extends Button {
     if (_scene.characters[0].isGrounded() &&
         !_scene.characters[0].usingAbility &&
         !_scene.characters[0].isGettingDamage) {
-      _scene.characters[0].setJumpSpeed(-6);
+      _scene.characters[0].jump(-6);
     }
   }
 
@@ -110,14 +110,12 @@ class FloorButton extends Button {
   @override
   void onTap() {
     if (_scene.characters[0].isGrounded() && _scene.characters[0].isMoving) {
-      _scene.characters[0].isFloor = true;
+      _scene.characters[0].attack(dodge: true, floor: true);
     }
   }
 
   @override
-  void onTapCancel() {
-    _scene.characters[0].isFloor = false;
-  }
+  void onTapCancel() {}
 }
 
 abstract class Button {

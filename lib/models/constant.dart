@@ -65,7 +65,7 @@ class Constant {
         (729 / environmentOriginalWidth) * w,
         (430 / environmentOriginalHeight) * h,
         (412 / environmentOriginalWidth) * w,
-        1);
+        (45 / environmentOriginalHeight) * h);
 
     lightHeight = w / 20 * gokuRatio;
     lightWidth = (345 / 923) * lightHeight;

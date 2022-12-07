@@ -130,11 +130,12 @@ abstract class Character {
   late int maxHealth;
   late double _speed;
   double _upSpeed = 0;
+  final double _gravity = 0.1;
 
   late String _facing;
   bool isMoving = false;
-  bool isFloor = false;
   bool usingAbility = false;
+  bool _usingStaticAbility = false;
   bool isInvincible = false;
   bool isGettingDamage = false;
 
@@ -168,52 +169,20 @@ abstract class Character {
     _facing = direction;
   }
 
-  void setMovement(bool move) {
-    isMoving = move;
-
-    if (isGrounded()) {
-      _actionImagesOffset = 0;
-      _actionImageFramesOffset = 0;
-      if (move) {
-        _setAction(_movingImages, _movingDuration);
-      } else {
-        _setAction(_staticImages, _staticDuration);
-      }
-      image = _actionImages[_actionImagesOffset];
-    }
-  }
-
-  void setJumpSpeed(double value) {
-    _upSpeed = value;
-
-    _actionImagesOffset = 0;
-    _actionImageFramesOffset = 0;
-    if (value == 0.0) {
-      if (isMoving) {
-        _setAction(_movingImages, _movingDuration);
-      } else {
-        _setAction(_staticImages, _staticDuration);
-      }
-    } else {
-      _setAction(_jumpingImages, _jumpingDuration);
-    }
-    image = _actionImages[_actionImagesOffset];
-  }
-
   void update() {
     bool actionLoopBack = _updateImage();
+    image = _actionImages[_actionImagesOffset];
     if (actionLoopBack && usingAbility) {
       usingAbility = false;
-      _setAction(_staticImages, _staticDuration);
+      _usingStaticAbility = false;
+      var move = isMoving;
+      setMovement(move);
     }
     if (actionLoopBack && isGettingDamage) {
-      print(2);
       isGettingDamage = false;
       isMoving = false;
-      _speed = 0;
       _setAction(_staticImages, _staticDuration);
     }
-    image = _actionImages[_actionImagesOffset];
 
     move();
 
@@ -228,17 +197,23 @@ abstract class Character {
 
   void move() {
     if (isGrounded() && _upSpeed > 0.0 && !isGettingDamage) {
-      setJumpSpeed(0.0);
+      _upSpeed = 0;
+      if (!usingAbility) {
+        var move = isMoving;
+        setMovement(move);
+      }
     }
-    if (!isGrounded() && !usingAbility && !isGettingDamage) {
-      setJumpSpeed(_upSpeed + 0.1);
+    if (!isGrounded() && !_usingStaticAbility && !isGettingDamage) {
+      if (_upSpeed == 0 && !usingAbility) {
+        jump(_gravity);
+      }
+      _upSpeed += _gravity;
     }
     _bbox = Rect.fromLTWH(
         _bbox.left, _bbox.top + _upSpeed, _bbox.width, _bbox.height);
-    if (isMoving && !_isBlocked()) {
+    if (isMoving && !_isBlocked() && !_usingStaticAbility) {
       var speed = _speed;
       if (isGettingDamage) {
-        print(1);
         speed = -recoilSpeed;
       }
       switch (_facing) {
@@ -255,6 +230,38 @@ abstract class Character {
       }
     }
     return;
+  }
+
+  void jump(double speed) {
+    _upSpeed = speed;
+
+    _actionImagesOffset = 0;
+    _actionImageFramesOffset = 0;
+    if (speed == 0.0) {
+      if (isMoving) {
+        _setAction(_movingImages, _movingDuration);
+      } else {
+        _setAction(_staticImages, _staticDuration);
+      }
+    } else {
+      _setAction(_jumpingImages, _jumpingDuration);
+    }
+  }
+
+  void setMovement(bool move) {
+    isMoving = move;
+
+    if (isGrounded()) {
+      _actionImagesOffset = 0;
+      _actionImageFramesOffset = 0;
+      if (move) {
+        _setAction(_movingImages, _movingDuration);
+      } else {
+        _setAction(_staticImages, _staticDuration);
+      }
+    } else {
+      _setAction(_jumpingImages, _jumpingDuration);
+    }
   }
 
   bool _isBlocked() {
@@ -291,16 +298,40 @@ abstract class Character {
     return _bbox;
   }
 
-  void attack({bool quick = false, bool dodge = false}) {
+  void attack({bool quick = false, bool floor = false, bool dodge = false}) {
     if (!usingAbility && !isGettingDamage) {
       usingAbility = true;
-      _upSpeed = 0;
       isMoving = false;
       _actionImagesOffset = 0;
       _actionImageFramesOffset = 0;
-      _abilityInProgress = _determineAttack(quick, dodge);
+      _abilityInProgress = _determineAttack(quick, floor, dodge);
       _setAction(_abilityInProgress.images, _abilityInProgress.duration);
     }
+  }
+
+  Ability _determineAttack(bool quick, bool floor, bool dodge) {
+    if (dodge) {
+      _usingStaticAbility = false;
+      return _dodge;
+    }
+    if (quick) {
+      _usingStaticAbility = true;
+      return _quickAttack;
+    }
+    if (!isGrounded()) {
+      _usingStaticAbility = false;
+      return _airAttack;
+    }
+    if (floor) {
+      _usingStaticAbility = true;
+      return _floorAttack;
+    }
+    if (isMoving) {
+      _usingStaticAbility = false;
+      return _horizontalAttack;
+    }
+    _usingStaticAbility = true;
+    return _staticAttack;
   }
 
   void _setAction(List<ui.Image> images, double duration) {
@@ -308,25 +339,7 @@ abstract class Character {
     _actionFramesPerImage =
         ((duration / (_framerate.toDouble()) / _actionImages.length.toDouble()))
             .round();
-  }
-
-  Ability _determineAttack(bool quick, bool dodge) {
-    if (dodge) {
-      return _dodge;
-    }
-    if (quick) {
-      return _quickAttack;
-    }
-    if (!isGrounded()) {
-      return _airAttack;
-    }
-    if (isFloor) {
-      return _floorAttack;
-    }
-    if (isMoving) {
-      return _horizontalAttack;
-    }
-    return _staticAttack;
+    image = _actionImages[_actionImagesOffset];
   }
 
   bool isGrounded() {
@@ -367,7 +380,6 @@ abstract class Character {
       _actionImagesOffset = 0;
       _actionImageFramesOffset = 0;
       _setAction(_getDamageImages, _getDamageDuration);
-      print(_getDamageDuration);
       usingAbility = false;
       isMoving = true;
       _upSpeed = 0;

@@ -5,7 +5,7 @@ import 'loader.dart';
 
 class LightDodge extends Ability {
   LightDodge() {
-    power = 10;
+    power = 0;
     duration = 500; //millisec
     recoilDistance = 0;
 
@@ -83,7 +83,7 @@ class LightFloor extends Ability {
 
 class HeavyDodge extends Ability {
   HeavyDodge() {
-    power = 10;
+    power = 0;
     duration = 500; //millisec
     recoilDistance = 0;
 
