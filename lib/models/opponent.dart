@@ -83,6 +83,13 @@ class SmartBot extends Opponent {
   }
 }
 
+class RealPlayer extends Opponent {
+  String username;
+  RealPlayer({required this.username, required super.character});
+  @override
+  void getActions() {}
+}
+
 abstract class Opponent {
   Character character;
   //Cosmetics cosmetics;

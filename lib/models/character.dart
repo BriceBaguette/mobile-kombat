@@ -234,6 +234,11 @@ class StickMan extends Character {
     }
     return isAbove;
   }
+
+  @override
+  void setPosition(Rect bbox) {
+    bbox = bbox;
+  }
 }
 
 abstract class Character {
@@ -281,7 +286,7 @@ abstract class Character {
   void setAS(int mod);
   void setResistance(int mod);
   void setSpeed(int mod);
-
+  void setPosition(Rect bbox);
   bool isGrounded();
   bool isBlocked();
   bool isAbove();
@@ -568,5 +573,10 @@ class StickMan2 extends Character {
       }
     }
     return isAbove;
+  }
+
+  @override
+  void setPosition(Rect bbox) {
+    bbox = bbox;
   }
 }

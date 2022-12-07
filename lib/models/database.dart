@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/models/player.dart';
 import 'package:mobile_kombat/models/room.dart';
@@ -42,6 +43,7 @@ class Database {
 }
 
 class RealTimeDB {
+  final Constant _constant = Constant();
   final db = FirebaseDatabase.instance;
   final Loader _loader = Loader();
   DatabaseReference ref = FirebaseDatabase.instance.ref();
@@ -83,25 +85,23 @@ class RealTimeDB {
           var index = rooms.indexOf(room);
           DatabaseReference refRoom =
               FirebaseDatabase.instance.ref('/rooms/$index');
-          final snapshot = await refRoom.get();
-          if (snapshot.exists) {
-            var jsonChar =
-                jsonEncode(CharacterDb.fromCharacter(_player.character));
-            refRoom.update({
-              'users': [
-                {
-                  "userId": room.users[0].userId,
-                  "userName": room.users[0].userName,
-                  "character": jsonEncode(room.users[0].character),
-                },
-                {
-                  "userId": userId,
-                  "userName": _player.username,
-                  "character": jsonChar,
-                }
-              ]
-            });
-          }
+          var jsonChar = jsonEncode(
+              CharacterDb.fromCharacter(_player.character, second: true));
+          refRoom.update({
+            'users': [
+              {
+                "userId": room.users[0].userId,
+                "userName": room.users[0].userName,
+                "character": jsonEncode(room.users[0].character),
+              },
+              {
+                "userId": userId,
+                "userName": _player.username,
+                "character": jsonChar,
+              }
+            ]
+          });
+          return room.roomId;
         }
       }
       return await createRoom(userId);
@@ -148,5 +148,47 @@ class RealTimeDB {
       index = string.indexOf(RegExp(r'[A-Z][0-9]}', caseSensitive: false));
     }
     return string;
+  }
+
+  Future<Room?> waitOpponent(String roomId) async {
+    final snapshot = await ref.get();
+    if (snapshot.exists) {
+      String jsonString = snapshotToJsonString(snapshot.value.toString());
+      Map<String, dynamic> json =
+          jsonDecode(jsonString) as Map<String, dynamic>;
+      for (var room in json['rooms']) {
+        Room newRoom = Room.fromJson(room);
+        if (roomId == newRoom.roomId) {
+          if (newRoom.users.length == 2) {
+            return newRoom;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  Future<Character?> getOpponentCharacter(
+      UserDb user, String currentUserId) async {
+    Character character = _loader.characterList[user.character.id];
+    if (user.character.facing == 'LEFT') {
+      character.setDirection('LEFT');
+      character.setPosition(_constant.secondPlayerPosition);
+    }
+    return character;
+  }
+
+  Future<UserDb?> getOpponent(String roomId, String currentUserId) async {
+    Room? room = await waitOpponent(roomId);
+    while (room == null) {
+      Future.delayed(const Duration(milliseconds: 500));
+      room = await waitOpponent(roomId);
+    }
+    for (var user in room.users) {
+      if (user.userId != currentUserId) {
+        return user;
+      }
+    }
+    return null;
   }
 }

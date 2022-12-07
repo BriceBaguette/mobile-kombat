@@ -19,7 +19,8 @@ enum AssetList {
   quickAttackImg,
   dodgeImg,
   heavyAttackImg,
-  reversedCharacterImg
+  reversedCharacterImg,
+  hatImg,
 }
 
 const _sceneAssets = {
@@ -33,6 +34,7 @@ const _sceneAssets = {
   AssetList.quickAttackImg: "./assets/images/quickAttack.png",
   AssetList.dodgeImg: "./assets/images/dodge.png",
   AssetList.heavyAttackImg: "./assets/images/heavyAttack.png",
+  AssetList.hatImg: "./assets/images/hat.png"
 };
 
 class Loader extends ChangeNotifier {
@@ -68,13 +70,16 @@ class Loader extends ChangeNotifier {
       imgMap[key] = img;
     }
     characterList.add(StickMan(
-        bbox: Rect.fromLTWH(_constant.w / 4, _constant.h / 2, _constant.w / 20,
-            _constant.w / 20 * _constant.gokuRatio),
+        bbox: _constant.firstPlayerPosition,
         speed: 3,
         facing: 'RIGHT',
         framerate: _constant.framerate));
     Player().setCharacter(characterList[0]);
     _loading = false;
     notifyListeners();
+  }
+
+  int getCharacterId(Character character) {
+    return characterList.indexOf(character);
   }
 }

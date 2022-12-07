@@ -6,6 +6,7 @@ import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/database.dart';
 import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/models/player.dart';
+import 'package:mobile_kombat/models/room.dart';
 import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:mobile_kombat/views/inventory.dart';
 import 'package:mobile_kombat/views/shop.dart';
@@ -22,11 +23,9 @@ class MainMenu extends StatelessWidget {
   final _database = Database();
   final _rtDb = RealTimeDB();
   final _player = Player();
-
+  late Opponent opponent;
   @override
   Widget build(BuildContext context) {
-    Player player = Player();
-    Opponent opponent;
     return Consumer<ControllerInventory>(
         builder: (_, data, __) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -232,37 +231,29 @@ class MainMenu extends StatelessWidget {
                                                                 Colors
                                                                     .red[900]),
                                                     onPressed: () => {
-                                                          opponent = DummyBot(
-                                                              character: StickMan(
-                                                                  bbox: Rect.fromLTWH(
-                                                                      Constant()
-                                                                              .w -
-                                                                          Constant().w /
-                                                                              4,
-                                                                      Constant()
-                                                                              .h /
-                                                                          2,
-                                                                      Constant()
-                                                                              .w /
-                                                                          20,
-                                                                      Constant()
-                                                                              .w /
-                                                                          20 *
-                                                                          Constant()
-                                                                              .gokuRatio),
-                                                                  speed: 3,
-                                                                  facing:
-                                                                      'LEFT',
-                                                                  framerate:
-                                                                      Constant()
-                                                                          .framerate)),
-                                                          Stage().setOpponent(
-                                                              opponent),
                                                           Navigator.of(ctx)
                                                               .pop(),
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              'gamestage')
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                          ctx) =>
+                                                                      AlertDialog(
+                                                                        title: const Center(
+                                                                            child:
+                                                                                Text("Select game mode")),
+                                                                        actions: [
+                                                                          FutureBuilder(
+                                                                            future:
+                                                                                startGame(),
+                                                                            builder:
+                                                                                (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                                                                              Navigator.pushNamed(context, 'gamestage');
+                                                                              return const CircularProgressIndicator();
+                                                                            },
+                                                                          )
+                                                                        ],
+                                                                      )),
                                                         },
                                                     child: const Text(
                                                         "Play online")))
@@ -274,5 +265,14 @@ class MainMenu extends StatelessWidget {
                 ),
               ],
             ));
+  }
+
+  Future startGame() async {
+    String roomId = await _rtDb.joinRoom(user!.uid);
+    UserDb? opponentUser = await _rtDb.getOpponent(roomId, user!.uid);
+    Character? opponentChar =
+        await _rtDb.getOpponentCharacter(opponentUser!, user!.uid);
+
+    opponent = RealPlayer(username: "", character: opponentChar!);
   }
 }
