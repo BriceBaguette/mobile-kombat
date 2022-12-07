@@ -14,12 +14,20 @@ class MovingButton extends Button {
 
   @override
   void onTap() {
-    _scene.move(_scene.characters[0], dir, true);
+    var character = _scene.characters[0];
+    if (!character.usingAbility && !character.isGettingDamage) {
+      character.setDirection(dir);
+      character.setMovement(true);
+    }
   }
 
   @override
   void onTapCancel() {
-    _scene.move(_scene.characters[0], dir, false);
+    var character = _scene.characters[0];
+    if (!character.usingAbility && !character.isGettingDamage) {
+      character.setDirection(dir);
+      character.setMovement(false);
+    }
   }
 }
 
@@ -34,8 +42,10 @@ class JumpButton extends Button {
 
   @override
   void onTap() {
-    if (_scene.characters[0].isGrounded()) {
-      _scene.characters[0].setJumpSpeed(-5);
+    if (!_scene.characters[0].hasJumped &&
+        !_scene.characters[0].usingAbility &&
+        !_scene.characters[0].isGettingDamage) {
+      _scene.characters[0].jump(-6);
     }
   }
 
@@ -89,7 +99,9 @@ class DodgeButton extends Button {
   DodgeButton({required this.img, required this.bbox});
   @override
   void onTap() {
-    _scene.characters[0].attack(dodge: true);
+    if (_scene.characters[0].dodgeRemainingCooldown <= 0) {
+      _scene.characters[0].attack(dodge: true);
+    }
   }
 
   @override
@@ -108,14 +120,12 @@ class FloorButton extends Button {
   @override
   void onTap() {
     if (_scene.characters[0].isGrounded() && _scene.characters[0].isMoving) {
-      _scene.characters[0].isFloor = true;
+      _scene.characters[0].attack(dodge: true, floor: true);
     }
   }
 
   @override
-  void onTapCancel() {
-    _scene.characters[0].isFloor = false;
-  }
+  void onTapCancel() {}
 }
 
 abstract class Button {
