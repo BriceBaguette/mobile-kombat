@@ -128,24 +128,25 @@ class RealTimeDB {
           '${string.substring(0, index + 1)}"${string.substring(index + 1, string.length)}';
       index = string.indexOf(RegExp(r'[A-Z],', caseSensitive: false));
     }
-    index = string.indexOf(RegExp(r':[0-9][A-Z]', caseSensitive: false));
+    index = string.indexOf(RegExp(r':[0-9]', caseSensitive: false));
     while (index > -1) {
       string =
           '${string.substring(0, index + 1)}"${string.substring(index + 1, string.length)}';
-      index = string.indexOf(RegExp(r':[0-9][A-Z]', caseSensitive: false));
+      index = string.indexOf(RegExp(r':[0-9]', caseSensitive: false));
     }
-    index = string.indexOf(RegExp(r'[A-Z][0-9],', caseSensitive: false));
+    index = string.indexOf(RegExp(r'[0-9],', caseSensitive: false));
     while (index > -1) {
       string =
-          '${string.substring(0, index + 2)}"${string.substring(index + 2, string.length)}';
-      index = string.indexOf(RegExp(r'[A-Z][0-9],', caseSensitive: false));
+          '${string.substring(0, index + 1)}"${string.substring(index + 1, string.length)}';
+      index = string.indexOf(RegExp(r'[0-9],', caseSensitive: false));
     }
-    index = string.indexOf(RegExp(r'[A-Z][0-9]}', caseSensitive: false));
+    index = string.indexOf(RegExp(r'[0-9]}', caseSensitive: false));
     while (index > -1) {
       string =
-          '${string.substring(0, index + 2)}"${string.substring(index + 2, string.length)}';
-      index = string.indexOf(RegExp(r'[A-Z][0-9]}', caseSensitive: false));
+          '${string.substring(0, index + 1)}"${string.substring(index + 1, string.length)}';
+      index = string.indexOf(RegExp(r'[0-9]}', caseSensitive: false));
     }
+
     string = string.replaceAll(',"{', ',{');
     return string;
   }

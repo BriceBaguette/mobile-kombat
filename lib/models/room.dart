@@ -32,9 +32,9 @@ class CharacterDb {
 
   CharacterDb.fromJson(json) {
     facing = json['facing'];
-    health = json['health'];
-    id = json['id'];
-    upSpeed = json['upSpeed'];
+    health = int.parse(json['health']);
+    id = int.parse(json['id']);
+    upSpeed = double.parse(json['upSpeed']);
   }
 
   Map<String, dynamic> toJson() {
