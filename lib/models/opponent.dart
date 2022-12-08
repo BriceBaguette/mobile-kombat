@@ -34,7 +34,7 @@ class SmartBot extends Opponent {
 
   void makeJump() {
     if (random.nextDouble() < 0.005 && character.isGrounded()) {
-      character.setJumpSpeed(-5);
+      character.jump(-6);
     }
   }
 
@@ -48,15 +48,15 @@ class SmartBot extends Opponent {
     if (moveTimer <= 0) {
       if (random.nextDouble() < 0.95) {
         character.setMovement(true);
-        if (character.bbox.right < playerBbox.left &&
-            character.facing == 'RIGHT') {
+        if (character.getHitBox().right < playerBbox.left &&
+            character.getFacing() == 'RIGHT') {
           if (random.nextDouble() < 0.95) {
             character.setDirection('RIGHT');
           } else {
             character.setDirection('LEFT');
           }
-        } else if (character.bbox.left > playerBbox.right &&
-            character.facing == 'LEFT') {
+        } else if (character.getHitBox().left > playerBbox.right &&
+            character.getFacing() == 'LEFT') {
           if (random.nextDouble() < 0.95) {
             character.setDirection('LEFT');
           } else {
@@ -79,7 +79,7 @@ class SmartBot extends Opponent {
   }
 
   double getCharacterDistance(playerBbox) {
-    return (character.bbox.center - playerBbox.center).distance;
+    return (character.getHitBox().center - playerBbox.center).distance;
   }
 }
 
