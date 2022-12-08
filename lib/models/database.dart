@@ -261,9 +261,24 @@ class RealTimeDB {
       }
       Stage().opponent!.character.setMovement(move);
     });
+    DatabaseReference listenJump =
+        FirebaseDatabase.instance.ref('${room.roomId}/$id/character/isMoving');
+    listenJump.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      Stage()
+          .opponent!
+          .character
+          .setJumpSpeed(double.parse(snapshot.value as String));
+    });
   }
 
   setMovement(bool move) async {
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
+    ref.update({"isMoving": move.toString()});
+  }
+
+  setJump(bool move) async {
     DatabaseReference ref = FirebaseDatabase.instance
         .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
     ref.update({"isMoving": move.toString()});
