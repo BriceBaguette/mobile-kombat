@@ -29,12 +29,12 @@ class DefaultFirebaseOptions {
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
         throw UnsupportedError(
@@ -50,7 +50,7 @@ class DefaultFirebaseOptions {
     projectId: 'mobile-kombat',
     authDomain: 'mobile-kombat.firebaseapp.com',
     databaseURL:
-    'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
+        'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'mobile-kombat.appspot.com',
     measurementId: 'G-N83F1Q2QV6',
   );
@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '568278540801',
     projectId: 'mobile-kombat',
     databaseURL:
-    'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
+        'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'mobile-kombat.appspot.com',
   );
 
@@ -71,10 +71,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '568278540801',
     projectId: 'mobile-kombat',
     databaseURL:
-    'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
+        'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'mobile-kombat.appspot.com',
     iosClientId:
-    '568278540801-dnu9don3ji9401obv33uuqvcnm4v1dvc.apps.googleusercontent.com',
+        '568278540801-dnu9don3ji9401obv33uuqvcnm4v1dvc.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 
@@ -84,10 +84,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '568278540801',
     projectId: 'mobile-kombat',
     databaseURL:
-    'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
+        'https://mobile-kombat-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'mobile-kombat.appspot.com',
     iosClientId:
-    '568278540801-dnu9don3ji9401obv33uuqvcnm4v1dvc.apps.googleusercontent.com',
+        '568278540801-dnu9don3ji9401obv33uuqvcnm4v1dvc.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 }

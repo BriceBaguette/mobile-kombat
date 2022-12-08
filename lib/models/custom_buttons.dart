@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile_kombat/models/database.dart';
 import "dart:ui" as ui;
 import 'game_stage.dart';
 
@@ -14,12 +15,25 @@ class MovingButton extends Button {
 
   @override
   void onTap() {
-    _scene.move(_scene.characters[0], dir, true);
+    var character = _scene.characters[0];
+    if (!character.usingAbility && !character.isGettingDamage) {
+      character.setDirection(dir);
+      character.setMovement(true);
+      _rtDb.setDirection(dir);
+      _rtDb.setMovement(true);
+    }
+
   }
 
   @override
   void onTapCancel() {
-    _scene.move(_scene.characters[0], dir, false);
+    
+    var character = _scene.characters[0];
+    if (!character.usingAbility && !character.isGettingDamage) {
+      character.setDirection(dir);
+      character.setMovement(false);
+      _rtDb.setMovement(false);
+    }
   }
 }
 
@@ -34,8 +48,12 @@ class JumpButton extends Button {
 
   @override
   void onTap() {
-    if (_scene.characters[0].isGrounded()) {
-      _scene.characters[0].setJumpSpeed(-5);
+      
+    if (!_scene.characters[0].hasJumped &&
+        !_scene.characters[0].usingAbility &&
+        !_scene.characters[0].isGettingDamage) {
+      _scene.characters[0].jump(-6);
+      _rtDb.setJump(-6);
     }
   }
 
@@ -73,6 +91,7 @@ class QuickAttackButton extends Button {
   @override
   void onTap() {
     _scene.characters[0].attack(quick: true);
+    _rtDb.setAttack('quick');
   }
 
   @override
@@ -89,7 +108,12 @@ class DodgeButton extends Button {
   DodgeButton({required this.img, required this.bbox});
   @override
   void onTap() {
-    _scene.characters[0].attack(dodge: true);
+
+    if (_scene.characters[0].dodgeRemainingCooldown <= 0) {
+      _scene.characters[0].attack(dodge: true);
+      _rtDb.setAttack('dodge');
+    }
+
   }
 
   @override
@@ -108,17 +132,17 @@ class FloorButton extends Button {
   @override
   void onTap() {
     if (_scene.characters[0].isGrounded() && _scene.characters[0].isMoving) {
-      _scene.characters[0].isFloor = true;
+      _scene.characters[0].attack(dodge: true, floor: true);
+      _rtDb.setAttack('floor');
     }
   }
 
   @override
-  void onTapCancel() {
-    _scene.characters[0].isFloor = false;
-  }
+  void onTapCancel() {}
 }
 
 abstract class Button {
+  final RealTimeDB _rtDb = RealTimeDB();
   get img => null;
 
   get bbox => null;

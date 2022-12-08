@@ -25,8 +25,6 @@ Future main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (BuildContext context) => Loader()),

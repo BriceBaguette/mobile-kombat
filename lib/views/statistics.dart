@@ -27,17 +27,7 @@ class Statistics extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red[900],
-        toolbarHeight: 40,
         title: const Text("Statistics"),
-        leading: Row(children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.of(context).popAndPushNamed('menu');
-            },
-            tooltip: 'Statistics',
-          ),
-        ]),
       ),
       body: Center(
         child: Row(
