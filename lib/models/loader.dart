@@ -107,9 +107,12 @@ class Loader extends ChangeNotifier {
       var img = await _loadImage(_sceneAssets[key]!);
       imgMap[key] = img;
     }
-    characterList.add(StickMan(
-        bbox: Rect.fromLTWH(_constant.w / 4, _constant.h / 2, _constant.w / 20,
-            _constant.w / 20 * _constant.gokuRatio),
+    characterList.add(Heavy(
+        bbox: Rect.fromLTWH(
+            _constant.leftCharacterLeft,
+            _constant.leftCharacterTop,
+            _constant.heavyWidth,
+            _constant.heavyHeight),
         speed: 3,
         facing: 'RIGHT',
         framerate: _constant.framerate));
