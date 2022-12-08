@@ -10,7 +10,6 @@ import 'package:mobile_kombat/models/player.dart';
 import 'package:mobile_kombat/models/room.dart';
 import 'package:mobile_kombat/views/canvas.dart';
 
-
 import 'custom_buttons.dart';
 import 'ground.dart';
 import 'loader.dart';
@@ -26,7 +25,7 @@ class Stage extends ChangeNotifier {
   var _ready = false;
   late Timer gameTimer;
   late int displayTime;
-  late Room room;
+  Room? room;
   bool gameOver = false;
   bool get ready => _ready && !_loading;
 

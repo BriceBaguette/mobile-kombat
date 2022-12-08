@@ -63,7 +63,7 @@ class ScenePainter extends CustomPainter {
 
   void paintText(Canvas canvas, Size size) {
     const textStyle = TextStyle(
-      color: Colors.black,
+      color: Colors.white,
       fontSize: 30,
     );
     TextSpan textSpan;

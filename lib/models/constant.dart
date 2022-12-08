@@ -71,7 +71,7 @@ class Constant {
         (412 / environmentOriginalWidth) * w,
         (45 / environmentOriginalHeight) * h);
 
-    leftCharacterLeft = leftPlatformBox.left + leftPlatformBox.width / 2;
+    leftCharacterLeft = leftPlatformBox.left;
     leftCharacterTop = h / 2;
     rightCharacterLeft = rightPlatformBox.left + rightPlatformBox.width / 2;
     rightCharacterTop = h / 2;
@@ -94,10 +94,10 @@ class Constant {
         Rect.fromLTWH(w - w / 40 - 2 * w / 15, h - h / 9, w / 20, w / 20);
     quickAttackButtonPosition =
         Rect.fromLTWH(w - w / 40 - 3 * w / 15, h - h / 9, w / 20, w / 20);
-    firstPlayerPosition =
-        Rect.fromLTWH(w / 4, h / 2, w / 20, w / 20 * gokuRatio);
-    secondPlayerPosition =
-        Rect.fromLTWH(w - w / 4, h / 2, w / 20, w / 20 * gokuRatio);
+    firstPlayerPosition = Rect.fromLTWH(
+        leftCharacterLeft, leftCharacterTop, w / 20, w / 20 * gokuRatio);
+    secondPlayerPosition = Rect.fromLTWH(
+        rightCharacterLeft, rightCharacterTop, w / 20, w / 20 * gokuRatio);
 
     healthBarLeft = w / 40;
     healthBarTop = h / 9;

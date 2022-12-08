@@ -161,6 +161,8 @@ class MainMenu extends StatelessWidget {
                                                         _player.character
                                                             .setPosition(Constant()
                                                                 .firstPlayerPosition),
+                                                        _player.character
+                                                            .setMovement(false),
                                                         opponent = DummyBot(
                                                             character: StickMan(
                                                                 bbox: Constant()
@@ -191,6 +193,8 @@ class MainMenu extends StatelessWidget {
                                                         _player.character
                                                             .setPosition(Constant()
                                                                 .firstPlayerPosition),
+                                                        _player.character
+                                                            .setMovement(false),
                                                         opponent = SmartBot(
                                                             character: StickMan(
                                                                 bbox: Constant()

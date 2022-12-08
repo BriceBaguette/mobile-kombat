@@ -184,13 +184,15 @@ class RealTimeDB {
     if (user.first == false) {
       character.setDirection('LEFT');
       character.setPosition(_constant.secondPlayerPosition);
-      Player().character.setDirection('RIGHT');
-      Player().character.setPosition(_constant.firstPlayerPosition);
+      _player.character.setDirection('RIGHT');
+      _player.character.setMovement(false);
+      _player.character.setPosition(_constant.firstPlayerPosition);
     } else {
       character.setDirection('RIGHT');
       character.setPosition(_constant.firstPlayerPosition);
-      Player().character.setDirection('LEFT');
-      Player().character.setPosition(_constant.secondPlayerPosition);
+      _player.character.setDirection('LEFT');
+      _player.character.setMovement(false);
+      _player.character.setPosition(_constant.secondPlayerPosition);
     }
     return character;
   }
@@ -289,28 +291,36 @@ class RealTimeDB {
   }
 
   setMovement(bool move) async {
-    DatabaseReference ref = FirebaseDatabase.instance
-        .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
-    ref.update({"isMoving": move.toString()});
+    if (Stage().room != null) {
+      DatabaseReference ref = FirebaseDatabase.instance
+          .ref('${Stage().room!.roomId}/${Auth().currentUser!.uid}/character');
+      ref.update({"isMoving": move.toString()});
+    }
   }
 
   setJump(int jump) async {
-    DatabaseReference ref = FirebaseDatabase.instance
-        .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
-    ref.update({"upSpeed": jump.toString()});
+    if (Stage().room != null) {
+      DatabaseReference ref = FirebaseDatabase.instance
+          .ref('${Stage().room!.roomId}/${Auth().currentUser!.uid}/character');
+      ref.update({"upSpeed": jump.toString()});
+    }
   }
 
   setDirection(String facing) async {
-    DatabaseReference ref = FirebaseDatabase.instance
-        .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
-    ref.update({"facing": facing});
+    if (Stage().room != null) {
+      DatabaseReference ref = FirebaseDatabase.instance
+          .ref('${Stage().room!.roomId}/${Auth().currentUser!.uid}/character');
+      ref.update({"facing": facing});
+    }
   }
 
   setAttack(String attack) async {
-    DatabaseReference ref = FirebaseDatabase.instance
-        .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
-    ref.update({"attack": attack});
-    Future.delayed(const Duration(milliseconds: 10));
-    ref.update({"attack": ''});
+    if (Stage().room != null) {
+      DatabaseReference ref = FirebaseDatabase.instance
+          .ref('${Stage().room!.roomId}/${Auth().currentUser!.uid}/character');
+      ref.update({"attack": attack});
+      Future.delayed(const Duration(milliseconds: 10));
+      ref.update({"attack": ''});
+    }
   }
 }
