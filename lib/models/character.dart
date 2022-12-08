@@ -47,6 +47,12 @@ class StickMan extends Character {
     _horizontalAttack = LightHorizontal();
     _floorAttack = LightFloor();
   }
+
+  @override
+  StickMan duplicate() {
+    return StickMan(
+        bbox: _bbox, framerate: _framerate, facing: _facing, speed: _speed);
+  }
 }
 
 class Light extends Character {
@@ -101,6 +107,12 @@ class Light extends Character {
     _horizontalAttack = LightHorizontal();
     _floorAttack = LightFloor();
   }
+
+  @override
+  Light duplicate() {
+    return Light(
+        bbox: _bbox, framerate: _framerate, facing: _facing, speed: _speed);
+  }
 }
 
 class Heavy extends Character {
@@ -153,6 +165,12 @@ class Heavy extends Character {
     _staticAttack = HeavyStatic();
     _horizontalAttack = HeavyHorizontal();
     _floorAttack = HeavyFloor();
+  }
+
+  @override
+  Heavy duplicate() {
+    return Heavy(
+        bbox: _bbox, framerate: _framerate, facing: _facing, speed: _speed);
   }
 }
 
@@ -243,6 +261,10 @@ abstract class Character {
 
   String getName() {
     return _name;
+  }
+
+  void setJumpSpeed(double jumpSpeed) {
+    _upSpeed = jumpSpeed;
   }
 
   void setStrength(int mod) {
@@ -520,6 +542,12 @@ abstract class Character {
   int abilityDamage() => _abilityInProgress.power + _powerModificator;
 
   int abilityRecoil() => _abilityInProgress.recoilDistance;
+
+  void setPosition(Rect position) {
+    _bbox = position;
+  }
+
+  Character duplicate();
 }
 
 class CharacterWidget extends StatelessWidget {
