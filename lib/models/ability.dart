@@ -5,198 +5,204 @@ import 'loader.dart';
 
 class LightDodge extends Ability {
   LightDodge() {
-    power = 0;
     duration = 500; //millisec
     recoilDistance = 0;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.lightDodgeAbility_1]!];
+    powerPerImage = [0];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 class LightQuick extends Ability {
   LightQuick() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.lightQuickAbility_1]!];
+    powerPerImage = [10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 class LightAir extends Ability {
   LightAir() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.lightAirAbility_1]!];
+    powerPerImage = [10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 class LightStatic extends Ability {
   LightStatic() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.lightStaticAbility_1]!];
+    powerPerImage = [10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 class LightHorizontal extends Ability {
   LightHorizontal() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [
+      Loader().imgMap[AssetList.lightHorizontalAbility_1]!,
+      Loader().imgMap[AssetList.lightHorizontalAbility_2]!
+    ];
+    powerPerImage = [0, 10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0, 0];
+    hitBoxTopOffset = [0, 0];
   }
 }
 
 class LightFloor extends Ability {
   LightFloor() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.lightFloorAbility_1]!];
+    powerPerImage = [10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 class HeavyDodge extends Ability {
   HeavyDodge() {
-    power = 0;
     duration = 500; //millisec
     recoilDistance = 0;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.heavyDodgeAbility_1]!];
+    powerPerImage = [0];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 class HeavyQuick extends Ability {
   HeavyQuick() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.heavyQuickAbility_1]!];
+    powerPerImage = [10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 class HeavyAir extends Ability {
   HeavyAir() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.heavyAirAbility_1]!];
+    powerPerImage = [10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 class HeavyStatic extends Ability {
   HeavyStatic() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [
+      Loader().imgMap[AssetList.heavyStaticAbility_1]!,
+      Loader().imgMap[AssetList.heavyStaticAbility_2]!
+    ];
+    powerPerImage = [0, 10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0, 0];
+    hitBoxTopOffset = [0, 0];
   }
 }
 
 class HeavyHorizontal extends Ability {
   HeavyHorizontal() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.heavyHorizontalAbility_1]!];
+    powerPerImage = [10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 class HeavyFloor extends Ability {
   HeavyFloor() {
-    power = 10;
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.swordImg]!];
+    images = [Loader().imgMap[AssetList.heavyFloorAbility_1]!];
+    powerPerImage = [10];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = 0;
-    hitBoxTopOffset = 0;
+    hitBoxLeftOffset = [0];
+    hitBoxTopOffset = [0];
   }
 }
 
 abstract class Ability {
-  late int power;
+  late List<int> powerPerImage;
   late double duration;
   late int recoilDistance;
 
@@ -205,8 +211,8 @@ abstract class Ability {
   late double imageBoxHeightRatio;
   late double imageBoxWidthRatio;
 
-  late double hitBoxLeftOffset;
-  late double hitBoxTopOffset;
+  late List<double> hitBoxLeftOffset;
+  late List<double> hitBoxTopOffset;
 
   Rect range(Rect characterHitBox, String facing) {
     var left = characterHitBox.left;

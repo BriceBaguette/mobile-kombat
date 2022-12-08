@@ -96,6 +96,7 @@ class Stage extends ChangeNotifier {
         for (var other in _stage!.characters) {
           if (other != character &&
               other.usingAbility &&
+              other.abilityDamage() > 0 &&
               !character.isInvincible &&
               character.getHitBox().overlaps(other.abilityRange())) {
             int invincibilityFrame = other.remainingAbilityDuration();

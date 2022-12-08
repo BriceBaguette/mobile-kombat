@@ -486,8 +486,8 @@ abstract class Character {
   Rect getHitBox() {
     if (usingAbility) {
       return Rect.fromLTWH(
-          _bbox.left + _abilityInProgress.hitBoxLeftOffset,
-          _bbox.top + _abilityInProgress.hitBoxTopOffset,
+          _bbox.left + _abilityInProgress.hitBoxLeftOffset[_actionImagesOffset],
+          _bbox.top + _abilityInProgress.hitBoxTopOffset[_actionImagesOffset],
           _bbox.width,
           _bbox.height);
     }
@@ -516,7 +516,13 @@ abstract class Character {
 
   Rect abilityRange() => _abilityInProgress.range(_bbox, _facing);
 
-  int abilityDamage() => _abilityInProgress.power + _powerModificator;
+  int abilityDamage() {
+    if (_abilityInProgress.powerPerImage[_actionImagesOffset] == 0) {
+      return 0;
+    }
+    return _abilityInProgress.powerPerImage[_actionImagesOffset] +
+        _powerModificator;
+  }
 
   int abilityRecoil() => _abilityInProgress.recoilDistance;
 }
