@@ -34,12 +34,12 @@ class Constant {
   late Rect attackButtonPosition;
   late Rect dodgeButtonPosition;
   late Rect quickAttackButtonPosition;
-
+  late Rect firstPlayerPosition;
+  late Rect secondPlayerPosition;
   late double healthBarLeft;
   late double healthBarTop;
   late double healthBarMaxWidth;
   late double healthBarHeight;
-
   factory Constant() {
     _constant ??= Constant._hidden();
     return _constant!;
@@ -94,6 +94,10 @@ class Constant {
         Rect.fromLTWH(w - w / 40 - 2 * w / 15, h - h / 9, w / 20, w / 20);
     quickAttackButtonPosition =
         Rect.fromLTWH(w - w / 40 - 3 * w / 15, h - h / 9, w / 20, w / 20);
+    firstPlayerPosition =
+        Rect.fromLTWH(w / 4, h / 2, w / 20, w / 20 * gokuRatio);
+    secondPlayerPosition =
+        Rect.fromLTWH(w - w / 4, h / 2, w / 20, w / 20 * gokuRatio);
 
     healthBarLeft = w / 40;
     healthBarTop = h / 9;

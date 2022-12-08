@@ -120,4 +120,8 @@ class Loader extends ChangeNotifier {
     _loading = false;
     notifyListeners();
   }
+
+  int getCharacterId(Character character) {
+    return characterList.indexOf(character);
+  }
 }

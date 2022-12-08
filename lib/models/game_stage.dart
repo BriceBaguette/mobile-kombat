@@ -7,7 +7,9 @@ import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
+import 'package:mobile_kombat/models/room.dart';
 import 'package:mobile_kombat/views/canvas.dart';
+
 
 import 'custom_buttons.dart';
 import 'ground.dart';
@@ -19,11 +21,12 @@ class Stage extends ChangeNotifier {
   var characters = <Character>[];
   var buttons = <Button>[];
   var grounds = <Ground>[];
-  Opponent? _opponent;
+  Opponent? opponent;
   var _loading = true;
   var _ready = false;
   late Timer gameTimer;
   late int displayTime;
+  late Room room;
   bool gameOver = false;
   bool get ready => _ready && !_loading;
 
@@ -49,7 +52,7 @@ class Stage extends ChangeNotifier {
     displayTime = Constant().time;
     characters
       ..add(Player().character)
-      ..add(_opponent!.character);
+      ..add(opponent!.character);
     buttons
       ..add(MovingButton(
           dir: 'LEFT',
@@ -89,9 +92,18 @@ class Stage extends ChangeNotifier {
     _stageSetup(Loader().imgMap);
   }
 
+  void setRoom(Room newRoom) {
+    room = newRoom;
+  }
+
+  void move(Character character, String dir, bool isMoving) {
+    character.setDirection(dir);
+    character.setMovement(isMoving);
+  }
+
   void updateGame() {
     if (Stage().ready) {
-      _opponent!.getActions();
+      opponent!.getActions();
       for (var character in _stage!.characters) {
         for (var other in _stage!.characters) {
           if (other != character &&
@@ -161,7 +173,7 @@ class Stage extends ChangeNotifier {
     return Player().character.getHitBox();
   }
 
-  void setOpponent(Opponent opponent) {
-    _opponent = opponent;
+  void setOpponent(Opponent newOpponent) {
+    opponent = newOpponent;
   }
 }

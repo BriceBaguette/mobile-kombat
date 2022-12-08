@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/auth.dart';
 import 'package:mobile_kombat/models/character.dart';
@@ -6,6 +7,7 @@ import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/database.dart';
 import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/models/player.dart';
+import 'package:mobile_kombat/models/room.dart';
 import 'package:mobile_kombat/views/game_scene.dart';
 import 'package:mobile_kombat/views/inventory.dart';
 import 'package:mobile_kombat/views/shop.dart';
@@ -22,11 +24,9 @@ class MainMenu extends StatelessWidget {
   final _database = Database();
   final _rtDb = RealTimeDB();
   final _player = Player();
-
+  late Opponent opponent;
   @override
   Widget build(BuildContext context) {
-    Player player = Player();
-    Opponent opponent;
     return Consumer<ControllerInventory>(
         builder: (_, data, __) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -118,8 +118,19 @@ class MainMenu extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    SizedBox(
+                        width: 150,
+                        height: 50,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red[900]),
+                            child: const Text('disconnect'),
+                            onPressed: () => {
+                                  Auth().signout(),
+                                  Navigator.of(context).popAndPushNamed('login')
+                                })),
                     Container(
-                      height: 275,
+                      height: 200,
                     ),
                     SizedBox(
                       width: 150,
@@ -232,37 +243,30 @@ class MainMenu extends StatelessWidget {
                                                                 Colors
                                                                     .red[900]),
                                                     onPressed: () => {
-                                                          opponent = DummyBot(
-                                                              character: StickMan(
-                                                                  bbox: Rect.fromLTWH(
-                                                                      Constant()
-                                                                              .w -
-                                                                          Constant().w /
-                                                                              4,
-                                                                      Constant()
-                                                                              .h /
-                                                                          2,
-                                                                      Constant()
-                                                                              .w /
-                                                                          20,
-                                                                      Constant()
-                                                                              .w /
-                                                                          20 *
-                                                                          Constant()
-                                                                              .gokuRatio),
-                                                                  speed: 3,
-                                                                  facing:
-                                                                      'LEFT',
-                                                                  framerate:
-                                                                      Constant()
-                                                                          .framerate)),
-                                                          Stage().setOpponent(
-                                                              opponent),
                                                           Navigator.of(ctx)
                                                               .pop(),
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              'gamestage')
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                          ctx) =>
+                                                                      AlertDialog(
+                                                                        title: const Center(
+                                                                            child:
+                                                                                Text("Looking for opponent")),
+                                                                        actions: [
+                                                                          FutureBuilder(
+                                                                            future: startGame().then((_) =>
+                                                                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                                                                  Navigator.pushNamed(context, 'gamestage');
+                                                                                })),
+                                                                            builder:
+                                                                                (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                                                                              return const Center(child: CircularProgressIndicator());
+                                                                            },
+                                                                          ),
+                                                                        ],
+                                                                      )),
                                                         },
                                                     child: const Text(
                                                         "Play online")))
@@ -274,5 +278,23 @@ class MainMenu extends StatelessWidget {
                 ),
               ],
             ));
+  }
+
+  Future startGame() async {
+    String roomId = await _rtDb.joinRoom(user!.uid);
+    Room? room = await _rtDb.getRoom(roomId);
+    UserDb? opponentUser = await _rtDb.getOpponent(room!, user!.uid);
+    if (opponentUser!.first == false) {
+      await _rtDb.createGameRoom(room);
+    }
+    Character? opponentChar =
+        await _rtDb.getOpponentCharacter(opponentUser, user!.uid);
+    _rtDb.initListener(room, user!.uid);
+    opponent =
+        RealPlayer(username: opponentUser.userName, character: opponentChar!);
+    Stage().setOpponent(opponent);
+    Stage().setRoom(room);
+    Future.delayed(const Duration(seconds: 1));
+    return opponent;
   }
 }
