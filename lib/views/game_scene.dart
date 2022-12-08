@@ -25,8 +25,8 @@ class GameScene extends StatelessWidget {
           onPointerUp: (details) => Controller().onTapStop(details),
           child: CustomPaint(
               size: Size.infinite,
-              painter: ScenePainter(
-                  scene.characters, scene.buttons, scene.grounds)));
+              painter: ScenePainter(scene.environmentImage, scene.characters,
+                  scene.buttons, scene.grounds)));
     });
   }
 }
