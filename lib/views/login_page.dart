@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_kombat/controller_inventory.dart';
 import 'package:mobile_kombat/models/auth.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -47,18 +49,24 @@ class LoginPage extends StatelessWidget {
                   width: double.infinity,
                   height: 20,
                 ),
-                ElevatedButton(
-                  child: (const Text('Sign in')),
-                  onPressed: () => {
-                    auth.signIn(email, password),
-                    if (auth.currentUser != null)
-                      {
-                        Navigator.of(context).popAndPushNamed('menu'),
-                      }
-                    else
-                      {}
-                  },
-                ),
+                Consumer<ControllerInventory>(
+                    builder: (_, data, __) => FutureBuilder(
+                        future: data.init().then((_) => (_)),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          return ElevatedButton(
+                            child: (const Text('Sign in')),
+                            onPressed: () => {
+                              auth.signIn(email, password),
+                              if (auth.currentUser != null)
+                                {
+                                  Navigator.of(context).popAndPushNamed('menu'),
+                                }
+                              else
+                                {}
+                            },
+                          );
+                        })),
                 const SizedBox(
                   width: double.infinity,
                   height: 20,

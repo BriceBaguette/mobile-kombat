@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/constant.dart';
+import 'package:mobile_kombat/models/cosmetics.dart';
 import 'package:mobile_kombat/models/player.dart';
 
 enum AssetList {
@@ -41,7 +42,11 @@ enum AssetList {
   heavyMoving_3,
   heavyMoving_4,
   heavyJumping_1,
-  heavyJumping_2
+  heavyJumping_2,
+  character2Img,
+  hatImg,
+  swimwearImg,
+  hawaiianshirtImg
 }
 
 const _sceneAssets = {
@@ -72,7 +77,11 @@ const _sceneAssets = {
   AssetList.heavyMoving_3: "./assets/images/heavy/heavy_moving_3.png",
   AssetList.heavyMoving_4: "./assets/images/heavy/heavy_moving_4.png",
   AssetList.heavyJumping_1: "./assets/images/jumping.png",
-  AssetList.heavyJumping_2: "./assets/images/jumping.png"
+  AssetList.heavyJumping_2: "./assets/images/jumping.png",
+  AssetList.character2Img: "assets/images/GenericGuy.png",
+  AssetList.hatImg: "assets/images/ClassyHat.png",
+  AssetList.swimwearImg: "assets/images/swimwear.png",
+  AssetList.hawaiianshirtImg: "assets/images/hawaiian-shirt.png",
 };
 
 class Loader extends ChangeNotifier {
@@ -80,6 +89,7 @@ class Loader extends ChangeNotifier {
   static Loader? _loader;
   var imgMap = <AssetList, ui.Image>{};
   List<Character> characterList = [];
+  List<Cosmetics> cosmeticList = [];
   var _loading = true;
   var _ready = false;
   bool gameOver = false;

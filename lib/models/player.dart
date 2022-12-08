@@ -12,6 +12,15 @@ class Player {
   late List<Cosmetics> cosmetics;
   String _username = '';
   double health = 100;
+  int gold = 0;
+
+  void updateGold(int mod) {
+    gold = gold + mod;
+  }
+
+  void setGoldPlayer(int n) {
+    gold = n;
+  }
 
   Player._hidden() {
     resetHealth();
@@ -29,5 +38,9 @@ class Player {
 
   resetHealth() {
     health = 100;
+  }
+
+  getUsername() {
+    return username;
   }
 }

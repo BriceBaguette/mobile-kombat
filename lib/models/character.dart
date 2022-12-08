@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile_kombat/models/constant.dart';
+import 'package:mobile_kombat/models/cosmetics.dart';
 import 'package:mobile_kombat/models/database.dart';
 import 'dart:ui' as ui;
 
@@ -13,6 +15,21 @@ class StickMan extends Character {
       required Rect bbox,
       required String facing,
       required double speed}) {
+    @override
+    Rect hatBbox = (Rect.fromLTWH((Constant().w / 4) + 6, (Constant().h / 2),
+        Constant().w / 30, Constant().w / 60 * Constant().gokuRatio));
+    @override
+    Rect bodyBbox = (Rect.fromLTWH(
+        (Constant().w / 4) + 6,
+        (Constant().h / 2) + 25,
+        Constant().w / 30,
+        Constant().w / 60 * Constant().gokuRatio));
+    @override
+    Rect footBbox = (Rect.fromLTWH(
+        (Constant().w / 4) + 6,
+        (Constant().h / 2) + 35,
+        Constant().w / 30,
+        Constant().w / 60 * Constant().gokuRatio));
     _price = 0;
 
     _framerate = framerate;
@@ -62,6 +79,21 @@ class Light extends Character {
       required Rect bbox,
       required String facing,
       required double speed}) {
+    @override
+    Rect hatBbox = (Rect.fromLTWH((Constant().w / 4) + 6, (Constant().h / 2),
+        Constant().w / 30, Constant().w / 60 * Constant().gokuRatio));
+    @override
+    Rect bodyBbox = (Rect.fromLTWH(
+        (Constant().w / 4) + 6,
+        (Constant().h / 2) + 25,
+        Constant().w / 30,
+        Constant().w / 60 * Constant().gokuRatio));
+    @override
+    Rect footBbox = (Rect.fromLTWH(
+        (Constant().w / 4) + 6,
+        (Constant().h / 2) + 35,
+        Constant().w / 30,
+        Constant().w / 60 * Constant().gokuRatio));
     _price = 0;
 
     _framerate = framerate;
@@ -175,6 +207,11 @@ class Heavy extends Character {
 }
 
 abstract class Character {
+  late Rect hatBbox;
+
+  late Rect bodyBbox;
+
+  late Rect footBbox;
   late int _price;
 
   late int _framerate;
@@ -236,6 +273,16 @@ abstract class Character {
   double recoilSpeed = 10;
 
   String getImageDir() => _imageDir;
+
+  Map<String, Cosmetics> equippedCosmetics = {};
+  void equipCosmetic(Cosmetics c) {
+    String bp = c.getBodyPart();
+    equippedCosmetics[bp] = c;
+  }
+
+  void removeCosmetic(String s) {
+    equippedCosmetics.remove(s);
+  }
 
   int getPrice() {
     return _price;
@@ -334,6 +381,12 @@ abstract class Character {
       }
       _upSpeed += _gravity;
     }
+    hatBbox = Rect.fromLTWH(
+        hatBbox.left, hatBbox.top + _upSpeed, hatBbox.width, hatBbox.height);
+    bodyBbox = Rect.fromLTWH(bodyBbox.left, bodyBbox.top + _upSpeed,
+        bodyBbox.width, bodyBbox.height);
+    footBbox = Rect.fromLTWH(footBbox.left, footBbox.top + _upSpeed,
+        footBbox.width, footBbox.height);
     _bbox = Rect.fromLTWH(
         _bbox.left, _bbox.top + _upSpeed, _bbox.width, _bbox.height);
     if (isMoving && !_isBlocked() && !_usingStaticAbility) {
@@ -345,10 +398,22 @@ abstract class Character {
         case 'RIGHT':
           _bbox = Rect.fromLTWH(
               _bbox.left + speed, _bbox.top, _bbox.width, _bbox.height);
+          hatBbox = Rect.fromLTWH(
+              hatBbox.left + speed, hatBbox.top, hatBbox.width, hatBbox.height);
+          bodyBbox = Rect.fromLTWH(bodyBbox.left + speed, bodyBbox.top,
+              bodyBbox.width, bodyBbox.height);
+          footBbox = Rect.fromLTWH(footBbox.left + speed, footBbox.top,
+              footBbox.width, footBbox.height);
           break;
         case 'LEFT':
           _bbox = Rect.fromLTWH(
               _bbox.left - speed, _bbox.top, _bbox.width, _bbox.height);
+          hatBbox = Rect.fromLTWH(
+              hatBbox.left - speed, hatBbox.top, hatBbox.width, hatBbox.height);
+          bodyBbox = Rect.fromLTWH(bodyBbox.left - speed, bodyBbox.top,
+              bodyBbox.width, bodyBbox.height);
+          footBbox = Rect.fromLTWH(footBbox.left - speed, footBbox.top,
+              footBbox.width, footBbox.height);
           break;
         default:
           return;
@@ -561,10 +626,32 @@ class CharacterWidget extends StatelessWidget {
       children: [
         Image.asset(c.getImageDir(), width: 70),
         Text(c.getName()),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [])
+        const SizedBox(width: 20)
       ],
+    );
+  }
+}
+
+class PopUpChar extends StatelessWidget {
+  const PopUpChar({super.key, required this.c});
+  final Character c;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Image.asset(
+            c.getImageDir(),
+            width: 150,
+          ),
+          Text("Speed: ${c.getSpeed()}\n"
+              "Resistance:${c.getResistance()}\n"
+              "Attack Speed: ${c.getAS()}\n"
+              "Strength: ${c.getStrength()}\n"),
+        ],
+      ),
     );
   }
 }

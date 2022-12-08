@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:mobile_kombat/models/auth.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/constant.dart';
+import 'package:mobile_kombat/models/cosmetics.dart';
 import 'package:mobile_kombat/models/game_stage.dart';
 import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/models/player.dart';
@@ -41,6 +42,105 @@ class Database {
     var docSnap = await db.collection('users').doc(userId).get();
     var data = docSnap.data();
     return data!["nickname"] as String;
+  }
+
+  Future<List<Character>> getCharacterForShop(String userUid) async {
+    List<Character> characters = [];
+    var docSnap = await db.collection('users').doc(userUid).get();
+    var data = docSnap.data();
+    List<int> characterList = data!["shopCharacter"].cast<int>();
+    for (int i in characterList) {
+      characters.add(_loader.characterList[i]); //not that list
+    }
+    return characters;
+  }
+
+  getGoldFromUser(String userUid) async {
+    var docSnap = await db.collection('users').doc(userUid).get();
+    var data = docSnap.data();
+    int gold = data!["gold"] as int;
+    return gold;
+  }
+
+  updateGold(String userUid, int n) async {
+    db.collection('users').doc(userUid).update({
+      "gold": FieldValue.increment(n),
+    });
+  }
+
+  Future<List<Cosmetics>> getCosmeticFromUser(String userUid) async {
+    List<Cosmetics> cosmetics = [];
+    var docSnap = await db.collection('users').doc(userUid).get();
+    var data = docSnap.data();
+    List<int> cosmeticList = data!["ownedCosmetic"].cast<int>();
+    for (int i in cosmeticList) {
+      cosmetics.add(_loader.cosmeticList[i]);
+    }
+    return cosmetics;
+  }
+
+  Future<List<Cosmetics>> getCosmeticForShop(String userUid) async {
+    List<Cosmetics> cosmetics = [];
+    var docSnap = await db.collection('users').doc(userUid).get();
+    var data = docSnap.data();
+    List<int> cosmeticList = data!["shopCosmetic"].cast<int>();
+    for (int i in cosmeticList) {
+      cosmetics.add(_loader.cosmeticList[i]);
+    }
+    return cosmetics;
+  }
+
+  buyCosmetic(String userUid, int n) async {
+    db.collection('users').doc(userUid).update({
+      "ownedCosmetic": FieldValue.arrayUnion(["$n"]),
+    });
+    db.collection('users').doc(userUid).update({
+      "shopCosmetic": FieldValue.arrayRemove(["$n"]),
+    });
+  }
+
+  buyCharacter(String userUid, int n) async {
+    db.collection('users').doc(userUid).update({
+      "ownedCharacter": FieldValue.arrayUnion(["$n"]),
+    });
+    db.collection('users').doc(userUid).update({
+      "shopCharacter": FieldValue.arrayRemove(["$n"]),
+    });
+  }
+
+  updateStats(String userUid, int time, int tc1, int tc2, int gold, int nch,
+      int nco) async {
+    db
+        .collection('users')
+        .doc(userUid)
+        .update({"Statistics.0": FieldValue.increment(time)});
+    db
+        .collection('users')
+        .doc(userUid)
+        .update({"Statistics.1": FieldValue.increment(tc1)});
+    db
+        .collection('users')
+        .doc(userUid)
+        .update({"Statistics.2": FieldValue.increment(tc2)});
+    db
+        .collection('users')
+        .doc(userUid)
+        .update({"Statistics.3": FieldValue.increment(gold)});
+    db
+        .collection('users')
+        .doc(userUid)
+        .update({"Statistics.4": FieldValue.increment(nch)});
+    db
+        .collection('users')
+        .doc(userUid)
+        .update({"Statistics.5": FieldValue.increment(nco)});
+  }
+
+  getStats(String userUid) async {
+    var docSnap = await db.collection('users').doc(userUid).get();
+    var data = docSnap.data();
+    List<int> stats = data!["Statistics"].cast<int>();
+    return stats;
   }
 }
 

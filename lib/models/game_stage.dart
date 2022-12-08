@@ -168,6 +168,10 @@ class Stage extends ChangeNotifier {
     gameOver = true;
   }
 
+  List<Character> getChar() {
+    return [Player().character, opponent!.character];
+  }
+
   Rect getPlayerPosition() {
     return Player().character.getHitBox();
   }

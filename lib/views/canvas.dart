@@ -51,6 +51,30 @@ class ScenePainter extends CustomPainter {
 
       i += Constant().healthBarTop + Constant().healthBarHeight;
     }
+    if (element.equippedCosmetics["H"] != null) {
+      paintImage(
+          canvas: canvas,
+          image: element.equippedCosmetics["H"]!.image,
+          rect: element.hatBbox,
+          flipHorizontally: flip,
+          fit: BoxFit.fill);
+    }
+    if (element.equippedCosmetics["F"] != null) {
+      paintImage(
+          canvas: canvas,
+          image: element.equippedCosmetics["F"]!.image,
+          rect: element.footBbox,
+          flipHorizontally: flip,
+          fit: BoxFit.fill);
+    }
+    if (element.equippedCosmetics["B"] != null) {
+      paintImage(
+          canvas: canvas,
+          image: element.equippedCosmetics["B"]!.image,
+          rect: element.bodyBbox,
+          flipHorizontally: flip,
+          fit: BoxFit.fill);
+    }
     for (var element in buttonList) {
       paintImage(
           canvas: canvas,

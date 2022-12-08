@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 
 /*
 * == Cosmetics ==================================================
@@ -21,58 +22,72 @@ class Cosmetics extends StatelessWidget {
   final String _set;
   final int _price;
   final String _name;
-  bool _inventory;
-
-  Cosmetics(this._name, this._modifiers, this._spriteDir, this._bodyPart,
-      this._set, this._price, this._inventory,
+  final ui.Image image;
+  final int id;
+  const Cosmetics(this._name, this._modifiers, this._spriteDir, this._bodyPart,
+      this._set, this._price, this.image, this.id,
       {super.key});
 
   List<int> getModifiers() {
     return _modifiers;
   }
 
-  String getBodyPart(){
+  String getBodyPart() {
     return _bodyPart;
   }
 
-  String getName(){
+  String getName() {
     return _name;
   }
 
-  String getImage(){
+  String getImage() {
     return _spriteDir;
   }
 
-  String getSet(){
+  String getSet() {
     return _set;
   }
 
-  int getPrice(){
+  int getPrice() {
     return _price;
   }
 
-  bool getInventory(){
-    return _inventory;
-  }
-
-  void setInventory(){
-    _inventory = true;
-  }
-
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const SizedBox(width: 20),
+        Image.asset(_spriteDir, width: 40),
+        const SizedBox(width: 20),
+        Text(_name),
+        const SizedBox(width: 20)
+      ],
+    );
+  }
+}
+
+class PopUpCosmetic extends StatelessWidget {
+  const PopUpCosmetic({super.key, required this.c});
+  final Cosmetics c;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(width: 20,),
-          Image.asset(_spriteDir, scale: 20),
-          const SizedBox(width: 30,),
-          Text(_name),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const []
-          )
+          Image.asset(
+            c.getImage(),
+            width: 150,
+          ),
+          Text("Set: ${c.getSet()}\n"
+              "Speed: ${c.getModifiers()[0]}\n"
+              "Resistance:${c.getModifiers()[1]}\n"
+              "Attack Speed: ${c.getModifiers()[2]}\n"
+              "Strength: ${c.getModifiers()[3]}\n"),
         ],
+      ),
     );
   }
 }
