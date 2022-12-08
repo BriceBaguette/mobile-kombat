@@ -67,7 +67,7 @@ class CharacterDb {
     }
     health = character.health;
     id = Loader().getCharacterId(character);
-    upSpeed = character.upSpeed;
+    upSpeed = character.getUpSpeed();
     isMoving = character.isMoving;
   }
 }
