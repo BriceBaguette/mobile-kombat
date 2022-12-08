@@ -110,13 +110,11 @@ class StickMan extends Character {
   @override
   void setDirection(String direction) {
     facing = direction;
-    _rtDb.setDirection(move);
   }
 
   @override
   void setMovement(bool move) {
     isMoving = move;
-    _rtDb.setMovement(move);
   }
 
   @override

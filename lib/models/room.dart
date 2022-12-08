@@ -55,7 +55,7 @@ class CharacterDb {
       'health': health,
       'id': id,
       'upSpeed': upSpeed,
-      'isMoving': isMoving
+      'isMoving': isMoving.toString(),
     };
   }
 

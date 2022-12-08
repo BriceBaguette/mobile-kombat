@@ -284,13 +284,12 @@ class MainMenu extends StatelessWidget {
     String roomId = await _rtDb.joinRoom(user!.uid);
     Room? room = await _rtDb.getRoom(roomId);
     UserDb? opponentUser = await _rtDb.getOpponent(room!, user!.uid);
-
     if (opponentUser!.first == false) {
       await _rtDb.createGameRoom(room);
-      _rtDb.initListener(room, user!.uid);
     }
     Character? opponentChar =
         await _rtDb.getOpponentCharacter(opponentUser, user!.uid);
+    _rtDb.initListener(room, user!.uid);
     opponent =
         RealPlayer(username: opponentUser.userName, character: opponentChar!);
     Stage().setOpponent(opponent);

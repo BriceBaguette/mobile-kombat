@@ -18,7 +18,7 @@ class Stage extends ChangeNotifier {
   var characters = <Character>[];
   var buttons = <Button>[];
   var grounds = <Ground>[];
-  Opponent? _opponent;
+  Opponent? opponent;
   var _loading = true;
   var _ready = false;
   late Timer gameTimer;
@@ -49,7 +49,7 @@ class Stage extends ChangeNotifier {
     displayTime = Constant().time;
     characters
       ..add(Player().character)
-      ..add(_opponent!.character);
+      ..add(opponent!.character);
     buttons
       ..add(MovingButton(
           dir: 'LEFT',
@@ -103,7 +103,7 @@ class Stage extends ChangeNotifier {
 
   void updateGame() {
     if (Stage().ready) {
-      _opponent!.getActions();
+      opponent!.getActions();
       for (var character in _stage!.characters) {
         for (var other in _stage!.characters) {
           if (other != character &&
@@ -153,7 +153,7 @@ class Stage extends ChangeNotifier {
     return Player().character.bbox;
   }
 
-  void setOpponent(Opponent opponent) {
-    _opponent = opponent;
+  void setOpponent(Opponent newOpponent) {
+    opponent = newOpponent;
   }
 }

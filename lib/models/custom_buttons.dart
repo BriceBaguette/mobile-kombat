@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile_kombat/models/database.dart';
 import "dart:ui" as ui;
 import 'game_stage.dart';
 
@@ -9,17 +10,21 @@ class MovingButton extends Button {
   final ui.Image img;
   @override
   final Rect bbox;
+  final RealTimeDB _rtDb = RealTimeDB();
 
   MovingButton({required this.dir, required this.img, required this.bbox});
 
   @override
   void onTap() {
     _scene.move(_scene.characters[0], dir, true);
+    _rtDb.setDirection(dir);
+    _rtDb.setMovement(true);
   }
 
   @override
   void onTapCancel() {
     _scene.move(_scene.characters[0], dir, false);
+    _rtDb.setMovement(false);
   }
 }
 

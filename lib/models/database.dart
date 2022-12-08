@@ -216,12 +216,26 @@ class RealTimeDB {
   Future createGameRoom(Room room) async {
     DatabaseReference roomRef =
         FirebaseDatabase.instance.ref(room.roomId.toString());
-    print('here');
     roomRef.set({
-      room.users[0].userId: {'character': jsonEncode(room.users[0].character)},
-      room.users[1].userId: {'character': jsonEncode(room.users[1].character)}
+      room.users[0].userId: {
+        'character': {
+          'facing': room.users[0].character.facing,
+          'health': room.users[0].character.health,
+          'id': room.users[0].character.id,
+          'upSpeed': room.users[0].character.upSpeed,
+          'isMoving': room.users[0].character.isMoving.toString(),
+        }
+      },
+      room.users[1].userId: {
+        'character': {
+          'facing': room.users[1].character.facing,
+          'health': room.users[1].character.health,
+          'id': room.users[1].character.id,
+          'upSpeed': room.users[1].character.upSpeed,
+          'isMoving': room.users[1].character.isMoving.toString()
+        }
+      }
     });
-    print("there");
   }
 
   void initListener(Room room, userId) {
@@ -231,24 +245,33 @@ class RealTimeDB {
     } else {
       id = room.users[0].userId;
     }
-    DatabaseReference listenerRef =
-        FirebaseDatabase.instance.ref('${room.roomId}/$id');
-    listenerRef.onValue.listen((event) {
+    DatabaseReference listenFacing =
+        FirebaseDatabase.instance.ref('${room.roomId}/$id/character/facing');
+    listenFacing.onValue.listen((event) {
       var snapshot = event.snapshot;
-      print(snapshot.value);
+      Stage().opponent!.character.setDirection(snapshot.value as String);
+    });
+    DatabaseReference listenMove =
+        FirebaseDatabase.instance.ref('${room.roomId}/$id/character/isMoving');
+    listenMove.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      bool move = false;
+      if ((snapshot.value as String) == 'true') {
+        move = true;
+      }
+      Stage().opponent!.character.setMovement(move);
     });
   }
 
-  Future<void> setMovement(bool move) async {
+  setMovement(bool move) async {
     DatabaseReference ref = FirebaseDatabase.instance
         .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
-    ref.update({"isMoving": move});
+    ref.update({"isMoving": move.toString()});
   }
 
-  Future<void> setDirection(facing) async {
+  setDirection(String facing) async {
     DatabaseReference ref = FirebaseDatabase.instance
         .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
-
     ref.update({"facing": facing});
   }
 }
