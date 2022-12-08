@@ -17,9 +17,13 @@ class Constant {
   late Rect middlePlatformBox;
   late Rect upperPlatformBox;
 
+  late double leftCharacterLeft;
+  late double leftCharacterTop;
+  late double rightCharacterLeft;
+  late double rightCharacterTop;
+
   late double lightWidth;
   late double lightHeight;
-
   late double heavyWidth;
   late double heavyHeight;
 
@@ -67,9 +71,13 @@ class Constant {
         (412 / environmentOriginalWidth) * w,
         (45 / environmentOriginalHeight) * h);
 
+    leftCharacterLeft = leftPlatformBox.left + leftPlatformBox.width / 2;
+    leftCharacterTop = h / 2;
+    rightCharacterLeft = rightPlatformBox.left + rightPlatformBox.width / 2;
+    rightCharacterTop = h / 2;
+
     lightHeight = w / 20 * gokuRatio;
     lightWidth = (345 / 923) * lightHeight;
-
     heavyHeight = w / 20 * gokuRatio;
     heavyWidth = (421 / 711) * heavyHeight;
 

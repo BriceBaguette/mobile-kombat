@@ -12,8 +12,13 @@ class StickMan extends Character {
       required Rect bbox,
       required String facing,
       required double speed}) {
+    _price = 0;
+
     _framerate = framerate;
+
     _bbox = bbox;
+    _name = "Stickman";
+    _imageDir = "./assets/images/goku.png";
 
     health = 100;
     maxHealth = 100;
@@ -50,8 +55,13 @@ class Light extends Character {
       required Rect bbox,
       required String facing,
       required double speed}) {
+    _price = 0;
+
     _framerate = framerate;
+
     _bbox = bbox;
+    _name = "Light";
+    _imageDir = "./assets/images/light/light_static_1.png";
 
     health = 100;
     maxHealth = 100;
@@ -99,8 +109,13 @@ class Heavy extends Character {
       required Rect bbox,
       required String facing,
       required double speed}) {
+    _price = 0;
+
     _framerate = framerate;
+
     _bbox = bbox;
+    _name = "Heavy";
+    _imageDir = "./assets/images/heavy/heavy_static_1.png";
 
     health = 100;
     maxHealth = 100;
@@ -141,10 +156,14 @@ class Heavy extends Character {
 }
 
 abstract class Character {
+  late int _price;
+
   late int _framerate;
 
   late ui.Image image;
   late Rect _bbox;
+  late String _name;
+  late String _imageDir;
 
   late int health;
   late int maxHealth;
@@ -197,17 +216,10 @@ abstract class Character {
 
   double recoilSpeed = 10;
 
-  int price = 0;
-  int strength = 0;
-  int aS = 0;
-  int resistance = 0;
-  String imageDir = "assets/images/GenericGuy.png";
-  String name = "Stickman2";
-
-  String getImageDir() => imageDir;
+  String getImageDir() => _imageDir;
 
   int getPrice() {
-    return price;
+    return _price;
   }
 
   int getStrength() {
@@ -215,11 +227,11 @@ abstract class Character {
   }
 
   int getAS() {
-    return aS;
+    return _attackSpeedModificator.round();
   }
 
   int getResistance() {
-    return resistance;
+    return _resistanceModificator;
   }
 
   double getSpeed() {
@@ -229,7 +241,7 @@ abstract class Character {
   double getUpSpeed() => _upSpeed;
 
   String getName() {
-    return name;
+    return _name;
   }
 
   void setStrength(int mod) {
@@ -241,7 +253,7 @@ abstract class Character {
   }
 
   void setResistance(int mod) {
-    resistance = resistance + mod;
+    _resistanceModificator = mod;
   }
 
   void setSpeed(int mod) {
@@ -323,8 +335,6 @@ abstract class Character {
   }
 
   void jump(double speed) {
-    _actionImagesOffset = 0;
-    _actionImageFramesOffset = 0;
     if (speed == 0.0) {
       if (isMoving) {
         _setAction(_movingImages, _movingBbox, _movingDuration);
@@ -345,8 +355,6 @@ abstract class Character {
     isMoving = move;
 
     if (isGrounded()) {
-      _actionImagesOffset = 0;
-      _actionImageFramesOffset = 0;
       if (move) {
         _setAction(_movingImages, _movingBbox, _movingDuration);
       } else {
@@ -395,8 +403,6 @@ abstract class Character {
     if (!usingAbility && !isGettingDamage) {
       usingAbility = true;
       isMoving = false;
-      _actionImagesOffset = 0;
-      _actionImageFramesOffset = 0;
       _abilityInProgress = _determineAttack(quick, floor, dodge);
       _setAction(_abilityInProgress.images, getImageBox(),
           _abilityInProgress.duration - _attackSpeedModificator);
@@ -407,6 +413,8 @@ abstract class Character {
     if (dodge) {
       _usingStaticAbility = false;
       hasJumped = false;
+      isInvincible = true;
+      _invincibilityDuration = (_dodge.duration / _framerate).round();
       return _dodge;
     }
     if (quick) {
@@ -430,6 +438,8 @@ abstract class Character {
   }
 
   void _setAction(List<ui.Image> images, Rect bbox, double duration) {
+    _actionImagesOffset = 0;
+    _actionImageFramesOffset = 0;
     _actionImages = images;
     _actionFramesPerImage =
         ((duration / (_framerate.toDouble()) / _actionImages.length.toDouble()))
@@ -446,8 +456,9 @@ abstract class Character {
   }
 
   bool isGrounded() {
-    return Stage().isGround(Offset(_bbox.right, _bbox.bottom + _upSpeed),
-        Offset(_bbox.left, _bbox.bottom + _upSpeed));
+    return (Stage().isGround(Offset(_bbox.right, _bbox.bottom + _upSpeed),
+            Offset(_bbox.left, _bbox.bottom + _upSpeed)) &&
+        _upSpeed >= 0);
   }
 
   bool _updateImage() {
@@ -489,8 +500,6 @@ abstract class Character {
       health -= damage - _resistanceModificator;
       _getDamageDuration = recoilDistance / recoilSpeed * _framerate;
       _setInvincibilityFrame(invincibilityFrame);
-      _actionImagesOffset = 0;
-      _actionImageFramesOffset = 0;
       _setAction(_getDamageImages, _getDamageBbox, _getDamageDuration);
       usingAbility = false;
       isMoving = true;
