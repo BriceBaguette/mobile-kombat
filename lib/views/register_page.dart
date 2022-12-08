@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/auth.dart';
-import 'package:provider/provider.dart';
-
-import '../controller_inventory.dart';
-import '../models/player.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -17,72 +13,66 @@ class RegisterPage extends StatelessWidget {
     return Align(
         child: SizedBox(
             width: 600,
-            height: 320,
+            height: 300,
             child: SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: "Email",
-                      ),
-                      onChanged: (value) => email = value,
-                      validator: (String? value) {
-                        return (value != null && value.contains('@'))
-                            ? null
-                            : 'Insert a valid email adress';
-                      },
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: "Email",
+                  ),
+                  onChanged: (value) => email = value,
+                  validator: (String? value) {
+                    return (value != null && value.contains('@'))
+                        ? null
+                        : 'Insert a valid email adress';
+                  },
+                ),
+                TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: "password",
                     ),
-                    TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: "password",
-                        ),
-                        obscureText: true,
-                        onChanged: (value) => password = value,
-                        validator: (String? value) {
-                          return (null);
-                        }),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: "nickname",
-                      ),
-                      onChanged: (value) => nickname = value,
-                      validator: (String? value) {
-                        return (value != null) ? null : 'Insert a nickname';
-                      },
-                    ),
-                    const SizedBox(
-                      width: double.infinity,
-                      height: 20,
-                    ),
-    Consumer<ControllerInventory>(
-    builder: (_, data, __) => FutureBuilder(
-    future: data.init().then((_) =>
-    (_)),
-    builder:
-    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-    return ElevatedButton(
-                      child: (const Text('Sign up')),
-                      onPressed: () => {
-                        auth.signUp(email, password, nickname),
-                        if (auth.currentUser != null)
-                          {
-                            Navigator.of(context).popAndPushNamed('menu'),
-                          }
-                        else
-                          {}
-                      },
-    );})),
-                    const SizedBox(
-                      width: double.infinity,
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      child: (const Text('Go to sign in')),
-                      onPressed: () =>
-                          Navigator.of(context).popAndPushNamed('login'),
-                    )
-                  ],
-                ))));
+                    obscureText: true,
+                    onChanged: (value) => password = value,
+                    validator: (String? value) {
+                      return (null);
+                    }),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: "nickname",
+                  ),
+                  onChanged: (value) => nickname = value,
+                  validator: (String? value) {
+                    return (value != null) ? null : 'Insert a nickname';
+                  },
+                ),
+                const SizedBox(
+                  width: double.infinity,
+                  height: 20,
+                ),
+                ElevatedButton(
+                  child: (const Text('Sign up')),
+                  onPressed: () => {
+                    auth.signUp(email, password, nickname),
+                    if (auth.currentUser != null)
+                      {
+                        Navigator.of(context).popAndPushNamed('menu'),
+                      }
+                    else
+                      {}
+                  },
+                ),
+                const SizedBox(
+                  width: double.infinity,
+                  height: 20,
+                ),
+                ElevatedButton(
+                  child: (const Text('Go to sign in')),
+                  onPressed: () =>
+                      Navigator.of(context).popAndPushNamed('login'),
+                )
+              ],
+            ))));
   }
 }
