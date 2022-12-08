@@ -207,6 +207,7 @@ class Heavy extends Character {
 }
 
 abstract class Character {
+  int id = 0;
   late Rect hatBbox;
 
   late Rect bodyBbox;
