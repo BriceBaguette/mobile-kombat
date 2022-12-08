@@ -48,7 +48,7 @@ class RealTimeDB {
   final Constant _constant = Constant();
   final db = FirebaseDatabase.instance;
   final Loader _loader = Loader();
-  DatabaseReference ref = FirebaseDatabase.instance.ref();
+  DatabaseReference ref = FirebaseDatabase.instance.ref('newRoom');
   final userDatabase = Database();
   final _player = Player();
 
@@ -85,7 +85,7 @@ class RealTimeDB {
         if ((room.users.length < 2)) {
           var index = rooms.indexOf(room);
           DatabaseReference refRoom =
-              FirebaseDatabase.instance.ref('/rooms/$index');
+              FirebaseDatabase.instance.ref('/newRoom/rooms/$index');
           var jsonChar = jsonEncode(
               CharacterDb.fromCharacter(_player.character, second: true));
           refRoom.update({
@@ -267,16 +267,14 @@ class RealTimeDB {
         FirebaseDatabase.instance.ref('${room.roomId}/$id/character/upSpeed');
     listenJump.onValue.listen((event) {
       var snapshot = event.snapshot;
-      Stage()
-          .opponent!
-          .character
-          .setJumpSpeed(double.parse(snapshot.value as String));
+      double jumpSpeed = double.parse(snapshot.value as String);
+      Stage().opponent!.character.setJumpSpeed(jumpSpeed);
     });
     DatabaseReference listenAttack =
         FirebaseDatabase.instance.ref('${room.roomId}/$id/character/attack');
     listenAttack.onValue.listen((event) {
       var snapshot = event.snapshot;
-      switch (snapshot as String) {
+      switch (snapshot.value as String) {
         case 'dodge':
           Stage().opponent!.character.attack(dodge: true);
           break;
@@ -296,10 +294,10 @@ class RealTimeDB {
     ref.update({"isMoving": move.toString()});
   }
 
-  setJump(bool move) async {
+  setJump(int jump) async {
     DatabaseReference ref = FirebaseDatabase.instance
         .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
-    ref.update({"isMoving": move.toString()});
+    ref.update({"upSpeed": jump.toString()});
   }
 
   setDirection(String facing) async {
@@ -312,5 +310,7 @@ class RealTimeDB {
     DatabaseReference ref = FirebaseDatabase.instance
         .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
     ref.update({"attack": attack});
+    Future.delayed(const Duration(milliseconds: 10));
+    ref.update({"attack": ''});
   }
 }
