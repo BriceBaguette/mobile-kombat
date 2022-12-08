@@ -40,6 +40,11 @@ class Constant {
   late double healthBarMaxWidth;
   late double healthBarHeight;
 
+  int lightDefaultHeight = 964;
+  int lightDefaultWidth = 524;
+  int heavyDefaultHeight = 699;
+  int heavyDefaultWidth = 405;
+
   factory Constant() {
     _constant ??= Constant._hidden();
     return _constant!;

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile_kombat/models/constant.dart';
 import 'dart:ui' as ui;
 
 import 'loader.dart';
@@ -27,8 +28,8 @@ class LightQuick extends Ability {
     images = [Loader().imgMap[AssetList.lightQuickAbility_1]!];
     powerPerImage = [10];
 
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
+    imageBoxHeightRatio = 798 / Constant().lightDefaultHeight;
+    imageBoxWidthRatio = 980 / Constant().lightDefaultWidth;
 
     hitBoxLeftOffset = [0];
     hitBoxTopOffset = [0];
@@ -59,8 +60,8 @@ class LightStatic extends Ability {
     images = [Loader().imgMap[AssetList.lightStaticAbility_1]!];
     powerPerImage = [10];
 
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1080 / Constant().lightDefaultHeight;
+    imageBoxWidthRatio = 1080 / Constant().lightDefaultWidth;
 
     hitBoxLeftOffset = [0];
     hitBoxTopOffset = [0];
@@ -110,8 +111,8 @@ class HeavyDodge extends Ability {
     images = [Loader().imgMap[AssetList.heavyDodgeAbility_1]!];
     powerPerImage = [0];
 
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
+    imageBoxHeightRatio = 729 / Constant().heavyDefaultHeight;
+    imageBoxWidthRatio = 384 / Constant().heavyDefaultWidth;
 
     hitBoxLeftOffset = [0];
     hitBoxTopOffset = [0];
@@ -161,8 +162,8 @@ class HeavyStatic extends Ability {
     ];
     powerPerImage = [0, 10];
 
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
+    imageBoxHeightRatio = 766 / Constant().heavyDefaultHeight;
+    imageBoxWidthRatio = 1058 / Constant().heavyDefaultWidth;
 
     hitBoxLeftOffset = [0, 0];
     hitBoxTopOffset = [0, 0];
@@ -177,8 +178,8 @@ class HeavyHorizontal extends Ability {
     images = [Loader().imgMap[AssetList.heavyHorizontalAbility_1]!];
     powerPerImage = [10];
 
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
+    imageBoxHeightRatio = 709 / Constant().heavyDefaultHeight;
+    imageBoxWidthRatio = 1080 / Constant().heavyDefaultWidth;
 
     hitBoxLeftOffset = [0];
     hitBoxTopOffset = [0];

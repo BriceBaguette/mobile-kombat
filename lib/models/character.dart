@@ -335,18 +335,10 @@ abstract class Character {
   }
 
   void jump(double speed) {
-    if (speed == 0.0) {
-      if (isMoving) {
-        _setAction(_movingImages, _movingBbox, _movingDuration);
-      } else {
-        _setAction(_staticImages, _staticBbox, _staticDuration);
-      }
-    } else {
-      if (_upSpeed != 0.0) {
-        hasJumped = true;
-      }
-      _setAction(_jumpingImages, _jumpingBbox, _jumpingDuration);
+    if (_upSpeed != 0.0) {
+      hasJumped = true;
     }
+    _setAction(_jumpingImages, _jumpingBbox, _jumpingDuration);
 
     _upSpeed = speed;
   }
@@ -392,7 +384,8 @@ abstract class Character {
     if (usingAbility) {
       return Rect.fromLTWH(
           _bbox.left,
-          _bbox.top,
+          _bbox.top +
+              (1 - _abilityInProgress.imageBoxHeightRatio) * _bbox.height,
           _bbox.width * _abilityInProgress.imageBoxWidthRatio,
           _bbox.height * _abilityInProgress.imageBoxHeightRatio);
     }
@@ -445,7 +438,6 @@ abstract class Character {
         ((duration / (_framerate.toDouble()) / _actionImages.length.toDouble()))
             .round();
     image = _actionImages[_actionImagesOffset];
-    _adjustBbox(bbox);
   }
 
   void _adjustBbox(Rect bbox) {
