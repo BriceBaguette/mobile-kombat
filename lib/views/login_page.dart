@@ -9,6 +9,12 @@ class LoginPage extends StatelessWidget {
     String email = '';
     String password = '';
     Auth auth = Auth();
+    if (auth.currentUser != null) {
+      auth.initializeUser();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.popAndPushNamed(context, 'menu');
+      });
+    }
     return Align(
         child: SizedBox(
             width: 600,

@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/constant.dart';
+import 'package:mobile_kombat/models/player.dart';
 
 enum AssetList {
   characterImg,
@@ -18,7 +19,7 @@ enum AssetList {
   quickAttackImg,
   dodgeImg,
   heavyAttackImg,
-  reversedCharacterImg
+  reversedCharacterImg,
 }
 
 const _sceneAssets = {
@@ -67,12 +68,16 @@ class Loader extends ChangeNotifier {
       imgMap[key] = img;
     }
     characterList.add(StickMan(
-        bbox: Rect.fromLTWH(_constant.w / 4, _constant.h / 2, _constant.w / 20,
-            _constant.w / 20 * _constant.gokuRatio),
+        bbox: _constant.firstPlayerPosition,
         speed: 3,
         facing: 'RIGHT',
         framerate: _constant.framerate));
+    Player().setCharacter(characterList[0]);
     _loading = false;
     notifyListeners();
+  }
+
+  int getCharacterId(Character character) {
+    return characterList.indexOf(character);
   }
 }

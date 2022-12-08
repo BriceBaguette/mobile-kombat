@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile_kombat/models/database.dart';
 import "dart:ui" as ui;
 import 'game_stage.dart';
 
@@ -15,11 +16,14 @@ class MovingButton extends Button {
   @override
   void onTap() {
     _scene.move(_scene.characters[0], dir, true);
+    _rtDb.setDirection(dir);
+    _rtDb.setMovement(true);
   }
 
   @override
   void onTapCancel() {
     _scene.move(_scene.characters[0], dir, false);
+    _rtDb.setMovement(false);
   }
 }
 
@@ -36,6 +40,7 @@ class JumpButton extends Button {
   void onTap() {
     if (_scene.characters[0].isGrounded()) {
       _scene.characters[0].setJumpSpeed(-5);
+      _rtDb.setJump(-5);
     }
   }
 
@@ -73,6 +78,7 @@ class QuickAttackButton extends Button {
   @override
   void onTap() {
     _scene.characters[0].attack(quick: true);
+    _rtDb.setAttack('quick');
   }
 
   @override
@@ -90,6 +96,7 @@ class DodgeButton extends Button {
   @override
   void onTap() {
     _scene.characters[0].attack(dodge: true);
+    _rtDb.setAttack('dodge');
   }
 
   @override
@@ -109,6 +116,7 @@ class FloorButton extends Button {
   void onTap() {
     if (_scene.characters[0].isGrounded() && _scene.characters[0].isMoving) {
       _scene.characters[0].isFloor = true;
+      _rtDb.setAttack('floor');
     }
   }
 
@@ -119,6 +127,7 @@ class FloorButton extends Button {
 }
 
 abstract class Button {
+  final RealTimeDB _rtDb = RealTimeDB();
   get img => null;
 
   get bbox => null;

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mobile_kombat/models/database.dart';
 import 'dart:ui' as ui;
 
 import 'package:mobile_kombat/models/game_stage.dart';
@@ -22,7 +23,7 @@ class StickMan extends Character {
     _horizontalAttack = LightHorizontal();
     _floorAttack = LightFloor();
   }
-
+  final RealTimeDB _rtDb = RealTimeDB();
   late int framerate;
   @override
   int health = 100;
@@ -34,6 +35,7 @@ class StickMan extends Character {
   double speed = 5;
   @override
   String facing;
+  @override
   double upSpeed = 0;
   @override
   bool usingAbility = false;
@@ -210,7 +212,7 @@ class StickMan extends Character {
   void getDamage(int damage) => health -= damage;
 
   @override
-  void attack({bool quick = false, bool dodge = false}) {
+  void attack({bool quick = false, bool floor = false, bool dodge = false}) {
     if (!usingAbility) {
       usingAbility = true;
       abilityInProgress = determineAttack(quick, dodge);
@@ -233,6 +235,17 @@ class StickMan extends Character {
     }
     return isAbove;
   }
+
+  @override
+  void setPosition(Rect newBbox) {
+    bbox = newBbox;
+  }
+
+  @override
+  Character duplicate() {
+    return StickMan(
+        bbox: bbox, speed: speed, facing: facing, framerate: framerate);
+  }
 }
 
 abstract class Character {
@@ -248,7 +261,7 @@ abstract class Character {
 
   get bbox => null;
 
-  get upspeed => null;
+  get upSpeed => null;
 
   get usingAbility => null;
 
@@ -280,7 +293,7 @@ abstract class Character {
   void setAS(int mod);
   void setResistance(int mod);
   void setSpeed(int mod);
-
+  void setPosition(Rect newBbox);
   bool isGrounded();
   bool isBlocked();
   bool isAbove();
@@ -293,7 +306,7 @@ abstract class Character {
   Rect abilityRange();
   int abilityDamage();
   void getDamage(int damage);
-  void attack({bool quick = false, bool dodge = false});
+  void attack({bool quick = false, bool floor = false, bool dodge = false});
 
   Ability determineAttack(bool quick, bool dodge) {
     if (dodge) {
@@ -323,6 +336,8 @@ abstract class Character {
     }
     return framesList;
   }
+
+  Character duplicate();
 }
 
 class CharacterWidget extends StatelessWidget {
@@ -545,7 +560,7 @@ class StickMan2 extends Character {
   void getDamage(int damage) => health -= damage;
 
   @override
-  void attack({bool quick = false, bool dodge = false}) {
+  void attack({bool quick = false, bool floor = false, bool dodge = false}) {
     if (!usingAbility) {
       usingAbility = true;
       abilityInProgress = determineAttack(quick, dodge);
@@ -567,5 +582,16 @@ class StickMan2 extends Character {
       }
     }
     return isAbove;
+  }
+
+  @override
+  void setPosition(Rect newBbox) {
+    bbox = newBbox;
+  }
+
+  @override
+  Character duplicate() {
+    return StickMan2(
+        bbox: bbox, speed: speed, facing: facing, framerate: framerate);
   }
 }
