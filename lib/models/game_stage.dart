@@ -7,8 +7,7 @@ import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
-import 'package:mobile_kombat/models/room.dart';
-import 'package:mobile_kombat/views/canvas.dart';
+import 'package:mobile_kombat/models/player.dart';
 
 import 'custom_buttons.dart';
 import 'ground.dart';
@@ -16,16 +15,14 @@ import 'loader.dart';
 
 class Stage extends ChangeNotifier {
   static Stage? _stage;
-  var environmentImage = Loader().imgMap[AssetList.environmentImg]!;
   var characters = <Character>[];
   var buttons = <Button>[];
   var grounds = <Ground>[];
-  Opponent? opponent;
+  Opponent? _opponent;
   var _loading = true;
   var _ready = false;
   late Timer gameTimer;
   late int displayTime;
-  Room? room;
   bool gameOver = false;
   bool get ready => _ready && !_loading;
 
@@ -46,12 +43,12 @@ class Stage extends ChangeNotifier {
     _ready = true;
     gameTimer =
         Timer.periodic(Duration(milliseconds: Constant().framerate), (timer) {
-      _stage!.updateGame();
-    });
+          _stage!.updateGame();
+        });
     displayTime = Constant().time;
     characters
       ..add(Player().character)
-      ..add(opponent!.character);
+      ..add(_opponent!.character);
     buttons
       ..add(MovingButton(
           dir: 'LEFT',
@@ -68,31 +65,32 @@ class Stage extends ChangeNotifier {
           img: imgMap[AssetList.floorButtonImg]!,
           bbox: Constant().floorButtonPosition))
       ..add(AttackButton(
-          img: imgMap[AssetList.heavyAttackButtonImg]!,
+          img: imgMap[AssetList.heavyAttackImg]!,
           bbox: Constant().attackButtonPosition))
       ..add(QuickAttackButton(
-          img: imgMap[AssetList.quickAttackButtonImg]!,
+          img: imgMap[AssetList.quickAttackImg]!,
           bbox: Constant().quickAttackButtonPosition))
       ..add(DodgeButton(
-          img: imgMap[AssetList.dodgeButtonImg]!,
+          img: imgMap[AssetList.dodgeImg]!,
           bbox: Constant().dodgeButtonPosition));
-    grounds.add(Ground(bbox: Constant().leftPlatformBox));
-    grounds.add(Ground(bbox: Constant().rightPlatformBox));
-    grounds.add(Ground(bbox: Constant().middlePlatformBox));
-    grounds.add(Ground(bbox: Constant().upperPlatformBox));
+    grounds.add(Ground(
+        bbox: Rect.fromLTWH(
+            0,
+            Constant().h / 2 + _stage!.characters[0].bbox.height,
+            Constant().w,
+            Constant().h / 10),
+        groundImg: imgMap[AssetList.baseGround]!));
     _loading = false;
     _stage!._updateScreen();
   }
 
   void reset() {
+    Player().character.resetBbox();
     gameOver = false;
     displayTime = Constant().time;
     _loading = true;
     _stageSetup(Loader().imgMap);
-  }
 
-  void setRoom(Room newRoom) {
-    room = newRoom;
   }
 
   void move(Character character, String dir, bool isMoving) {
@@ -102,36 +100,24 @@ class Stage extends ChangeNotifier {
 
   void updateGame() {
     if (Stage().ready) {
-      opponent!.getActions();
+      _opponent!.getActions();
       for (var character in _stage!.characters) {
         for (var other in _stage!.characters) {
           if (other != character &&
               other.usingAbility &&
-              !character.isInvincible &&
-              character.getHitBox().overlaps(other.abilityRange())) {
-            int invincibilityFrame = other.remainingAbilityDuration();
-            String fromDirection = 'LEFT';
-            if (character.getHitBox().left < other.getHitBox().left) {
-              fromDirection = 'RIGHT';
-            }
-            character.getDamage(other.abilityDamage(), invincibilityFrame,
-                other.abilityRecoil(), fromDirection, false);
-            if (character.health <= 0) {
-              endGame();
-              _updateScreen();
-            }
+              character.bbox.overlaps(other.abilityRange())) {
+            character.getDamage(other.abilityDamage());
           }
-        }
-        if (character.getImageBox().top > Constant().h) {
-          character.getDamage(character.maxHealth, 0, 0, 'RIGHT', true);
-          endGame();
-          _updateScreen();
         }
         character.update();
       }
       _updateTimer();
       if (displayTime <= 0) {
-        endGame();
+        characters.removeRange(0, characters.length);
+        grounds.removeRange(0, grounds.length);
+        buttons.removeRange(0, buttons.length);
+        gameTimer.cancel();
+        gameOver = true;
       }
       _updateScreen();
     }
@@ -160,19 +146,22 @@ class Stage extends ChangeNotifier {
     _ready = bool;
   }
 
-  void endGame() {
-    characters.removeRange(0, characters.length);
-    grounds.removeRange(0, grounds.length);
-    buttons.removeRange(0, buttons.length);
-    gameTimer.cancel();
-    gameOver = true;
-  }
-
   Rect getPlayerPosition() {
-    return Player().character.getHitBox();
+    return Player().character.bbox;
   }
 
-  void setOpponent(Opponent newOpponent) {
-    opponent = newOpponent;
+  void setOpponent(Opponent opponent) {
+    _opponent = opponent;
   }
+/*=============================================================
+* TEST
+=============================================================*/
+  List<Character> getChar(){
+    return [Player().character,_opponent!.character];
+  }
+
+  Opponent getOp(){
+    return _opponent!;
+  }
+
 }

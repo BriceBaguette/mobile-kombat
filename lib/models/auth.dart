@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mobile_kombat/controller_inventory.dart';
 import 'package:mobile_kombat/models/database.dart';
 import 'package:mobile_kombat/models/player.dart';
 
@@ -14,7 +15,7 @@ class Auth {
   signUp(String email, String password, String nickname) async {
     try {
       final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -48,14 +49,5 @@ class Auth {
     } catch (e) {
       print(e);
     }
-  }
-
-  void initializeUser() async {
-    var username = await _database.getUserName(currentUser!.uid);
-    Player().username = username;
-  }
-
-  void signout() {
-    _firebaseAuth.signOut();
   }
 }

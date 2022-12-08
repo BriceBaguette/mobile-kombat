@@ -1,6 +1,9 @@
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/cosmetics.dart';
 
+import 'auth.dart';
+import 'database.dart';
+
 class Player {
   static Player? _player;
 
@@ -10,14 +13,21 @@ class Player {
   }
   late Character character;
   late List<Cosmetics> cosmetics;
-  String _username = '';
+  late String username;
   double health = 100;
+  int gold = 0;
+
+  void updateGold(int mod){
+    gold = gold + mod;
+  }
+
+  void setGoldPlayer(int n){
+    gold = n;
+  }
 
   Player._hidden() {
     resetHealth();
   }
-  set username(nickname) => _username = nickname;
-  get username => _username;
 
   setCharacter(character) {
     this.character = character;
@@ -25,6 +35,10 @@ class Player {
 
   setCosmetics(cosmetics) {
     this.cosmetics = cosmetics;
+  }
+
+  String getUsername(){
+    return "alouette";//username
   }
 
   resetHealth() {

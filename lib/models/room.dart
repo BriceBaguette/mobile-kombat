@@ -1,5 +1,4 @@
 import 'package:mobile_kombat/models/character.dart';
-import 'package:mobile_kombat/models/loader.dart';
 
 class Room {
   String roomId = '';
@@ -16,17 +15,11 @@ class Room {
 class UserDb {
   String userId = '';
   String userName = '';
-  late bool first;
   late CharacterDb character;
   UserDb.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     userName = json['userName'];
     character = CharacterDb.fromJson(json['character']);
-    if (json['first'] == 'true') {
-      first = true;
-    } else {
-      first = false;
-    }
   }
 }
 
@@ -35,39 +28,22 @@ class CharacterDb {
   int health = 100;
   int id = -1;
   double upSpeed = 0;
-  bool isMoving = false;
 
   CharacterDb.fromJson(json) {
     facing = json['facing'];
-    health = int.parse(json['health']);
-    id = int.parse(json['id']);
-    upSpeed = double.parse(json['upSpeed']);
-    if (json['isMoving'] == 'true') {
-      isMoving = true;
-    } else {
-      isMoving = false;
-    }
+    health = json['health'];
+    id = json['id'];
+    upSpeed = json['upSpeed'];
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'facing': facing,
-      'health': health,
-      'id': id,
-      'upSpeed': upSpeed,
-      'isMoving': isMoving.toString(),
-    };
+    return {'facing': facing, 'health': health, 'id': id, 'upSpeed': upSpeed};
   }
 
-  CharacterDb.fromCharacter(Character character, {second = false}) {
-    if (!second) {
-      facing = 'LEFT';
-    } else {
-      facing = 'RIGHT';
-    }
+  CharacterDb.fromCharacter(Character character) {
+    facing = character.facing;
     health = character.health;
-    id = Loader().getCharacterId(character);
-    upSpeed = character.getUpSpeed();
-    isMoving = character.isMoving;
+    id = 0;
+    upSpeed = character.upSpeed;
   }
 }

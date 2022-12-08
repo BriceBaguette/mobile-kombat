@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'package:mobile_kombat/models/cosmetics.dart';
 import 'package:mobile_kombat/models/character.dart';
 
 import 'package:mobile_kombat/controller_inventory.dart';
-import 'package:provider/provider.dart';
+
 
 /*
 *== SHOP ========================================================
@@ -31,267 +32,507 @@ class Shop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red[900],
-        toolbarHeight: 40,
-        leading: Row(children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.of(context).popAndPushNamed('menu');
-            },
-            tooltip: 'Shop',
-          ),
-        ]),
-        actions: const [],
-        title: const Text("Shop"),
-        centerTitle: true,
-      ),
-      body: Consumer<ControllerInventory>(
-          builder: (_, data, __) => Center(
-                child: Row(
+    return Consumer<ControllerInventory>(
+        builder: (_, data, __) =>
+            Center(
+              child: Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.red[900],
+                  toolbarHeight: 40,
+                  leading: Row(children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back_ios),
+                      onPressed: () {
+                        Navigator.of(context).popAndPushNamed('menu');
+                      },
+                      tooltip: 'Shop',
+                    ),
+                  ]),
+                  actions: const [],
+                  title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(),
+                        const Text("Shop"),
+                        Row(children: [
+                          Text(data.getGold().toString()),
+                          const Text("   "),
+                          Image.asset("./assets/images/Coins.png", width: 20)
+                        ])
+                      ]),
+                  centerTitle: true,
+                ),
+                body: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    /*SizedBox(
-                  width: 180,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text("GenericName1"),
-                      Image.asset('assets/images/GenericGuy.png'),
-                      Container()
-                    ],
-                  )),*/
-                    SizedBox(
-                      width: 300,
-                      child: SizedBox(
-                        //CHARACTER PART TO MODIFY
-                        child: ListView.builder(
-                            itemCount: data.getArticlesChar().length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              title: Center(
-                                                  child: Text(data
+                    Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Column(children: [
+                          Container(
+                            height: 40,
+                            width: 300,
+                            decoration: BoxDecoration(
+                                color: Colors.red[900]!,
+                                border: Border.all(
+                                  color: Colors.black,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
+                            child: const Center(
+                                child: Text(
+                                  "Characters",
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                          ),
+                          SizedBox(
+                            width: 300,
+                            height: MediaQuery
+                                .of(context)
+                                .size
+                                .height - 120,
+                            child: SizedBox(
+                              child: ListView.builder(
+                                  itemCount: data
+                                      .getArticlesChar()
+                                      .length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder:
+                                                  (BuildContext context) =>
+                                                  AlertDialog(
+                                                    title: Center(
+                                                        child: Text(data
+                                                            .getArticlesChar()[
+                                                        index]
+                                                            .getName())),
+                                                    content: PopUpChar(
+                                                        c: data
+                                                            .getArticlesChar()[
+                                                        index]),
+                                                    actions: [
+                                                      Text(
+                                                          "Price: ${data
+                                                              .getArticlesChar()[index]
+                                                              .getPrice()}"),
+                                                      Image.asset(
+                                                        "assets/images/Coins.png",
+                                                        scale: 5,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 40,
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          if (data.getGold() >=
+                                                              data
+                                                                  .getArticlesChar()[
+                                                              index]
+                                                                  .getPrice()) {
+                                                            data.updateGold(
+                                                                -data
+                                                                    .getArticlesChar()[
+                                                                index]
+                                                                    .getPrice());
+                                                            data.addItemChar(
+                                                                data
+                                                                    .getArticlesChar()[
+                                                                index]);
+                                                            data
+                                                                .deleteArticleChar(
+                                                                index);
+                                                            Navigator.of(
+                                                                context)
+                                                                .pop();
+                                                          } else {
+                                                            showDialog(
+                                                                context:
+                                                                context,
+                                                                builder: (
+                                                                    BuildContext
+                                                                    context) =>
+                                                                    AlertDialog(
+                                                                      title:
+                                                                      const Center(
+                                                                          child: Text(
+                                                                              "Unable to buy this character")),
+                                                                      content: Column(
+                                                                          mainAxisSize: MainAxisSize
+                                                                              .min,
+                                                                          children: const [
+                                                                            Center(
+                                                                                child: Text(
+                                                                                  "Not enough money",
+                                                                                  style: TextStyle(
+                                                                                      color: Colors
+                                                                                          .red),
+                                                                                )),
+                                                                          ]),
+                                                                      actions: [
+                                                                        ElevatedButton(
+                                                                            onPressed: () {
+                                                                              Navigator
+                                                                                  .of(
+                                                                                  context)
+                                                                                  .pop();
+                                                                              Navigator
+                                                                                  .of(
+                                                                                  context)
+                                                                                  .pop();
+                                                                            },
+                                                                            child: const Text(
+                                                                                "Close"))
+                                                                      ],
+                                                                    ));
+                                                          }
+                                                        },
+                                                        child: const Text(
+                                                            'Buy'),
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          Navigator.of(
+                                                              context)
+                                                              .pop();
+                                                        },
+                                                        child: const Text(
+                                                            'Close'),
+                                                      ),
+                                                    ],
+                                                  ));
+                                        },
+                                        child: Container(
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.blueGrey.shade300,
+                                              ),
+                                              borderRadius:
+                                              const BorderRadius.all(
+                                                  Radius.circular(10)),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 20),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                                children: [
+                                                  CharacterWidget(
+                                                      c: data.getArticlesChar()[
+                                                      index]),
+                                                  //Make widget for character
+                                                  Text(data
                                                       .getArticlesChar()[index]
-                                                      .getName())),
-                                              content: PopUpShopChar(
-                                                  c: data.getArticlesChar()[
-                                                      index]),
-                                              actions: [
-                                                Text(
-                                                    "Price: ${data.getArticlesChar()[index].getPrice()}"),
-                                                Image.asset(
-                                                  "assets/images/Coins.png",
-                                                  scale: 5,
-                                                ),
-                                                const SizedBox(
-                                                  width: 40,
-                                                ),
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    data.addItemChar(
-                                                        data.getArticlesChar()[
-                                                            index]);
-                                                    data.deleteArticleChar(
-                                                        index);
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text('Buy'),
-                                                ),
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text('Close'),
-                                                ),
-                                              ],
-                                            ));
-                                  },
-                                  child: Container(
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors.blueGrey.shade300,
-                                        ),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10)),
-                                      ),
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 20),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            CharacterWidget(
-                                                c: data.getArticlesChar()[
-                                                    index]), //Make widget for character
-                                            Text(data
-                                                .getArticlesChar()[index]
-                                                .getPrice()
-                                                .toString()),
-                                            Image.asset(
-                                                "assets/images/Coins.png",
-                                                scale: 5),
-                                            ElevatedButton(
-                                              child: const Text('Buy'),
-                                              onPressed: () {
-                                                data.addItemChar(data
-                                                    .getArticlesChar()[index]);
-                                                data.deleteArticleChar(index);
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      )));
-                            }),
-                      ),
-                    ),
-                    SizedBox(
-                      //COSMETIC PART ISOK
-                      width: 300,
-                      child: SizedBox(
-                        child: ListView.builder(
-                            itemCount: data.getArticlesCosmetics().length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              title: Center(
-                                                  child: Text(data
-                                                      .getArticlesCosmetics()[
+                                                      .getPrice()
+                                                      .toString()),
+                                                  Image.asset(
+                                                      "assets/images/Coins.png",
+                                                      scale: 5),
+                                                  ElevatedButton(
+                                                    child: const Text('Buy'),
+                                                    onPressed: () {
+                                                      if (data.getGold() >=
+                                                          data
+                                                              .getArticlesChar()[
                                                           index]
-                                                      .getName())),
-                                              content: PopUpShopCosmetic(
-                                                  c: data.getArticlesCosmetics()[
-                                                      index]),
-                                              actions: [
-                                                Text(
-                                                    "Price: ${data.getArticlesCosmetics()[index].getPrice()}"),
-                                                Image.asset(
-                                                  "assets/images/Coins.png",
-                                                  scale: 5,
-                                                ),
-                                                const SizedBox(
-                                                  width: 40,
-                                                ),
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    data.addItem(
-                                                        data.getArticlesCosmetics()[
+                                                              .getPrice()) {
+                                                        data.updateGold(-data
+                                                            .getArticlesChar()[
+                                                        index]
+                                                            .getPrice());
+                                                        data.addItemChar(
+                                                            data
+                                                                .getArticlesChar()[
                                                             index]);
-                                                    data.deleteArticle(index);
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text('Buy'),
-                                                ),
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text('Close'),
-                                                ),
-                                              ],
-                                            ));
-                                  },
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors.blueGrey.shade300,
-                                        ),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10)),
-                                      ),
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 20),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            data.getArticlesCosmetics()[index],
-                                            Text(data
-                                                .getArticlesCosmetics()[index]
-                                                .getPrice()
-                                                .toString()),
-                                            Image.asset(
-                                                "assets/images/Coins.png",
-                                                scale: 5),
-                                            ElevatedButton(
-                                              child: const Text('Buy'),
-                                              onPressed: () {
-                                                data.addItem(
-                                                    data.getArticlesCosmetics()[
-                                                        index]);
-                                                data.deleteArticle(index);
-                                              },
+                                                        data.deleteArticleChar(
+                                                            index);
+                                                      } else {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (
+                                                                BuildContext
+                                                                context) =>
+                                                                AlertDialog(
+                                                                  title: const Center(
+                                                                      child: Text(
+                                                                          "Unable to buy this character")),
+                                                                  content: Column(
+                                                                      mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                      children: const [
+                                                                        Center(
+                                                                            child:
+                                                                            Text(
+                                                                              "Not enough money",
+                                                                              style:
+                                                                              TextStyle(
+                                                                                  color: Colors
+                                                                                      .red),
+                                                                            )),
+                                                                      ]),
+                                                                  actions: [
+                                                                    ElevatedButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator
+                                                                              .of(
+                                                                              context)
+                                                                              .pop();
+                                                                        },
+                                                                        child: const Text(
+                                                                            "Close"))
+                                                                  ],
+                                                                ));
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            )));
+                                  }),
+                            ),
+                          ),
+                        ])),
+                    Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Column(children: [
+                          Container(
+                            height: 40,
+                            width: 300,
+                            decoration: BoxDecoration(
+                                color: Colors.red[900]!,
+                                border: Border.all(
+                                  color: Colors.black,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
+                            child: const Center(
+                                child: Text(
+                                  "Cosmetics",
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                          ),
+                          SizedBox(
+                            width: 300,
+                            height: MediaQuery
+                                .of(context)
+                                .size
+                                .height - 120,
+                            child: SizedBox(
+                              child: ListView.builder(
+                                  itemCount: data
+                                      .getArticlesCosmetics()
+                                      .length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder:
+                                                  (BuildContext context) =>
+                                                  AlertDialog(
+                                                    title: Center(
+                                                        child: Text(data
+                                                            .getArticlesCosmetics()[
+                                                        index]
+                                                            .getName())),
+                                                    content: PopUpCosmetic(
+                                                        c: data
+                                                            .getArticlesCosmetics()[
+                                                        index]),
+                                                    actions: [
+                                                      Text(
+                                                          "Price: ${data
+                                                              .getArticlesCosmetics()[index]
+                                                              .getPrice()}"),
+                                                      Image.asset(
+                                                        "assets/images/Coins.png",
+                                                        scale: 5,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 40,
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          if (data.getGold() >=
+                                                              data
+                                                                  .getArticlesCosmetics()[
+                                                              index]
+                                                                  .getPrice()) {
+                                                            data.updateGold(
+                                                                -data
+                                                                    .getArticlesCosmetics()[
+                                                                index]
+                                                                    .getPrice());
+                                                            data.addItem(
+                                                                data
+                                                                    .getArticlesCosmetics()[
+                                                                index]);
+                                                            data.deleteArticle(
+                                                                index);
+                                                            Navigator.of(
+                                                                context)
+                                                                .pop();
+                                                          } else {
+                                                            showDialog(
+                                                                context:
+                                                                context,
+                                                                builder: (
+                                                                    BuildContext
+                                                                    context) =>
+                                                                    AlertDialog(
+                                                                      title:
+                                                                      const Center(
+                                                                          child: Text(
+                                                                              "Unable to buy this item")),
+                                                                      content: Column(
+                                                                          mainAxisSize: MainAxisSize
+                                                                              .min,
+                                                                          children: const [
+                                                                            Center(
+                                                                                child: Text(
+                                                                                  "Not enough money",
+                                                                                  style: TextStyle(
+                                                                                      color: Colors
+                                                                                          .red),
+                                                                                )),
+                                                                          ]),
+                                                                      actions: [
+                                                                        ElevatedButton(
+                                                                            onPressed: () {
+                                                                              Navigator
+                                                                                  .of(
+                                                                                  context)
+                                                                                  .pop();
+                                                                              Navigator
+                                                                                  .of(
+                                                                                  context)
+                                                                                  .pop();
+                                                                            },
+                                                                            child: const Text(
+                                                                                "Close"))
+                                                                      ],
+                                                                    ));
+                                                          }
+                                                        },
+                                                        child: const Text(
+                                                            'Buy'),
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          Navigator.of(
+                                                              context)
+                                                              .pop();
+                                                        },
+                                                        child: const Text(
+                                                            'Close'),
+                                                      ),
+                                                    ],
+                                                  ));
+                                        },
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.blueGrey.shade300,
+                                              ),
+                                              borderRadius:
+                                              const BorderRadius.all(
+                                                  Radius.circular(10)),
                                             ),
-                                          ],
-                                        ),
-                                      )));
-                            }),
-                      ),
-                    ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 20),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                                children: [
+                                                  data.getArticlesCosmetics()[
+                                                  index],
+                                                  Text(data
+                                                      .getArticlesCosmetics()[
+                                                  index]
+                                                      .getPrice()
+                                                      .toString()),
+                                                  Image.asset(
+                                                      "assets/images/Coins.png",
+                                                      scale: 5),
+                                                  ElevatedButton(
+                                                    child: const Text('Buy'),
+                                                    onPressed: () {
+                                                      if (data.getGold() >=
+                                                          data
+                                                              .getArticlesCosmetics()[
+                                                          index]
+                                                              .getPrice()) {
+                                                        data.updateGold(-data
+                                                            .getArticlesCosmetics()[
+                                                        index]
+                                                            .getPrice());
+                                                        data.addItem(
+                                                            data
+                                                                .getArticlesCosmetics()[
+                                                            index]);
+                                                        data.deleteArticle(
+                                                            index);
+                                                      } else {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (
+                                                                BuildContext
+                                                                context) =>
+                                                                AlertDialog(
+                                                                  title: const Center(
+                                                                      child: Text(
+                                                                          "Unable to buy this item")),
+                                                                  content: Column(
+                                                                      mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                      children: const [
+                                                                        Center(
+                                                                            child:
+                                                                            Text(
+                                                                              "Not enough money",
+                                                                              style:
+                                                                              TextStyle(
+                                                                                  color: Colors
+                                                                                      .red),
+                                                                            )),
+                                                                      ]),
+                                                                  actions: [
+                                                                    ElevatedButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator
+                                                                              .of(
+                                                                              context)
+                                                                              .pop();
+                                                                        },
+                                                                        child: const Text(
+                                                                            "Close"))
+                                                                  ],
+                                                                ));
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            )));
+                                  }),
+                            ),
+                          )
+                        ])),
                   ],
                 ),
-              )),
-    );
-  }
-}
-/*
-* ==Sandbox======================================================
-* Testing stuff and ideas
-* ===============================================================
-*/
-
-class PopUpShopCosmetic extends StatelessWidget {
-  const PopUpShopCosmetic({super.key, required this.c});
-  final Cosmetics c;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.asset(c.getImage()),
-          Text("Set: ${c.getSet()}\n"
-              "Speed: ${c.getModifiers()[0]}\n"
-              "Resistance:${c.getModifiers()[1]}\n"
-              "Attack Speed: ${c.getModifiers()[2]}\n"
-              "Strength: ${c.getModifiers()[3]}\n"),
-        ],
-      ),
-    );
-  }
-}
-
-class PopUpShopChar extends StatelessWidget { //in inventory, add stats of the equipped items
-  const PopUpShopChar({super.key, required this.c});
-  final Character c;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.asset(c.getImageDir()),
-          Text("Speed: ${c.getSpeed()}\n"
-              "Resistance:${c.getResistance()}\n"
-              "Attack Speed: ${c.getAS()}\n"
-              "Strength: ${c.getStrength()}\n"),
-        ],
-      ),
-    );
+              ),
+            ));
   }
 }
