@@ -91,6 +91,7 @@ class RealPlayer extends Opponent {
 }
 
 abstract class Opponent {
+  String username = '';
   Character character;
   //Cosmetics cosmetics;
   Opponent({
