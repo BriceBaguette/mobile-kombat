@@ -1,74 +1,31 @@
 import 'package:flutter/cupertino.dart';
-
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/cosmetics.dart';
-import 'package:mobile_kombat/models/constant.dart';
+import 'models/auth.dart';
+import 'models/database.dart';
+import 'models/player.dart';
 
 class ControllerInventory extends ChangeNotifier {
-  final List<Cosmetics> _articlesCosmetics = [
-    Cosmetics(
-        key: const ObjectKey('test1'),
-        'test1',
-        const [1, 0, -1, 0],
-        'assets/images/ClassyHat.png',
-        "H",
-        "gen",
-        100,
-        false),
-    Cosmetics(
-        key: const ObjectKey('test2'),
-        'test2',
-        const [0, 0, -1, 0],
-        'assets/images/GenericGuy.png',
-        "H",
-        "gen",
-        100,
-        false),
-    Cosmetics(
-        key: const ObjectKey('test3'),
-        'test3',
-        const [2, 0, 0, 0],
-        'assets/images/hawaiian-shirt.png',
-        "B",
-        "gen",
-        100,
-        false),
-    Cosmetics(
-        key: const ObjectKey('test4'),
-        'test4',
-        const [1, 1, -2, 0],
-        'assets/images/swimwear.png',
-        "F",
-        "gen",
-        100,
-        false),
-  ]; //get shop from Firebase
-  final List<Cosmetics> _itemsInvCosmetics = []; // get inventory from Firebase
-  final Map<String, Cosmetics> _equippedCosmetics =
-      {}; //get equipped from Firebase
 
-  final List<Character> _articlesCharacters = [
-    StickMan(
-        bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
-            Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
-        speed: 3,
-        facing: 'LEFT',
-        framerate: Constant().framerate)
-  ]; //get shop from Firebase
-  final List<Character> _itemsInvChar = [
-    StickMan(
-        bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
-            Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
-        speed: 3,
-        facing: 'LEFT',
-        framerate: Constant().framerate)
-  ]; // get inventory from Firebase
-  static Character _equippedChar = StickMan(
-      bbox: Rect.fromLTWH(Constant().w - Constant().w / 4, Constant().h / 2,
-          Constant().w / 20, Constant().w / 20 * Constant().gokuRatio),
-      speed: 3,
-      facing: 'LEFT',
-      framerate: Constant().framerate); //get equipped from Firebase
+
+
+  final Map<String, Cosmetics> _equippedCosmetics =
+      {};
+  int _gold = 0;
+  List<Character> _articlesCharacters = [];
+  List<Character> _itemsInvChar = [];
+  List<Cosmetics> _articlesCosmetics = [];
+  List<Cosmetics> _itemsInvCosmetics = [];
+  static Character _equippedChar = Player().character;
+
+  Future init() async{
+    _gold = await Database().getGoldFromUser(Auth().currentUser!.uid);
+    _itemsInvChar = await Database().getCharacterFromUser(Auth().currentUser!.uid);
+    _articlesCharacters = await Database().getCharacterForShop(Auth().currentUser!.uid);
+    _articlesCosmetics = await Database().getCosmeticForShop(Auth().currentUser!.uid);
+    _itemsInvCosmetics = await Database().getCosmeticFromUser(Auth().currentUser!.uid);
+    Player().setGoldPlayer(_gold);
+  }
 
   List<Cosmetics> getArticlesCosmetics() {
     return _articlesCosmetics;
@@ -89,32 +46,41 @@ class ControllerInventory extends ChangeNotifier {
   List<Character> getItemsInvChar() {
     return _itemsInvChar;
   }
-
-  Character getEquippedChar() {
+  Character getEquippedChar(){
     return _equippedChar;
   }
 
-  void addItem(Cosmetics c) {
+  int getGold(){
+    return _gold;
+  }
+
+  void updateGold(int mod) async{
+    _gold = _gold + mod;
+    await Database().updateGold(Auth().currentUser!.uid, mod);
+    notifyListeners();
+  }
+
+
+  void addItem(Cosmetics c) async{
     _itemsInvCosmetics.add(c);
-    // add to Firebase inventory
-    // +1 to cosmetics count
+    await Database().buyCosmetic(Auth().currentUser!.uid, c.id);
+    await Database().updateStats(Auth().currentUser!.uid,0,0,0,0,0,1);
     notifyListeners();
   }
 
   void deleteArticle(index) {
     _articlesCosmetics.removeAt(index);
-    // remove from firebase shop
     notifyListeners();
   }
 
-  void addStat(Cosmetics c) {
+  void addStat(Cosmetics c){
     _equippedChar.setStrength(c.getModifiers()[3]);
     _equippedChar.setResistance(c.getModifiers()[1]);
     _equippedChar.setSpeed(c.getModifiers()[0]);
     _equippedChar.setAS(c.getModifiers()[2]);
   }
 
-  void removeStat(Cosmetics c) {
+  void removeStat(Cosmetics c){
     _equippedChar.setStrength(-c.getModifiers()[3]);
     _equippedChar.setResistance(-c.getModifiers()[1]);
     _equippedChar.setSpeed(-c.getModifiers()[0]);
@@ -128,8 +94,8 @@ class ControllerInventory extends ChangeNotifier {
       unequipItem(_equippedCosmetics[bp]!);
     }
     _equippedCosmetics[bp] = c;
+    _equippedChar.equipCosmetic(c);
     addStat(_equippedCosmetics[bp]!);
-    //update firebase equipped
     notifyListeners();
   }
 
@@ -137,20 +103,19 @@ class ControllerInventory extends ChangeNotifier {
     String bp = c.getBodyPart();
     removeStat(_equippedCosmetics[bp]!);
     _equippedCosmetics.remove(bp);
-    //remove from Firebase equipped
+    _equippedChar.removeCosmetic(bp);
     notifyListeners();
   }
 
-  void addItemChar(Character c) {
+  void addItemChar(Character c) async {
     _itemsInvChar.add(c);
-    // add to Firebase inventory
-    // +1 to character count
+    await Database().buyCharacter(Auth().currentUser!.uid, c.id);
+    await Database().updateStats(Auth().currentUser!.uid,0,0,0,0,1,0);
     notifyListeners();
   }
 
   void deleteArticleChar(index) {
     _articlesCharacters.removeAt(index);
-    // remove from firebase shop
     notifyListeners();
   }
 
@@ -158,8 +123,11 @@ class ControllerInventory extends ChangeNotifier {
     _equippedCosmetics.remove("H");
     _equippedCosmetics.remove("B");
     _equippedCosmetics.remove("F");
+    _equippedChar.removeCosmetic("H");
+    _equippedChar.removeCosmetic("B");
+    _equippedChar.removeCosmetic("F");
     _equippedChar = c;
-    //update firebase equipped
+    Player().setCharacter(c);
     notifyListeners();
   }
 }

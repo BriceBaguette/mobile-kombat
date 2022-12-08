@@ -10,6 +10,7 @@ class DummyBot extends Opponent {
     required super.character,
     /*required super.cosmetics*/
   });
+  String username = "Dummybot";
 
   @override
   void getActions() {}
@@ -23,6 +24,7 @@ class SmartBot extends Opponent {
     required super.character,
     /*required super.cosmetics*/
   });
+  String username = "Smartbot";
 
   @override
   void getActions() {
@@ -34,7 +36,7 @@ class SmartBot extends Opponent {
 
   void makeJump() {
     if (random.nextDouble() < 0.005 && character.isGrounded()) {
-      character.jump(-6);
+      character.setJumpSpeed(-5);
     }
   }
 
@@ -48,15 +50,15 @@ class SmartBot extends Opponent {
     if (moveTimer <= 0) {
       if (random.nextDouble() < 0.95) {
         character.setMovement(true);
-        if (character.getHitBox().right < playerBbox.left &&
-            character.getFacing() == 'RIGHT') {
+        if (character.bbox.right < playerBbox.left &&
+            character.facing == 'RIGHT') {
           if (random.nextDouble() < 0.95) {
             character.setDirection('RIGHT');
           } else {
             character.setDirection('LEFT');
           }
-        } else if (character.getHitBox().left > playerBbox.right &&
-            character.getFacing() == 'LEFT') {
+        } else if (character.bbox.left > playerBbox.right &&
+            character.facing == 'LEFT') {
           if (random.nextDouble() < 0.95) {
             character.setDirection('LEFT');
           } else {
@@ -79,19 +81,13 @@ class SmartBot extends Opponent {
   }
 
   double getCharacterDistance(playerBbox) {
-    return (character.getHitBox().center - playerBbox.center).distance;
+    return (character.bbox.center - playerBbox.center).distance;
   }
-}
-
-class RealPlayer extends Opponent {
-  String username;
-  RealPlayer({required this.username, required super.character});
-  @override
-  void getActions() {}
 }
 
 abstract class Opponent {
   Character character;
+  late String username;
   //Cosmetics cosmetics;
   Opponent({
     required this.character,
