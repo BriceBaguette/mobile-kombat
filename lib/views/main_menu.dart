@@ -158,25 +158,13 @@ class MainMenu extends StatelessWidget {
                                                           backgroundColor:
                                                               Colors.red[900]),
                                                   onPressed: () => {
+                                                        _player.character
+                                                            .setPosition(Constant()
+                                                                .firstPlayerPosition),
                                                         opponent = DummyBot(
                                                             character: StickMan(
-                                                                bbox: Rect.fromLTWH(
-                                                                    Constant()
-                                                                            .w -
-                                                                        Constant()
-                                                                                .w /
-                                                                            4,
-                                                                    Constant()
-                                                                            .h /
-                                                                        2,
-                                                                    Constant()
-                                                                            .w /
-                                                                        20,
-                                                                    Constant()
-                                                                            .w /
-                                                                        20 *
-                                                                        Constant()
-                                                                            .gokuRatio),
+                                                                bbox: Constant()
+                                                                    .secondPlayerPosition,
                                                                 speed: 3,
                                                                 facing: 'LEFT',
                                                                 framerate:
@@ -200,25 +188,13 @@ class MainMenu extends StatelessWidget {
                                                           backgroundColor:
                                                               Colors.red[900]),
                                                   onPressed: () => {
+                                                        _player.character
+                                                            .setPosition(Constant()
+                                                                .firstPlayerPosition),
                                                         opponent = SmartBot(
                                                             character: StickMan(
-                                                                bbox: Rect.fromLTWH(
-                                                                    Constant()
-                                                                            .w -
-                                                                        Constant()
-                                                                                .w /
-                                                                            4,
-                                                                    Constant()
-                                                                            .h /
-                                                                        2,
-                                                                    Constant()
-                                                                            .w /
-                                                                        20,
-                                                                    Constant()
-                                                                            .w /
-                                                                        20 *
-                                                                        Constant()
-                                                                            .gokuRatio),
+                                                                bbox: Constant()
+                                                                    .secondPlayerPosition,
                                                                 speed: 3,
                                                                 facing: 'LEFT',
                                                                 framerate:
