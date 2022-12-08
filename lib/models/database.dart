@@ -224,6 +224,7 @@ class RealTimeDB {
           'id': room.users[0].character.id,
           'upSpeed': room.users[0].character.upSpeed,
           'isMoving': room.users[0].character.isMoving.toString(),
+          'attack': '',
         }
       },
       room.users[1].userId: {
@@ -232,7 +233,8 @@ class RealTimeDB {
           'health': room.users[1].character.health,
           'id': room.users[1].character.id,
           'upSpeed': room.users[1].character.upSpeed,
-          'isMoving': room.users[1].character.isMoving.toString()
+          'isMoving': room.users[1].character.isMoving.toString(),
+          'attack': '',
         }
       }
     });
@@ -262,13 +264,29 @@ class RealTimeDB {
       Stage().opponent!.character.setMovement(move);
     });
     DatabaseReference listenJump =
-        FirebaseDatabase.instance.ref('${room.roomId}/$id/character/isMoving');
+        FirebaseDatabase.instance.ref('${room.roomId}/$id/character/upSpeed');
     listenJump.onValue.listen((event) {
       var snapshot = event.snapshot;
       Stage()
           .opponent!
           .character
           .setJumpSpeed(double.parse(snapshot.value as String));
+    });
+    DatabaseReference listenAttack =
+        FirebaseDatabase.instance.ref('${room.roomId}/$id/character/attack');
+    listenAttack.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      switch (snapshot as String) {
+        case 'dodge':
+          Stage().opponent!.character.attack(dodge: true);
+          break;
+        case 'floor':
+          Stage().opponent!.character.attack(floor: true);
+          break;
+        case 'quick':
+          Stage().opponent!.character.attack(quick: true);
+          break;
+      }
     });
   }
 
@@ -288,5 +306,11 @@ class RealTimeDB {
     DatabaseReference ref = FirebaseDatabase.instance
         .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
     ref.update({"facing": facing});
+  }
+
+  setAttack(String attack) async {
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref('${Stage().room.roomId}/${Auth().currentUser!.uid}/character');
+    ref.update({"attack": attack});
   }
 }

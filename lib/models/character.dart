@@ -212,7 +212,7 @@ class StickMan extends Character {
   void getDamage(int damage) => health -= damage;
 
   @override
-  void attack({bool quick = false, bool dodge = false}) {
+  void attack({bool quick = false, bool floor = false, bool dodge = false}) {
     if (!usingAbility) {
       usingAbility = true;
       abilityInProgress = determineAttack(quick, dodge);
@@ -306,7 +306,7 @@ abstract class Character {
   Rect abilityRange();
   int abilityDamage();
   void getDamage(int damage);
-  void attack({bool quick = false, bool dodge = false});
+  void attack({bool quick = false, bool floor = false, bool dodge = false});
 
   Ability determineAttack(bool quick, bool dodge) {
     if (dodge) {
@@ -560,7 +560,7 @@ class StickMan2 extends Character {
   void getDamage(int damage) => health -= damage;
 
   @override
-  void attack({bool quick = false, bool dodge = false}) {
+  void attack({bool quick = false, bool floor = false, bool dodge = false}) {
     if (!usingAbility) {
       usingAbility = true;
       abilityInProgress = determineAttack(quick, dodge);
