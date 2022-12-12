@@ -43,3 +43,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Documents for teacher
+Flutter_project_report.pdf
+app-release.apk
+readme.md
+
