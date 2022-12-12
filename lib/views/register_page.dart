@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_kombat/controller_inventory.dart';
 import 'package:mobile_kombat/models/auth.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -51,18 +53,22 @@ class RegisterPage extends StatelessWidget {
                   width: double.infinity,
                   height: 20,
                 ),
-                ElevatedButton(
-                  child: (const Text('Sign up')),
-                  onPressed: () => {
-                    auth.signUp(email, password, nickname),
-                    if (auth.currentUser != null)
-                      {
-                        Navigator.of(context).popAndPushNamed('menu'),
-                      }
-                    else
-                      {}
-                  },
-                ),
+                Consumer<ControllerInventory>(
+                    builder: (_, data, __) => ElevatedButton(
+                        child: (const Text('Sign in')),
+                        onPressed: () => {
+                              FutureBuilder(
+                                future: auth
+                                    .signUp(email, password, nickname)
+                                    .then((_) => data.init().then((_) =>
+                                        Navigator.of(context)
+                                            .popAndPushNamed('menu'))),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<dynamic> snapshot) {
+                                  return const CircularProgressIndicator();
+                                },
+                              )
+                            })),
                 const SizedBox(
                   width: double.infinity,
                   height: 20,
