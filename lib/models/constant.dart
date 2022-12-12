@@ -40,6 +40,12 @@ class Constant {
   late double healthBarTop;
   late double healthBarMaxWidth;
   late double healthBarHeight;
+
+  late Rect bodyBbox;
+
+  late Rect footBbox;
+
+  late Rect hatBbox;
   factory Constant() {
     _constant ??= Constant._hidden();
     return _constant!;
@@ -98,6 +104,18 @@ class Constant {
         leftCharacterLeft, leftCharacterTop, w / 20, w / 20 * gokuRatio);
     secondPlayerPosition = Rect.fromLTWH(
         rightCharacterLeft, rightCharacterTop, w / 20, w / 20 * gokuRatio);
+    hatBbox = Rect.fromLTWH(firstPlayerPosition.left, firstPlayerPosition.top,
+        firstPlayerPosition.width, w / 30);
+    bodyBbox = Rect.fromLTWH(
+        firstPlayerPosition.left,
+        firstPlayerPosition.top + 2 * w / 30,
+        firstPlayerPosition.width,
+        w / 30);
+    footBbox = Rect.fromLTWH(
+        firstPlayerPosition.left,
+        firstPlayerPosition.top + 4 * w / 30,
+        firstPlayerPosition.width,
+        w / 30);
 
     healthBarLeft = w / 40;
     healthBarTop = h / 9;

@@ -208,11 +208,9 @@ class Heavy extends Character {
 
 abstract class Character {
   int id = 0;
-  late Rect hatBbox;
-
-  late Rect bodyBbox;
-
-  late Rect footBbox;
+  Rect hatBbox = Constant().hatBbox;
+  Rect bodyBbox = Constant().bodyBbox;
+  Rect footBbox = Constant().footBbox;
   late int _price;
 
   late int _framerate;

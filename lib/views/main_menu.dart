@@ -174,6 +174,7 @@ class MainMenu extends StatelessWidget {
                                                                         .framerate)),
                                                         Stage().setOpponent(
                                                             opponent),
+                                                        Stage().reset(),
                                                         Navigator.of(ctx).pop(),
                                                         Navigator.pushNamed(
                                                             context,
@@ -206,6 +207,7 @@ class MainMenu extends StatelessWidget {
                                                                         .framerate)),
                                                         Stage().setOpponent(
                                                             opponent),
+                                                        Stage().reset(),
                                                         Navigator.of(ctx).pop(),
                                                         Navigator.pushNamed(
                                                             context,
@@ -237,9 +239,12 @@ class MainMenu extends StatelessWidget {
                                                                         actions: [
                                                                           FutureBuilder(
                                                                             future: startGame().then((_) =>
-                                                                                WidgetsBinding.instance.addPostFrameCallback((_) {
-                                                                                  Navigator.pushNamed(context, 'gamestage');
-                                                                                })),
+                                                                                {
+                                                                                  Stage().reset(),
+                                                                                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                                                                                    Navigator.pushNamed(context, 'gamestage');
+                                                                                  })
+                                                                                }),
                                                                             builder:
                                                                                 (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                                                                               return const Center(child: CircularProgressIndicator());
