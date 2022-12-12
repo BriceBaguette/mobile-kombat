@@ -119,13 +119,15 @@ class FloorButton extends Button {
 
   @override
   void onTap() {
-    if (_scene.characters[0].isGrounded() && _scene.characters[0].isMoving) {
-      _scene.characters[0].attack(dodge: true, floor: true);
+    if (_scene.characters[0].isGrounded() && !_scene.characters[0].isMoving) {
+      _scene.characters[0].isFloor = true;
     }
   }
 
   @override
-  void onTapCancel() {}
+  void onTapCancel() {
+    _scene.characters[0].isFloor = false;
+  }
 }
 
 abstract class Button {

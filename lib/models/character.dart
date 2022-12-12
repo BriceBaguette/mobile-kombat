@@ -166,6 +166,7 @@ abstract class Character {
   late String _facing;
   bool hasJumped = false;
   bool isMoving = false;
+  bool isFloor = false;
   bool usingAbility = false;
   bool _usingStaticAbility = false;
   bool isInvincible = false;
@@ -284,6 +285,14 @@ abstract class Character {
   }
 
   void move() {
+    if (isFloor && isGrounded() && !isMoving) {
+      for (var element in Stage().transparentGrounds) {
+        if (element.bbox.contains(Offset(_bbox.left, _bbox.bottom + 1)) ||
+            element.bbox.contains(Offset(_bbox.right, _bbox.bottom + 1))) {
+          _bbox = _bbox.translate(0, element.bbox.height);
+        }
+      }
+    }
     if (isGrounded() && _upSpeed > 0.0 && !isGettingDamage) {
       _upSpeed = 0;
       hasJumped = false;
@@ -395,16 +404,16 @@ abstract class Character {
     return box;
   }
 
-  void attack({bool quick = false, bool floor = false, bool dodge = false}) {
+  void attack({bool quick = false, bool dodge = false}) {
     if (!usingAbility && !isGettingDamage) {
       usingAbility = true;
-      _abilityInProgress = _determineAttack(quick, floor, dodge);
+      _abilityInProgress = _determineAttack(quick, dodge);
       _setAction(_abilityInProgress.images,
           _abilityInProgress.duration - _attackSpeedModificator);
     }
   }
 
-  Ability _determineAttack(bool quick, bool floor, bool dodge) {
+  Ability _determineAttack(bool quick, bool dodge) {
     if (dodge) {
       _usingStaticAbility = false;
       hasJumped = false;
@@ -420,7 +429,7 @@ abstract class Character {
       _usingStaticAbility = false;
       return _airAttack;
     }
-    if (floor) {
+    if (isFloor) {
       _usingStaticAbility = true;
       return _floorAttack;
     }
