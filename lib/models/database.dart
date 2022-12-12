@@ -19,12 +19,21 @@ class Database {
 
   final Loader _loader = Loader();
   void addUser(UserCredential cred, String nickname) {
-    List<int> characterList = [];
-    characterList.add(0);
-    db
-        .collection('users')
-        .doc(cred.user!.uid)
-        .set({'ownedCharacter': characterList, 'nickname': nickname});
+    List<int> characterShop = [1];
+    List<int> cosmeticShop = [0, 1, 2];
+    List<int> characterList = [0];
+    List<int> cosmeticList = [];
+    List<int> stats = [0, 0, 0, 0, 1, 0];
+
+    db.collection('users').doc(cred.user!.uid).set({
+      'ownedCharacter': characterList,
+      'nickname': nickname,
+      'ownedCosmetic': cosmeticList,
+      'gold': 0,
+      'shopCharacter': characterShop,
+      'shopCosmetic': cosmeticShop,
+      'Statistics': stats
+    });
   }
 
   Future<List<Character>> getCharacterFromUser(String userUid) async {
@@ -48,7 +57,7 @@ class Database {
     List<Character> characters = [];
     var docSnap = await db.collection('users').doc(userUid).get();
     var data = docSnap.data();
-    List<int> characterList = data!["shopCharacter"].cast<int>();
+    List<int> characterList = data!['shopCharacter'].cast<int>();
     for (int i in characterList) {
       characters.add(_loader.characterList[i]); //not that list
     }
@@ -92,19 +101,19 @@ class Database {
 
   buyCosmetic(String userUid, int n) async {
     db.collection('users').doc(userUid).update({
-      "ownedCosmetic": FieldValue.arrayUnion(["$n"]),
+      "ownedCosmetic": FieldValue.arrayUnion([n]),
     });
     db.collection('users').doc(userUid).update({
-      "shopCosmetic": FieldValue.arrayRemove(["$n"]),
+      "shopCosmetic": FieldValue.arrayRemove([n]),
     });
   }
 
   buyCharacter(String userUid, int n) async {
     db.collection('users').doc(userUid).update({
-      "ownedCharacter": FieldValue.arrayUnion(["$n"]),
+      "ownedCharacter": FieldValue.arrayUnion([n]),
     });
     db.collection('users').doc(userUid).update({
-      "shopCharacter": FieldValue.arrayRemove(["$n"]),
+      "shopCharacter": FieldValue.arrayRemove([n]),
     });
   }
 

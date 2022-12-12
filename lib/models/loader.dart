@@ -126,6 +126,61 @@ class Loader extends ChangeNotifier {
         speed: 3,
         facing: 'RIGHT',
         framerate: _constant.framerate));
+    characterList.add(Light(
+        bbox: Rect.fromLTWH(
+            _constant.leftCharacterLeft,
+            _constant.leftCharacterTop,
+            _constant.heavyWidth,
+            _constant.heavyHeight),
+        speed: 3,
+        facing: 'RIGHT',
+        framerate: _constant.framerate));
+    cosmeticList.add(
+      Cosmetics(
+          key: const ObjectKey('test1'),
+          'test1',
+          const [1, 0, -1, 0],
+          'assets/images/ClassyHat.png',
+          "H",
+          "gen",
+          100,
+          imgMap[AssetList.hatImg]!,
+          0),
+    );
+    cosmeticList.add(
+      Cosmetics(
+          key: const ObjectKey('test2'),
+          'test2',
+          const [0, 0, -1, 0],
+          'assets/images/GenericGuy.png',
+          "H",
+          "gen",
+          100,
+          Loader().imgMap[AssetList.character2Img]!,
+          1),
+    );
+    cosmeticList.add(
+      Cosmetics(
+          key: const ObjectKey('test3'),
+          'test3',
+          const [2, 0, 0, 0],
+          'assets/images/hawaiian-shirt.png',
+          "B",
+          "gen",
+          100,
+          Loader().imgMap[AssetList.hawaiianshirtImg]!,
+          2),
+    );
+    cosmeticList.add(Cosmetics(
+        key: const ObjectKey('test4'),
+        'test4',
+        const [1, 1, -2, 0],
+        'assets/images/swimwear.png',
+        "F",
+        "gen",
+        100,
+        Loader().imgMap[AssetList.swimwearImg]!,
+        3));
     Player().setCharacter(characterList[0]);
     _loading = false;
     notifyListeners();

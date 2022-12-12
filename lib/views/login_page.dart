@@ -50,23 +50,20 @@ class LoginPage extends StatelessWidget {
                   height: 20,
                 ),
                 Consumer<ControllerInventory>(
-                    builder: (_, data, __) => FutureBuilder(
-                        future: data.init().then((_) => (_)),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          return ElevatedButton(
-                            child: (const Text('Sign in')),
-                            onPressed: () => {
-                              auth.signIn(email, password),
-                              if (auth.currentUser != null)
-                                {
-                                  Navigator.of(context).popAndPushNamed('menu'),
-                                }
-                              else
-                                {}
-                            },
-                          );
-                        })),
+                    builder: (_, data, __) => ElevatedButton(
+                        child: (const Text('Sign in')),
+                        onPressed: () => {
+                              FutureBuilder(
+                                future: auth.signIn(email, password).then((_) =>
+                                    data.init().then((_) =>
+                                        Navigator.of(context)
+                                            .popAndPushNamed('menu'))),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<dynamic> snapshot) {
+                                  return const CircularProgressIndicator();
+                                },
+                              )
+                            })),
                 const SizedBox(
                   width: double.infinity,
                   height: 20,

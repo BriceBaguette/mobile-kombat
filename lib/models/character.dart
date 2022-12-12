@@ -95,7 +95,7 @@ class Light extends Character {
         Constant().w / 30,
         Constant().w / 60 * Constant().gokuRatio));
     _price = 0;
-
+    id = 1;
     _framerate = framerate;
 
     _bbox = bbox;
@@ -155,6 +155,7 @@ class Heavy extends Character {
       required String facing,
       required double speed}) {
     _price = 0;
+    id = 0;
 
     _framerate = framerate;
 
@@ -207,7 +208,7 @@ class Heavy extends Character {
 }
 
 abstract class Character {
-  int id = 0;
+  late int id;
   Rect hatBbox = Constant().hatBbox;
   Rect bodyBbox = Constant().bodyBbox;
   Rect footBbox = Constant().footBbox;
