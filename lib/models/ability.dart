@@ -53,7 +53,7 @@ class LightAir extends Ability {
     imageBoxWidthRatio = 1655 / Constant().lightDefaultWidth;
 
     hitBoxLeftOffsetRatio = [0, 330 / 1655, 850 / 1635, 1100 / 1635];
-    hitBoxTopOffsetRatio = [0, 125 / 1330, 230 / 1330, 650 / 1330];
+    hitBoxTopOffsetRatio = [530 / 1330, 125 / 1330, 230 / 1330, 650 / 1330];
   }
 }
 
@@ -148,14 +148,17 @@ class HeavyAir extends Ability {
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.heavyAirAbility_1]!];
-    powerPerImage = [10];
+    images = [
+      Loader().imgMap[AssetList.heavyAirAbility_1]!,
+      Loader().imgMap[AssetList.heavyAirAbility_2]!
+    ];
+    powerPerImage = [0, 10];
 
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
+    imageBoxHeightRatio = 898 / Constant().heavyDefaultHeight;
+    imageBoxWidthRatio = 1090 / Constant().heavyDefaultWidth;
 
-    hitBoxLeftOffsetRatio = [0];
-    hitBoxTopOffsetRatio = [0];
+    hitBoxLeftOffsetRatio = [0, 180 / 1090];
+    hitBoxTopOffsetRatio = [225 / 898, 225 / 898];
   }
 }
 

@@ -60,7 +60,8 @@ enum AssetList {
   heavyStaticAbility_2,
   heavyHorizontalAbility_1,
   heavyFloorAbility_1,
-  heavyAirAbility_1
+  heavyAirAbility_1,
+  heavyAirAbility_2
 }
 
 const _sceneAssets = {
@@ -116,8 +117,8 @@ const _sceneAssets = {
       "./assets/images/abilities/heavy_horizontal_1.png",
   AssetList.heavyFloorAbility_1:
       "./assets/images/abilities/heavy_horizontal_1.png",
-  AssetList.heavyAirAbility_1:
-      "./assets/images/abilities/heavy_horizontal_1.png"
+  AssetList.heavyAirAbility_1: "./assets/images/abilities/heavy_air_1.png",
+  AssetList.heavyAirAbility_2: "./assets/images/abilities/heavy_air_2.png"
 };
 
 class Loader extends ChangeNotifier {
