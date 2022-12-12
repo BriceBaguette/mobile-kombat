@@ -12,11 +12,11 @@ class LightDodge extends Ability {
     images = [Loader().imgMap[AssetList.lightDodgeAbility_1]!];
     powerPerImage = [0];
 
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
+    imageBoxHeightRatio = 965 / Constant().lightDefaultHeight;
+    imageBoxWidthRatio = 345 / Constant().lightDefaultWidth;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
   }
 }
 
@@ -31,8 +31,8 @@ class LightQuick extends Ability {
     imageBoxHeightRatio = 798 / Constant().lightDefaultHeight;
     imageBoxWidthRatio = 980 / Constant().lightDefaultWidth;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
   }
 }
 
@@ -41,14 +41,19 @@ class LightAir extends Ability {
     duration = 500; //millisec
     recoilDistance = 40;
 
-    images = [Loader().imgMap[AssetList.lightAirAbility_1]!];
-    powerPerImage = [10];
+    images = [
+      Loader().imgMap[AssetList.lightAirAbility_1]!,
+      Loader().imgMap[AssetList.lightAirAbility_2]!,
+      Loader().imgMap[AssetList.lightAirAbility_3]!,
+      Loader().imgMap[AssetList.lightAirAbility_4]!
+    ];
+    powerPerImage = [0, 10, 0, 0];
 
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0, 0, 0, 0];
+    hitBoxTopOffsetRatio = [0, 0, 0, 0];
   }
 }
 
@@ -63,8 +68,8 @@ class LightStatic extends Ability {
     imageBoxHeightRatio = 1080 / Constant().lightDefaultHeight;
     imageBoxWidthRatio = 1080 / Constant().lightDefaultWidth;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
   }
 }
 
@@ -79,11 +84,14 @@ class LightHorizontal extends Ability {
     ];
     powerPerImage = [0, 10];
 
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
+    imageBoxHeightRatio = 682 / Constant().lightDefaultHeight;
+    imageBoxWidthRatio = 1082 / Constant().lightDefaultWidth;
 
-    hitBoxLeftOffset = [0, 0];
-    hitBoxTopOffset = [0, 0];
+    hitBoxLeftOffsetRatio = [
+      110 / Constant().lightDefaultWidth,
+      375 / Constant().lightDefaultWidth
+    ];
+    hitBoxTopOffsetRatio = [0, 150 / Constant().lightDefaultHeight];
   }
 }
 
@@ -98,8 +106,8 @@ class LightFloor extends Ability {
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
   }
 }
 
@@ -114,8 +122,8 @@ class HeavyDodge extends Ability {
     imageBoxHeightRatio = 729 / Constant().heavyDefaultHeight;
     imageBoxWidthRatio = 384 / Constant().heavyDefaultWidth;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
   }
 }
 
@@ -130,8 +138,8 @@ class HeavyQuick extends Ability {
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
   }
 }
 
@@ -146,8 +154,8 @@ class HeavyAir extends Ability {
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
   }
 }
 
@@ -165,8 +173,8 @@ class HeavyStatic extends Ability {
     imageBoxHeightRatio = 766 / Constant().heavyDefaultHeight;
     imageBoxWidthRatio = 1058 / Constant().heavyDefaultWidth;
 
-    hitBoxLeftOffset = [0, 0];
-    hitBoxTopOffset = [0, 0];
+    hitBoxLeftOffsetRatio = [100 / 1058, 130 / 1058];
+    hitBoxTopOffsetRatio = [40 / 766, 90 / 766];
   }
 }
 
@@ -181,8 +189,8 @@ class HeavyHorizontal extends Ability {
     imageBoxHeightRatio = 709 / Constant().heavyDefaultHeight;
     imageBoxWidthRatio = 1080 / Constant().heavyDefaultWidth;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
   }
 }
 
@@ -197,8 +205,8 @@ class HeavyFloor extends Ability {
     imageBoxHeightRatio = 1.0;
     imageBoxWidthRatio = 1.0;
 
-    hitBoxLeftOffset = [0];
-    hitBoxTopOffset = [0];
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
   }
 }
 
@@ -212,8 +220,8 @@ abstract class Ability {
   late double imageBoxHeightRatio;
   late double imageBoxWidthRatio;
 
-  late List<double> hitBoxLeftOffset;
-  late List<double> hitBoxTopOffset;
+  late List<double> hitBoxLeftOffsetRatio;
+  late List<double> hitBoxTopOffsetRatio;
 
   Rect range(Rect characterHitBox, String facing) {
     var left = characterHitBox.left;

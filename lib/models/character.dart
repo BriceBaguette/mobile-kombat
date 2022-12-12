@@ -30,14 +30,10 @@ class StickMan extends Character {
     _movingImages = [Loader().imgMap[AssetList.characterImg]!];
     _jumpingImages = [Loader().imgMap[AssetList.characterImg]!];
     _getDamageImages = [Loader().imgMap[AssetList.characterImg]!];
-    _staticBbox = bbox;
-    _movingBbox = bbox;
-    _jumpingBbox = bbox;
-    _getDamageBbox = bbox;
     _staticDuration = 500;
     _movingDuration = 500;
     _jumpingDuration = 500;
-    _setAction(_staticImages, _staticBbox, _staticDuration);
+    _setAction(_staticImages, _staticDuration);
 
     _dodge = LightDodge();
     _quickAttack = LightQuick();
@@ -84,14 +80,10 @@ class Light extends Character {
       Loader().imgMap[AssetList.lightJumping_2]!
     ];
     _getDamageImages = [Loader().imgMap[AssetList.characterImg]!];
-    _staticBbox = bbox;
-    _movingBbox = bbox;
-    _jumpingBbox = bbox;
-    _getDamageBbox = bbox;
     _staticDuration = 500;
     _movingDuration = 500;
     _jumpingDuration = 500;
-    _setAction(_staticImages, _staticBbox, _staticDuration);
+    _setAction(_staticImages, _staticDuration);
 
     _dodge = LightDodge();
     _quickAttack = LightQuick();
@@ -137,14 +129,10 @@ class Heavy extends Character {
       Loader().imgMap[AssetList.heavyJumping_2]!
     ];
     _getDamageImages = [Loader().imgMap[AssetList.characterImg]!];
-    _staticBbox = bbox;
-    _movingBbox = bbox;
-    _jumpingBbox = bbox;
-    _getDamageBbox = bbox;
     _staticDuration = 1500;
     _movingDuration = 750;
     _jumpingDuration = 500;
-    _setAction(_staticImages, _staticBbox, _staticDuration);
+    _setAction(_staticImages, _staticDuration);
 
     _dodge = HeavyDodge();
     _quickAttack = HeavyQuick();
@@ -187,10 +175,6 @@ abstract class Character {
   late List<ui.Image> _movingImages;
   late List<ui.Image> _jumpingImages;
   late List<ui.Image> _getDamageImages;
-  late Rect _staticBbox;
-  late Rect _movingBbox;
-  late Rect _jumpingBbox;
-  late Rect _getDamageBbox;
   late double _staticDuration;
   late double _movingDuration;
   late double _jumpingDuration;
@@ -269,11 +253,12 @@ abstract class Character {
       dodgeRemainingCooldown -= _framerate;
     }
     bool actionLoopBack = _updateImage();
-    image = _actionImages[_actionImagesOffset];
     if (actionLoopBack && usingAbility) {
       if (_abilityInProgress == _dodge) {
         dodgeRemainingCooldown = _dodgeCooldown;
       }
+      _actionImagesOffset = _actionImages.length - 1;
+      _bbox = getHitBox();
       usingAbility = false;
       _usingStaticAbility = false;
       var move = isMoving;
@@ -282,10 +267,12 @@ abstract class Character {
     if (actionLoopBack && isGettingDamage) {
       isGettingDamage = false;
       isMoving = false;
-      _setAction(_staticImages, _staticBbox, _staticDuration);
+      _setAction(_staticImages, _staticDuration);
     }
 
     move();
+
+    image = _actionImages[_actionImagesOffset];
 
     if (isInvincible) {
       _invincibilityDuration -= 1;
@@ -338,7 +325,7 @@ abstract class Character {
     if (_upSpeed != 0.0) {
       hasJumped = true;
     }
-    _setAction(_jumpingImages, _jumpingBbox, _jumpingDuration);
+    _setAction(_jumpingImages, _jumpingDuration);
 
     _upSpeed = speed;
   }
@@ -348,12 +335,12 @@ abstract class Character {
 
     if (isGrounded()) {
       if (move) {
-        _setAction(_movingImages, _movingBbox, _movingDuration);
+        _setAction(_movingImages, _movingDuration);
       } else {
-        _setAction(_staticImages, _staticBbox, _staticDuration);
+        _setAction(_staticImages, _staticDuration);
       }
     } else {
-      _setAction(_jumpingImages, _jumpingBbox, _jumpingDuration);
+      _setAction(_jumpingImages, _jumpingDuration);
     }
   }
 
@@ -381,23 +368,35 @@ abstract class Character {
   String getFacing() => _facing;
 
   Rect getImageBox() {
+    var box = _bbox;
     if (usingAbility) {
-      return Rect.fromLTWH(
-          _bbox.left,
+      var boxWidth = _bbox.width * _abilityInProgress.imageBoxWidthRatio;
+      var boxLeft = _bbox.left -
+          _abilityInProgress.hitBoxLeftOffsetRatio[_actionImagesOffset] *
+              boxWidth;
+      if (_facing == 'LEFT') {
+        boxLeft = _bbox.left +
+            _bbox.width -
+            (1 -
+                    _abilityInProgress
+                        .hitBoxLeftOffsetRatio[_actionImagesOffset]) *
+                boxWidth;
+      }
+      box = Rect.fromLTWH(
+          boxLeft,
           _bbox.top +
               (1 - _abilityInProgress.imageBoxHeightRatio) * _bbox.height,
-          _bbox.width * _abilityInProgress.imageBoxWidthRatio,
+          boxWidth,
           _bbox.height * _abilityInProgress.imageBoxHeightRatio);
     }
-    return _bbox;
+    return box;
   }
 
   void attack({bool quick = false, bool floor = false, bool dodge = false}) {
     if (!usingAbility && !isGettingDamage) {
       usingAbility = true;
-      isMoving = false;
       _abilityInProgress = _determineAttack(quick, floor, dodge);
-      _setAction(_abilityInProgress.images, getImageBox(),
+      _setAction(_abilityInProgress.images,
           _abilityInProgress.duration - _attackSpeedModificator);
     }
   }
@@ -430,7 +429,7 @@ abstract class Character {
     return _staticAttack;
   }
 
-  void _setAction(List<ui.Image> images, Rect bbox, double duration) {
+  void _setAction(List<ui.Image> images, double duration) {
     _actionImagesOffset = 0;
     _actionImageFramesOffset = 0;
     _actionImages = images;
@@ -438,13 +437,6 @@ abstract class Character {
         ((duration / (_framerate.toDouble()) / _actionImages.length.toDouble()))
             .round();
     image = _actionImages[_actionImagesOffset];
-  }
-
-  void _adjustBbox(Rect bbox) {
-    var widthDiff = _bbox.width - bbox.width;
-    var heightDiff = _bbox.height - bbox.height;
-    _bbox = Rect.fromLTWH(_bbox.left + widthDiff / 2, _bbox.top + heightDiff,
-        bbox.width, bbox.height);
   }
 
   bool isGrounded() {
@@ -477,11 +469,24 @@ abstract class Character {
 
   Rect getHitBox() {
     if (usingAbility) {
-      return Rect.fromLTWH(
-          _bbox.left + _abilityInProgress.hitBoxLeftOffset[_actionImagesOffset],
-          _bbox.top + _abilityInProgress.hitBoxTopOffset[_actionImagesOffset],
-          _bbox.width,
-          _bbox.height);
+      var bbox = getImageBox();
+      var hitBoxLeft = bbox.left +
+          (_abilityInProgress.hitBoxLeftOffsetRatio[_actionImagesOffset] *
+              bbox.width);
+      if (_facing == 'LEFT') {
+        hitBoxLeft = bbox.right -
+            (_abilityInProgress.hitBoxLeftOffsetRatio[_actionImagesOffset] *
+                bbox.width) -
+            _bbox.width;
+      }
+      var hitBoxTop = bbox.top +
+          (_abilityInProgress.hitBoxTopOffsetRatio[_actionImagesOffset] *
+              bbox.height);
+      if (bbox.height - (hitBoxTop - bbox.top) < _bbox.height) {
+        hitBoxTop = _bbox.top;
+      }
+
+      return Rect.fromLTWH(hitBoxLeft, hitBoxTop, _bbox.width, _bbox.height);
     }
     return _bbox;
   }
@@ -492,7 +497,7 @@ abstract class Character {
       health -= damage - _resistanceModificator;
       _getDamageDuration = recoilDistance / recoilSpeed * _framerate;
       _setInvincibilityFrame(invincibilityFrame);
-      _setAction(_getDamageImages, _getDamageBbox, _getDamageDuration);
+      _setAction(_getDamageImages, _getDamageDuration);
       usingAbility = false;
       isMoving = true;
       _upSpeed = 0;

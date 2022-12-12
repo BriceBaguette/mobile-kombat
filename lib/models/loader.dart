@@ -50,6 +50,9 @@ enum AssetList {
   lightHorizontalAbility_2,
   lightFloorAbility_1,
   lightAirAbility_1,
+  lightAirAbility_2,
+  lightAirAbility_3,
+  lightAirAbility_4,
 
   heavyDodgeAbility_1,
   heavyQuickAbility_1,
@@ -98,7 +101,10 @@ const _sceneAssets = {
   AssetList.lightHorizontalAbility_2:
       "./assets/images/abilities/light_horizontal_2.png",
   AssetList.lightFloorAbility_1: "./assets/images/abilities/light_static_1.png",
-  AssetList.lightAirAbility_1: "./assets/images/abilities/light_static_1.png",
+  AssetList.lightAirAbility_1: "./assets/images/abilities/light_air_1.png",
+  AssetList.lightAirAbility_2: "./assets/images/abilities/light_air_2.png",
+  AssetList.lightAirAbility_3: "./assets/images/abilities/light_air_3.png",
+  AssetList.lightAirAbility_4: "./assets/images/abilities/light_air_4.png",
   AssetList.heavyDodgeAbility_1: "./assets/images/abilities/heavy_dodge_1.png",
   AssetList.heavyQuickAbility_1:
       "./assets/images/abilities/heavy_horizontal_1.png",
