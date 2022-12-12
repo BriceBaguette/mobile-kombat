@@ -49,11 +49,11 @@ class LightAir extends Ability {
     ];
     powerPerImage = [0, 10, 0, 0];
 
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
+    imageBoxHeightRatio = 1330 / Constant().lightDefaultHeight;
+    imageBoxWidthRatio = 1655 / Constant().lightDefaultWidth;
 
-    hitBoxLeftOffsetRatio = [0, 0, 0, 0];
-    hitBoxTopOffsetRatio = [0, 0, 0, 0];
+    hitBoxLeftOffsetRatio = [0, 330 / 1655, 850 / 1635, 1100 / 1635];
+    hitBoxTopOffsetRatio = [0, 125 / 1330, 230 / 1330, 650 / 1330];
   }
 }
 

@@ -371,16 +371,19 @@ abstract class Character {
     var box = _bbox;
     if (usingAbility) {
       var boxWidth = _bbox.width * _abilityInProgress.imageBoxWidthRatio;
-      var boxLeft = _bbox.left -
-          _abilityInProgress.hitBoxLeftOffsetRatio[_actionImagesOffset] *
-              boxWidth;
-      if (_facing == 'LEFT') {
-        boxLeft = _bbox.left +
-            _bbox.width -
-            (1 -
-                    _abilityInProgress
-                        .hitBoxLeftOffsetRatio[_actionImagesOffset]) *
+      var boxLeft = _bbox.left;
+      if (_usingStaticAbility) {
+        boxLeft -=
+            _abilityInProgress.hitBoxLeftOffsetRatio[_actionImagesOffset] *
                 boxWidth;
+      }
+      if (_facing == 'LEFT') {
+        boxLeft = _bbox.left + _bbox.width - boxWidth;
+        if (_usingStaticAbility) {
+          boxLeft +=
+              _abilityInProgress.hitBoxLeftOffsetRatio[_actionImagesOffset] *
+                  boxWidth;
+        }
       }
       box = Rect.fromLTWH(
           boxLeft,
