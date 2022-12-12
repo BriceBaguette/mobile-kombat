@@ -523,7 +523,8 @@ abstract class Character {
     _invincibilityDuration = duration;
   }
 
-  Rect abilityRange() => _abilityInProgress.range(_bbox, _facing);
+  Rect abilityRange() =>
+      _abilityInProgress.range(_actionImagesOffset, getImageBox(), _facing);
 
   int abilityDamage() {
     if (_abilityInProgress.powerPerImage[_actionImagesOffset] == 0) {
