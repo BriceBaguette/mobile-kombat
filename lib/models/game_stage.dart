@@ -82,7 +82,7 @@ class Stage extends ChangeNotifier {
     grounds.add(Ground(bbox: Constant().rightPlatformBox));
     grounds.add(Ground(bbox: Constant().middlePlatformBox));
     grounds.add(Ground(bbox: Constant().upperPlatformBox));
-    transparentGrounds.add(Ground(bbox: Constant().upperPlatformBox));
+    transparentGrounds.add(grounds[grounds.length - 1]);
     _loading = false;
     _stage!._updateScreen();
   }

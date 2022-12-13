@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/cosmetics.dart';
-import 'package:mobile_kombat/models/database.dart';
 import 'dart:ui' as ui;
 
 import 'package:mobile_kombat/models/game_stage.dart';
@@ -15,21 +14,6 @@ class StickMan extends Character {
       required Rect bbox,
       required String facing,
       required double speed}) {
-    @override
-    Rect hatBbox = (Rect.fromLTWH((Constant().w / 4) + 6, (Constant().h / 2),
-        Constant().w / 30, Constant().w / 60 * Constant().gokuRatio));
-    @override
-    Rect bodyBbox = (Rect.fromLTWH(
-        (Constant().w / 4) + 6,
-        (Constant().h / 2) + 25,
-        Constant().w / 30,
-        Constant().w / 60 * Constant().gokuRatio));
-    @override
-    Rect footBbox = (Rect.fromLTWH(
-        (Constant().w / 4) + 6,
-        (Constant().h / 2) + 35,
-        Constant().w / 30,
-        Constant().w / 60 * Constant().gokuRatio));
     _price = 0;
 
     _framerate = framerate;
@@ -75,21 +59,6 @@ class Light extends Character {
       required Rect bbox,
       required String facing,
       required double speed}) {
-    @override
-    Rect hatBbox = (Rect.fromLTWH((Constant().w / 4) + 6, (Constant().h / 2),
-        Constant().w / 30, Constant().w / 60 * Constant().gokuRatio));
-    @override
-    Rect bodyBbox = (Rect.fromLTWH(
-        (Constant().w / 4) + 6,
-        (Constant().h / 2) + 25,
-        Constant().w / 30,
-        Constant().w / 60 * Constant().gokuRatio));
-    @override
-    Rect footBbox = (Rect.fromLTWH(
-        (Constant().w / 4) + 6,
-        (Constant().h / 2) + 35,
-        Constant().w / 30,
-        Constant().w / 60 * Constant().gokuRatio));
     _price = 0;
     id = 1;
     _framerate = framerate;
@@ -118,7 +87,7 @@ class Light extends Character {
       Loader().imgMap[AssetList.lightJumping_1]!,
       Loader().imgMap[AssetList.lightJumping_2]!
     ];
-    _getDamageImages = [Loader().imgMap[AssetList.characterImg]!];
+    _getDamageImages = [Loader().imgMap[AssetList.lightGetDamage_1]!];
     _staticDuration = 500;
     _movingDuration = 500;
     _jumpingDuration = 500;
@@ -174,7 +143,7 @@ class Heavy extends Character {
       Loader().imgMap[AssetList.heavyJumping_1]!,
       Loader().imgMap[AssetList.heavyJumping_2]!
     ];
-    _getDamageImages = [Loader().imgMap[AssetList.characterImg]!];
+    _getDamageImages = [Loader().imgMap[AssetList.heavyGetDamage_1]!];
     _staticDuration = 1500;
     _movingDuration = 750;
     _jumpingDuration = 500;
@@ -340,6 +309,7 @@ abstract class Character {
       isMoving = false;
       _setAction(_staticImages, _staticDuration);
     }
+    _preventPlatformGlitching();
 
     move();
 
@@ -352,6 +322,50 @@ abstract class Character {
         _invincibilityDuration = 0;
       }
     }
+  }
+
+  bool _updateImage() {
+    _actionImageFramesOffset++;
+    if (_actionImageFramesOffset >= _actionFramesPerImage) {
+      _actionImageFramesOffset = 0;
+      _actionImagesOffset++;
+      if (_actionImagesOffset >= _actionImages.length) {
+        _actionImagesOffset = 0;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void _preventPlatformGlitching() {
+    var box = getHitBox();
+    for (var platform in Stage().grounds) {
+      if (!Stage().transparentGrounds.contains(platform)) {
+        double horizontalOffset = 0;
+        double verticalOffset = 0;
+        if (_bboxOverlaps(platform.bbox)) {
+          switch (_facing) {
+            case 'RIGHT':
+              horizontalOffset = platform.bbox.left - (box.right + 1);
+              break;
+            case 'LEFT':
+              horizontalOffset = platform.bbox.right - (box.left - 1);
+              break;
+          }
+          verticalOffset = platform.bbox.top - (box.bottom + 10);
+          if (verticalOffset > horizontalOffset) {
+            _bbox = _bbox.translate(horizontalOffset, 0);
+          } else {
+            _bbox = _bbox.translate(0, verticalOffset);
+          }
+        }
+      }
+    }
+  }
+
+  bool _bboxOverlaps(Rect otherBox) {
+    var box = getHitBox();
+    return otherBox.overlaps(box);
   }
 
   void move() {
@@ -419,44 +433,49 @@ abstract class Character {
   }
 
   void jump(double speed) {
-    if (_upSpeed != 0.0) {
-      hasJumped = true;
-    }
-    _setAction(_jumpingImages, _jumpingDuration);
+    if (!usingAbility &&
+        !isGettingDamage &&
+        (!hasJumped || speed == _gravity)) {
+      if (_upSpeed != 0.0) {
+        hasJumped = true;
+      }
+      _setAction(_jumpingImages, _jumpingDuration);
 
-    _upSpeed = speed;
+      _upSpeed = speed;
+    }
   }
 
   void setMovement(bool move) {
     isMoving = move;
-
-    if (isGrounded()) {
-      if (move) {
-        _setAction(_movingImages, _movingDuration);
+    if (!usingAbility && !isGettingDamage) {
+      if (isGrounded()) {
+        if (move) {
+          _setAction(_movingImages, _movingDuration);
+        } else {
+          _setAction(_staticImages, _staticDuration);
+        }
       } else {
-        _setAction(_staticImages, _staticDuration);
+        _setAction(_jumpingImages, _jumpingDuration);
       }
-    } else {
-      _setAction(_jumpingImages, _jumpingDuration);
     }
   }
 
   bool _isBlocked() {
     for (var ground in Stage().grounds) {
-      if (bboxIntersect(ground.bbox)) {
+      if (_bboxIntersect(ground.bbox)) {
         return true;
       }
     }
     return false;
   }
 
-  bool bboxIntersect(Rect otherBox) {
+  bool _bboxIntersect(Rect otherBox) {
+    var box = getHitBox();
     switch (_facing) {
       case 'LEFT':
-        return otherBox.contains(Offset(_bbox.left - _speed, _bbox.bottom - 1));
+        return otherBox.contains(Offset(box.left - _speed, box.bottom - 1));
       case 'RIGHT':
-        return otherBox
-            .contains(Offset(_bbox.right + _speed, _bbox.bottom - 1));
+        return otherBox.contains(Offset(box.right + _speed, box.bottom - 1));
       default:
         return false;
     }
@@ -540,22 +559,9 @@ abstract class Character {
   }
 
   bool isGrounded() {
-    return (Stage().isGround(Offset(_bbox.right, _bbox.bottom + _upSpeed),
-            Offset(_bbox.left, _bbox.bottom + _upSpeed)) &&
+    return (Stage().isGround(Offset(_bbox.right, _bbox.bottom + _upSpeed + 1),
+            Offset(_bbox.left, _bbox.bottom + _upSpeed + 1)) &&
         _upSpeed >= 0);
-  }
-
-  bool _updateImage() {
-    _actionImageFramesOffset++;
-    if (_actionImageFramesOffset >= _actionFramesPerImage) {
-      _actionImageFramesOffset = 0;
-      _actionImagesOffset++;
-      if (_actionImagesOffset >= _actionImages.length) {
-        _actionImagesOffset = 0;
-        return true;
-      }
-    }
-    return false;
   }
 
   int remainingAbilityDuration() {
