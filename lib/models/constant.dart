@@ -35,6 +35,9 @@ class Constant {
   late Rect dodgeButtonPosition;
   late Rect quickAttackButtonPosition;
 
+  late Rect firstPlayerPosition;
+  late Rect secondPlayerPosition;
+
   late double healthBarLeft;
   late double healthBarTop;
   late double healthBarMaxWidth;
@@ -44,6 +47,12 @@ class Constant {
   int lightDefaultWidth = 524;
   int heavyDefaultHeight = 699;
   int heavyDefaultWidth = 405;
+
+  late Rect bodyBbox;
+
+  late Rect footBbox;
+
+  late Rect hatBbox;
 
   factory Constant() {
     _constant ??= Constant._hidden();
@@ -76,7 +85,7 @@ class Constant {
         (412 / environmentOriginalWidth) * w,
         (45 / environmentOriginalHeight) * h);
 
-    leftCharacterLeft = leftPlatformBox.left + leftPlatformBox.width / 2;
+    leftCharacterLeft = leftPlatformBox.left;
     leftCharacterTop = h / 2;
     rightCharacterLeft = rightPlatformBox.left + rightPlatformBox.width / 2;
     rightCharacterTop = h / 2;
@@ -99,6 +108,22 @@ class Constant {
         Rect.fromLTWH(w - w / 40 - 2 * w / 15, h - h / 9, w / 20, w / 20);
     quickAttackButtonPosition =
         Rect.fromLTWH(w - w / 40 - 3 * w / 15, h - h / 9, w / 20, w / 20);
+    firstPlayerPosition = Rect.fromLTWH(
+        leftCharacterLeft, leftCharacterTop, w / 20, w / 20 * gokuRatio);
+    secondPlayerPosition = Rect.fromLTWH(
+        rightCharacterLeft, rightCharacterTop, w / 20, w / 20 * gokuRatio);
+    hatBbox = Rect.fromLTWH(firstPlayerPosition.left, firstPlayerPosition.top,
+        firstPlayerPosition.width, w / 30);
+    bodyBbox = Rect.fromLTWH(
+        firstPlayerPosition.left,
+        firstPlayerPosition.top + 2 * w / 30,
+        firstPlayerPosition.width,
+        w / 30);
+    footBbox = Rect.fromLTWH(
+        firstPlayerPosition.left,
+        firstPlayerPosition.top + 4 * w / 30,
+        firstPlayerPosition.width,
+        w / 30);
 
     healthBarLeft = w / 40;
     healthBarTop = h / 9;
