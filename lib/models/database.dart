@@ -389,8 +389,8 @@ class RealTimeDB {
         case 'dodge':
           Stage().opponent!.character.attack(dodge: true);
           break;
-        case 'floor':
-          Stage().opponent!.character.attack(floor: true);
+        case 'normal':
+          Stage().opponent!.character.attack();
           break;
         case 'quick':
           Stage().opponent!.character.attack(quick: true);

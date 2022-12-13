@@ -20,6 +20,7 @@ class Stage extends ChangeNotifier {
   var characters = <Character>[];
   var buttons = <Button>[];
   var grounds = <Ground>[];
+  var transparentGrounds = <Ground>[];
   Opponent? opponent;
   var _loading = true;
   var _ready = false;
@@ -81,6 +82,7 @@ class Stage extends ChangeNotifier {
     grounds.add(Ground(bbox: Constant().rightPlatformBox));
     grounds.add(Ground(bbox: Constant().middlePlatformBox));
     grounds.add(Ground(bbox: Constant().upperPlatformBox));
+    transparentGrounds.add(Ground(bbox: Constant().upperPlatformBox));
     _loading = false;
     _stage!._updateScreen();
   }
@@ -108,6 +110,7 @@ class Stage extends ChangeNotifier {
         for (var other in _stage!.characters) {
           if (other != character &&
               other.usingAbility &&
+              other.abilityDamage() > 0 &&
               !character.isInvincible &&
               character.getHitBox().overlaps(other.abilityRange())) {
             int invincibilityFrame = other.remainingAbilityDuration();

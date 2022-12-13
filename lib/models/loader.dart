@@ -45,6 +45,27 @@ enum AssetList {
   heavyMoving_4,
   heavyJumping_1,
   heavyJumping_2,
+
+  lightDodgeAbility_1,
+  lightQuickAbility_1,
+  lightStaticAbility_1,
+  lightHorizontalAbility_1,
+  lightHorizontalAbility_2,
+  lightFloorAbility_1,
+  lightAirAbility_1,
+  lightAirAbility_2,
+  lightAirAbility_3,
+  lightAirAbility_4,
+
+  heavyDodgeAbility_1,
+  heavyQuickAbility_1,
+  heavyStaticAbility_1,
+  heavyStaticAbility_2,
+  heavyHorizontalAbility_1,
+  heavyFloorAbility_1,
+  heavyAirAbility_1,
+  heavyAirAbility_2,
+
   character2Img,
   hatImg,
   swimwearImg,
@@ -80,6 +101,32 @@ const _sceneAssets = {
   AssetList.heavyMoving_4: "./assets/images/heavy/heavy_moving_4.png",
   AssetList.heavyJumping_1: "./assets/images/jumping.png",
   AssetList.heavyJumping_2: "./assets/images/jumping.png",
+  AssetList.lightDodgeAbility_1: "./assets/images/abilities/light_dodge_1.png",
+  AssetList.lightQuickAbility_1: "./assets/images/abilities/light_quick_1.png",
+  AssetList.lightStaticAbility_1:
+      "./assets/images/abilities/light_static_1.png",
+  AssetList.lightHorizontalAbility_1:
+      "./assets/images/abilities/light_horizontal_1.png",
+  AssetList.lightHorizontalAbility_2:
+      "./assets/images/abilities/light_horizontal_2.png",
+  AssetList.lightFloorAbility_1: "./assets/images/abilities/light_static_1.png",
+  AssetList.lightAirAbility_1: "./assets/images/abilities/light_air_1.png",
+  AssetList.lightAirAbility_2: "./assets/images/abilities/light_air_2.png",
+  AssetList.lightAirAbility_3: "./assets/images/abilities/light_air_3.png",
+  AssetList.lightAirAbility_4: "./assets/images/abilities/light_air_4.png",
+  AssetList.heavyDodgeAbility_1: "./assets/images/abilities/heavy_dodge_1.png",
+  AssetList.heavyQuickAbility_1:
+      "./assets/images/abilities/heavy_horizontal_1.png",
+  AssetList.heavyStaticAbility_1:
+      "./assets/images/abilities/heavy_static_1.png",
+  AssetList.heavyStaticAbility_2:
+      "./assets/images/abilities/heavy_static_2.png",
+  AssetList.heavyHorizontalAbility_1:
+      "./assets/images/abilities/heavy_horizontal_1.png",
+  AssetList.heavyFloorAbility_1:
+      "./assets/images/abilities/heavy_horizontal_1.png",
+  AssetList.heavyAirAbility_1: "./assets/images/abilities/heavy_air_1.png",
+  AssetList.heavyAirAbility_2: "./assets/images/abilities/heavy_air_2.png",
   AssetList.character2Img: "assets/images/GenericGuy.png",
   AssetList.hatImg: "assets/images/ClassyHat.png",
   AssetList.swimwearImg: "assets/images/swimwear.png",

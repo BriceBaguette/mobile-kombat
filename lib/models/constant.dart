@@ -34,18 +34,26 @@ class Constant {
   late Rect attackButtonPosition;
   late Rect dodgeButtonPosition;
   late Rect quickAttackButtonPosition;
+
   late Rect firstPlayerPosition;
   late Rect secondPlayerPosition;
+
   late double healthBarLeft;
   late double healthBarTop;
   late double healthBarMaxWidth;
   late double healthBarHeight;
+
+  int lightDefaultHeight = 964;
+  int lightDefaultWidth = 524;
+  int heavyDefaultHeight = 699;
+  int heavyDefaultWidth = 405;
 
   late Rect bodyBbox;
 
   late Rect footBbox;
 
   late Rect hatBbox;
+
   factory Constant() {
     _constant ??= Constant._hidden();
     return _constant!;

@@ -22,12 +22,10 @@ class MovingButton extends Button {
       _rtDb.setDirection(dir);
       _rtDb.setMovement(true);
     }
-
   }
 
   @override
   void onTapCancel() {
-    
     var character = _scene.characters[0];
     if (!character.usingAbility && !character.isGettingDamage) {
       character.setDirection(dir);
@@ -48,7 +46,6 @@ class JumpButton extends Button {
 
   @override
   void onTap() {
-      
     if (!_scene.characters[0].hasJumped &&
         !_scene.characters[0].usingAbility &&
         !_scene.characters[0].isGettingDamage) {
@@ -74,6 +71,7 @@ class AttackButton extends Button {
   @override
   void onTap() {
     _scene.characters[0].attack();
+    _rtDb.setAttack('normal');
   }
 
   @override
@@ -108,12 +106,10 @@ class DodgeButton extends Button {
   DodgeButton({required this.img, required this.bbox});
   @override
   void onTap() {
-
     if (_scene.characters[0].dodgeRemainingCooldown <= 0) {
       _scene.characters[0].attack(dodge: true);
       _rtDb.setAttack('dodge');
     }
-
   }
 
   @override
@@ -131,14 +127,15 @@ class FloorButton extends Button {
 
   @override
   void onTap() {
-    if (_scene.characters[0].isGrounded() && _scene.characters[0].isMoving) {
-      _scene.characters[0].attack(dodge: true, floor: true);
-      _rtDb.setAttack('floor');
+    if (_scene.characters[0].isGrounded() && !_scene.characters[0].isMoving) {
+      _scene.characters[0].isFloor = true;
     }
   }
 
   @override
-  void onTapCancel() {}
+  void onTapCancel() {
+    _scene.characters[0].isFloor = false;
+  }
 }
 
 abstract class Button {
