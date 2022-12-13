@@ -184,9 +184,6 @@ class Loader extends ChangeNotifier {
         Loader().imgMap[AssetList.swimwearImg]!,
         3));
     Player().setCharacter(characterList[0]);
-    if (Auth().currentUser != null) {
-      ControllerInventory().init();
-    }
     _loading = false;
     notifyListeners();
   }
