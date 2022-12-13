@@ -88,8 +88,8 @@ class Light extends Character {
       Loader().imgMap[AssetList.lightJumping_2]!
     ];
     _getDamageImages = [Loader().imgMap[AssetList.lightGetDamage_1]!];
-    _staticDuration = 500;
-    _movingDuration = 500;
+    _staticDuration = 1500;
+    _movingDuration = 750;
     _jumpingDuration = 500;
     _setAction(_staticImages, _staticDuration);
 

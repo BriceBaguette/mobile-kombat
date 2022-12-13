@@ -50,7 +50,7 @@ class Stage extends ChangeNotifier {
       _stage!.updateGame();
     });
     displayTime = Constant().time;
-    print(displayTime);
+    (displayTime);
     characters
       ..add(Player().character)
       ..add(opponent!.character);

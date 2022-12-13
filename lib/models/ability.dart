@@ -114,31 +114,28 @@ class LightStatic extends Ability {
     imageBoxHeightRatio = 1080 / Constant().lightDefaultHeight;
     imageBoxWidthRatio = 1080 / Constant().lightDefaultWidth;
 
-    hitBoxLeftOffsetRatio = [0];
+    hitBoxLeftOffsetRatio = [75 / 1080];
     hitBoxTopOffsetRatio = [0];
   }
 
   @override
   Rect range(int index, Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
+    if (index == 0) {
+      var left = characterHitBox.left + (500 / 1080 * characterHitBox.width);
+      var top = characterHitBox.top + (500 / 1080 * characterHitBox.height);
+      var width = 600 / 1080 * characterHitBox.width;
+      var height = 500 / 1080 * characterHitBox.height;
 
-    var range = Rect.fromLTWH(left, top, width, height);
+      if (facing == 'LEFT') {
+        left = characterHitBox.right -
+            (500 / 1080 * characterHitBox.width) -
+            width;
+      }
 
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
+      return Rect.fromLTWH(left, top, width, height);
     }
 
-    return range;
+    return noHitBox;
   }
 }
 
@@ -147,20 +144,52 @@ class LightHorizontal extends Ability {
     duration = 500; //millisec
     recoilDistance = 40;
 
+    images = [Loader().imgMap[AssetList.lightHorizontalAbility_1]!];
+    powerPerImage = [10];
+
+    imageBoxHeightRatio = 798 / Constant().lightDefaultHeight;
+    imageBoxWidthRatio = 980 / Constant().lightDefaultWidth;
+
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
+  }
+
+  @override
+  Rect range(int index, Rect characterHitBox, String facing) {
+    if (index == 0) {
+      var left = characterHitBox.left + (600 / 980 * characterHitBox.width);
+      var top = characterHitBox.top + (100 / 798 * characterHitBox.height);
+      var width = 400 / 980 * characterHitBox.width;
+      var height = 250 / 798 * characterHitBox.height;
+
+      if (facing == 'LEFT') {
+        left =
+            characterHitBox.right - (600 / 980 * characterHitBox.width) - width;
+      }
+
+      return Rect.fromLTWH(left, top, width, height);
+    }
+
+    return noHitBox;
+  }
+}
+
+class LightFloor extends Ability {
+  LightFloor() {
+    duration = 500; //millisec
+    recoilDistance = 40;
+
     images = [
-      Loader().imgMap[AssetList.lightHorizontalAbility_1]!,
-      Loader().imgMap[AssetList.lightHorizontalAbility_2]!
+      Loader().imgMap[AssetList.lightFloorAbility_1]!,
+      Loader().imgMap[AssetList.lightFloorAbility_2]!
     ];
     powerPerImage = [0, 10];
 
     imageBoxHeightRatio = 682 / Constant().lightDefaultHeight;
     imageBoxWidthRatio = 1082 / Constant().lightDefaultWidth;
 
-    hitBoxLeftOffsetRatio = [
-      110 / Constant().lightDefaultWidth,
-      375 / Constant().lightDefaultWidth
-    ];
-    hitBoxTopOffsetRatio = [0, 150 / Constant().lightDefaultHeight];
+    hitBoxLeftOffsetRatio = [110 / 1082, 375 / 1082];
+    hitBoxTopOffsetRatio = [0, 150 / 682];
   }
 
   @override
@@ -181,45 +210,6 @@ class LightHorizontal extends Ability {
     }
 
     return noHitBox;
-  }
-}
-
-class LightFloor extends Ability {
-  LightFloor() {
-    duration = 500; //millisec
-    recoilDistance = 40;
-
-    images = [Loader().imgMap[AssetList.lightFloorAbility_1]!];
-    powerPerImage = [10];
-
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
-
-    hitBoxLeftOffsetRatio = [0];
-    hitBoxTopOffsetRatio = [0];
-  }
-
-  @override
-  Rect range(int index, Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
-
-    var range = Rect.fromLTWH(left, top, width, height);
-
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
-    }
-
-    return range;
   }
 }
 
