@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_kombat/controller_inventory.dart';
+import 'package:mobile_kombat/models/auth.dart';
 
 import 'dart:ui' as ui;
 
@@ -182,6 +184,9 @@ class Loader extends ChangeNotifier {
         Loader().imgMap[AssetList.swimwearImg]!,
         3));
     Player().setCharacter(characterList[0]);
+    if (Auth().currentUser != null) {
+      ControllerInventory().init();
+    }
     _loading = false;
     notifyListeners();
   }
