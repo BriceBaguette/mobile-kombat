@@ -83,10 +83,7 @@ class Light extends Character {
       Loader().imgMap[AssetList.lightMoving_3]!,
       Loader().imgMap[AssetList.lightMoving_4]!
     ];
-    _jumpingImages = [
-      Loader().imgMap[AssetList.lightJumping_1]!,
-      Loader().imgMap[AssetList.lightJumping_2]!
-    ];
+    _jumpingImages = [Loader().imgMap[AssetList.lightJumping_1]!];
     _getDamageImages = [Loader().imgMap[AssetList.lightGetDamage_1]!];
     _staticDuration = 1500;
     _movingDuration = 750;
@@ -139,10 +136,7 @@ class Heavy extends Character {
       Loader().imgMap[AssetList.heavyMoving_3]!,
       Loader().imgMap[AssetList.heavyMoving_4]!
     ];
-    _jumpingImages = [
-      Loader().imgMap[AssetList.heavyJumping_1]!,
-      Loader().imgMap[AssetList.heavyJumping_2]!
-    ];
+    _jumpingImages = [Loader().imgMap[AssetList.heavyJumping_1]!];
     _getDamageImages = [Loader().imgMap[AssetList.heavyGetDamage_1]!];
     _staticDuration = 1500;
     _movingDuration = 750;

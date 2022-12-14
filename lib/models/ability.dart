@@ -115,7 +115,7 @@ class LightStatic extends Ability {
     imageBoxWidthRatio = 1080 / Constant().lightDefaultWidth;
 
     hitBoxLeftOffsetRatio = [75 / 1080];
-    hitBoxTopOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [200 / 1080];
   }
 
   @override
