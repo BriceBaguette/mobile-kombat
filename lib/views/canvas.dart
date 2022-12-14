@@ -39,7 +39,7 @@ class ScenePainter extends CustomPainter {
         ..color = Color.fromARGB(255, 99, 8, 8)
         ..style = PaintingStyle.fill;
       var barBox = Rect.fromLTWH(
-          Constant().healthBarLeft,
+          Constant().healthBarLeft + (1 - ratio) * Constant().healthBarMaxWidth,
           Constant().healthBarTop + i,
           Constant().healthBarMaxWidth * ratio,
           Constant().healthBarHeight);

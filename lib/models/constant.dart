@@ -105,19 +105,19 @@ class Constant {
     heavyHeight = w / 20 * gokuRatio;
     heavyWidth = (421 / 711) * heavyHeight;
 
-    leftButtonPosition = Rect.fromLTWH(w / 40, h - h / 9, w / 15, h / 10);
-    rightButtonPosition =
-        Rect.fromLTWH(2 * w / 40 + w / 15, h - h / 9, w / 15, h / 10);
-    jumpButtonPosition =
-        Rect.fromLTWH(w / 40, h - w / 20 - h / 9 - h / 15, w / 20, w / 20);
+    leftButtonPosition =
+        Rect.fromLTWH(w / 40, h / 2 - (2 * w / 20 + w / 40), w / 20, w / 20);
+    rightButtonPosition = Rect.fromLTWH(
+        2 * w / 20 + w / 40, h / 2 - (2 * w / 20 + w / 40), w / 20, w / 20);
+    jumpButtonPosition = Rect.fromLTWH(
+        w / 20 + w / 40, h / 2 - (3 * w / 20 + w / 40), w / 20, w / 20);
     floorButtonPosition = Rect.fromLTWH(
-        2 * w / 40 + w / 15, h - w / 20 - h / 9 - h / 15, w / 20, w / 20);
-    attackButtonPosition =
-        Rect.fromLTWH(w - w / 40 - w / 15, h - h / 9, w / 20, w / 20);
+        w / 20 + w / 40, h / 2 - (w / 20 + w / 40), w / 20, w / 20);
+    attackButtonPosition = Rect.fromLTWH(w - w / 15, h - h / 5, w / 20, w / 20);
     dodgeButtonPosition =
-        Rect.fromLTWH(w - w / 40 - 2 * w / 15, h - h / 9, w / 20, w / 20);
+        Rect.fromLTWH(w - w / 15, h - (3 * h / 10 + w / 20), w / 20, w / 20);
     quickAttackButtonPosition =
-        Rect.fromLTWH(w - w / 40 - 3 * w / 15, h - h / 9, w / 20, w / 20);
+        Rect.fromLTWH(w - w / 15 - 3 * w / 15, h - h / 9, w / 20, w / 20);
     firstPlayerPosition = Rect.fromLTWH(
         leftCharacterLeft, leftCharacterTop, w / 20, w / 20 * gokuRatio);
     secondPlayerPosition = Rect.fromLTWH(
@@ -135,9 +135,9 @@ class Constant {
         firstPlayerPosition.width,
         w / 30);
 
-    healthBarLeft = w / 40;
-    healthBarTop = h / 9;
     healthBarMaxWidth = w / 5;
     healthBarHeight = 10;
+    healthBarLeft = w - (w / 40 + healthBarMaxWidth);
+    healthBarTop = h / 9;
   }
 }
