@@ -12,6 +12,10 @@ class Constant {
 
   final int environmentOriginalHeight = 1080;
   final int environmentOriginalWidth = 1920;
+  late Rect leftPlatformBoxForBot;
+  late Rect rightPlatformBoxForBot;
+  late Rect leftSideWallForBot;
+  late Rect rightSideWallForBot;
   late Rect leftPlatformBox;
   late Rect rightPlatformBox;
   late Rect middlePlatformBox;
@@ -84,6 +88,12 @@ class Constant {
         (430 / environmentOriginalHeight) * h,
         (412 / environmentOriginalWidth) * w,
         (45 / environmentOriginalHeight) * h);
+    leftPlatformBoxForBot =
+        Rect.fromLTWH(0, h * (1 - (116 / environmentOriginalHeight)), w / 2, h);
+    rightPlatformBoxForBot = Rect.fromLTWH(
+        (w / 2) + 1, h * (1 - (116 / environmentOriginalHeight)), w / 2, h);
+    leftSideWallForBot = Rect.fromLTWH(-w, 0, w, h + 1);
+    rightSideWallForBot = Rect.fromLTWH(w, 0, w, h + 1);
 
     leftCharacterLeft = leftPlatformBox.left;
     leftCharacterTop = h / 2;

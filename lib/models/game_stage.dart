@@ -78,8 +78,15 @@ class Stage extends ChangeNotifier {
       ..add(DodgeButton(
           img: imgMap[AssetList.dodgeButtonImg]!,
           bbox: Constant().dodgeButtonPosition));
-    grounds.add(Ground(bbox: Constant().leftPlatformBox));
-    grounds.add(Ground(bbox: Constant().rightPlatformBox));
+    if (opponent is SmartBot) {
+      grounds.add(Ground(bbox: Constant().leftPlatformBoxForBot));
+      grounds.add(Ground(bbox: Constant().rightPlatformBoxForBot));
+      grounds.add(Ground(bbox: Constant().leftSideWallForBot));
+      grounds.add(Ground(bbox: Constant().rightSideWallForBot));
+    } else {
+      grounds.add(Ground(bbox: Constant().leftPlatformBox));
+      grounds.add(Ground(bbox: Constant().rightPlatformBox));
+    }
     grounds.add(Ground(bbox: Constant().middlePlatformBox));
     grounds.add(Ground(bbox: Constant().upperPlatformBox));
     transparentGrounds.add(grounds[grounds.length - 1]);

@@ -315,9 +315,80 @@ class HeavyStatic extends Ability {
     duration = 500; //millisec
     recoilDistance = 40;
 
+    images = [Loader().imgMap[AssetList.heavyStaticAbility_1]!];
+    powerPerImage = [10];
+
+    imageBoxHeightRatio = 723 / Constant().heavyDefaultHeight;
+    imageBoxWidthRatio = 553 / Constant().heavyDefaultWidth;
+
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
+  }
+
+  @override
+  Rect range(int index, Rect characterHitBox, String facing) {
+    if (index == 0) {
+      var left = characterHitBox.left + (400 / 553 * characterHitBox.width);
+      var top = characterHitBox.top + (125 / 723 * characterHitBox.height);
+      var width = 250 / 553 * characterHitBox.width;
+      var height = 400 / 723 * characterHitBox.height;
+
+      if (facing == 'LEFT') {
+        left =
+            characterHitBox.right - (400 / 553 * characterHitBox.width) - width;
+      }
+
+      return Rect.fromLTWH(left, top, width, height);
+    }
+
+    return noHitBox;
+  }
+}
+
+class HeavyHorizontal extends Ability {
+  HeavyHorizontal() {
+    duration = 500; //millisec
+    recoilDistance = 40;
+
+    images = [Loader().imgMap[AssetList.heavyHorizontalAbility_1]!];
+    powerPerImage = [10];
+
+    imageBoxHeightRatio = 709 / Constant().heavyDefaultHeight;
+    imageBoxWidthRatio = 1080 / Constant().heavyDefaultWidth;
+
+    hitBoxLeftOffsetRatio = [0];
+    hitBoxTopOffsetRatio = [0];
+  }
+
+  @override
+  Rect range(int index, Rect characterHitBox, String facing) {
+    if (index == 0) {
+      var left = characterHitBox.left + (750 / 1080 * characterHitBox.width);
+      var top = characterHitBox.top + (300 / 709 * characterHitBox.height);
+      var width = 300 / 1080 * characterHitBox.width;
+      var height = 300 / 709 * characterHitBox.height;
+
+      if (facing == 'LEFT') {
+        left = characterHitBox.right -
+            (750 / 1080 * characterHitBox.width) -
+            width;
+      }
+
+      return Rect.fromLTWH(left, top, width, height);
+    }
+
+    return noHitBox;
+  }
+}
+
+class HeavyFloor extends Ability {
+  HeavyFloor() {
+    duration = 500; //millisec
+    recoilDistance = 40;
+
     images = [
-      Loader().imgMap[AssetList.heavyStaticAbility_1]!,
-      Loader().imgMap[AssetList.heavyStaticAbility_2]!
+      Loader().imgMap[AssetList.heavyFloorAbility_1]!,
+      Loader().imgMap[AssetList.heavyFloorAbility_2]!
     ];
     powerPerImage = [0, 10];
 
@@ -346,84 +417,6 @@ class HeavyStatic extends Ability {
     }
 
     return noHitBox;
-  }
-}
-
-class HeavyHorizontal extends Ability {
-  HeavyHorizontal() {
-    duration = 500; //millisec
-    recoilDistance = 40;
-
-    images = [Loader().imgMap[AssetList.heavyHorizontalAbility_1]!];
-    powerPerImage = [10];
-
-    imageBoxHeightRatio = 709 / Constant().heavyDefaultHeight;
-    imageBoxWidthRatio = 1080 / Constant().heavyDefaultWidth;
-
-    hitBoxLeftOffsetRatio = [0];
-    hitBoxTopOffsetRatio = [0];
-  }
-
-  @override
-  Rect range(int index, Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
-
-    var range = Rect.fromLTWH(left, top, width, height);
-
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
-    }
-
-    return range;
-  }
-}
-
-class HeavyFloor extends Ability {
-  HeavyFloor() {
-    duration = 500; //millisec
-    recoilDistance = 40;
-
-    images = [Loader().imgMap[AssetList.heavyFloorAbility_1]!];
-    powerPerImage = [10];
-
-    imageBoxHeightRatio = 1.0;
-    imageBoxWidthRatio = 1.0;
-
-    hitBoxLeftOffsetRatio = [0];
-    hitBoxTopOffsetRatio = [0];
-  }
-
-  @override
-  Rect range(int index, Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
-
-    var range = Rect.fromLTWH(left, top, width, height);
-
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
-    }
-
-    return range;
   }
 }
 

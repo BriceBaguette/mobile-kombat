@@ -32,6 +32,9 @@ class ScenePainter extends CustomPainter {
       var health = element.health;
       var maxHealth = element.maxHealth;
       var ratio = (health / maxHealth).toDouble();
+      if (ratio < 0) {
+        ratio = 0;
+      }
       var paint = Paint()
         ..color = Color.fromARGB(255, 99, 8, 8)
         ..style = PaintingStyle.fill;
