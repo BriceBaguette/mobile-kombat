@@ -30,6 +30,8 @@ class MovingButton extends Button {
     if (!character.usingAbility && !character.isGettingDamage) {
       character.setMovement(false);
       _rtDb.setMovement(false);
+    } else {
+      character.isMoving = false;
     }
   }
 }

@@ -300,8 +300,11 @@ abstract class Character {
     }
     if (actionLoopBack && isGettingDamage) {
       isGettingDamage = false;
-      isMoving = false;
-      _setAction(_staticImages, _staticDuration);
+      if (_upSpeed < 0) {
+        jump(_upSpeed);
+      } else {
+        setMovement(isMoving);
+      }
     }
     _preventPlatformGlitching();
 
@@ -358,6 +361,8 @@ abstract class Character {
               break;
           }
           verticalOffset = platform.bbox.top - (box.bottom + 10);
+          print(horizontalOffset);
+          print(verticalOffset);
           if (verticalOffset > horizontalOffset) {
             _bbox = _bbox.translate(horizontalOffset, 0);
           } else {
@@ -390,8 +395,8 @@ abstract class Character {
         setMovement(move);
       }
     }
-    if (!isGrounded() && !_usingStaticAbility && !isGettingDamage) {
-      if (_upSpeed == 0 && !usingAbility) {
+    if (!isGrounded() && !_usingStaticAbility) {
+      if (_upSpeed == 0 && !usingAbility && !isGettingDamage) {
         jump(_gravity);
       }
       _upSpeed += _gravity;
@@ -404,7 +409,9 @@ abstract class Character {
         footBbox.width, footBbox.height);
     _bbox = Rect.fromLTWH(
         _bbox.left, _bbox.top + _upSpeed, _bbox.width, _bbox.height);
-    if (isMoving && !_isBlocked() && !_usingStaticAbility) {
+    if ((isMoving || isGettingDamage) &&
+        !_isBlocked() &&
+        !_usingStaticAbility) {
       var speed = _speed;
       if (isGettingDamage) {
         speed = -recoilSpeed;
@@ -613,7 +620,6 @@ abstract class Character {
       _setInvincibilityFrame(invincibilityFrame);
       _setAction(_getDamageImages, _getDamageDuration);
       usingAbility = false;
-      isMoving = true;
       _upSpeed = 0;
       isGettingDamage = true;
       _facing = fromDirection;
