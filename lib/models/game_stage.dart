@@ -72,9 +72,6 @@ class Stage extends ChangeNotifier {
       ..add(AttackButton(
           img: imgMap[AssetList.heavyAttackButtonImg]!,
           bbox: Constant().attackButtonPosition))
-      ..add(QuickAttackButton(
-          img: imgMap[AssetList.quickAttackButtonImg]!,
-          bbox: Constant().quickAttackButtonPosition))
       ..add(DodgeButton(
           img: imgMap[AssetList.dodgeButtonImg]!,
           bbox: Constant().dodgeButtonPosition));
