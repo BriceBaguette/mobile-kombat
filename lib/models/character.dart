@@ -595,6 +595,9 @@ abstract class Character {
       String fromDirection, bool absolute) {
     if (absolute || !isInvincible) {
       health -= damage - _resistanceModificator;
+      if (health < 0) {
+        health = 0;
+      }
       _getDamageDuration = recoilDistance / recoilSpeed * _framerate;
       _setInvincibilityFrame(invincibilityFrame);
       _setAction(_getDamageImages, _getDamageDuration);

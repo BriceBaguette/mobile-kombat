@@ -327,7 +327,7 @@ class HeavyStatic extends Ability {
 
   @override
   Rect range(int index, Rect characterHitBox, String facing) {
-    if (index == 1) {
+    if (index == 0) {
       var left = characterHitBox.left + (400 / 553 * characterHitBox.width);
       var top = characterHitBox.top + (125 / 723 * characterHitBox.height);
       var width = 250 / 553 * characterHitBox.width;
@@ -362,25 +362,22 @@ class HeavyHorizontal extends Ability {
 
   @override
   Rect range(int index, Rect characterHitBox, String facing) {
-    var left = characterHitBox.left;
-    var top = characterHitBox.top + characterHitBox.height / 2;
-    var width = characterHitBox.width;
-    var height = characterHitBox.height / 3;
+    if (index == 0) {
+      var left = characterHitBox.left + (750 / 1080 * characterHitBox.width);
+      var top = characterHitBox.top + (300 / 709 * characterHitBox.height);
+      var width = 300 / 1080 * characterHitBox.width;
+      var height = 300 / 709 * characterHitBox.height;
 
-    var range = Rect.fromLTWH(left, top, width, height);
+      if (facing == 'LEFT') {
+        left = characterHitBox.right -
+            (750 / 1080 * characterHitBox.width) -
+            width;
+      }
 
-    switch (facing) {
-      case 'RIGHT':
-        range = range.translate(characterHitBox.width, 0);
-        break;
-      case 'LEFT':
-        range = range.translate(-width, 0);
-        break;
-      default:
-        break;
+      return Rect.fromLTWH(left, top, width, height);
     }
 
-    return range;
+    return noHitBox;
   }
 }
 
