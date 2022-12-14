@@ -65,7 +65,7 @@ class LightQuick extends Ability {
 class LightAir extends Ability {
   LightAir() {
     duration = 500; //millisec
-    recoilDistance = 40;
+    recoilDistance = 70;
 
     images = [
       Loader().imgMap[AssetList.lightAirAbility_1]!,
@@ -106,7 +106,7 @@ class LightAir extends Ability {
 class LightStatic extends Ability {
   LightStatic() {
     duration = 500; //millisec
-    recoilDistance = 40;
+    recoilDistance = 80;
 
     images = [Loader().imgMap[AssetList.lightStaticAbility_1]!];
     powerPerImage = [10];
@@ -177,7 +177,7 @@ class LightHorizontal extends Ability {
 class LightFloor extends Ability {
   LightFloor() {
     duration = 500; //millisec
-    recoilDistance = 40;
+    recoilDistance = 60;
 
     images = [
       Loader().imgMap[AssetList.lightFloorAbility_1]!,
@@ -273,14 +273,14 @@ class HeavyQuick extends Ability {
 
 class HeavyAir extends Ability {
   HeavyAir() {
-    duration = 500; //millisec
+    duration = 750; //millisec
     recoilDistance = 40;
 
     images = [
       Loader().imgMap[AssetList.heavyAirAbility_1]!,
       Loader().imgMap[AssetList.heavyAirAbility_2]!
     ];
-    powerPerImage = [0, 10];
+    powerPerImage = [0, 15];
 
     imageBoxHeightRatio = 898 / Constant().heavyDefaultHeight;
     imageBoxWidthRatio = 1090 / Constant().heavyDefaultWidth;
@@ -312,11 +312,11 @@ class HeavyAir extends Ability {
 
 class HeavyStatic extends Ability {
   HeavyStatic() {
-    duration = 500; //millisec
-    recoilDistance = 40;
+    duration = 750; //millisec
+    recoilDistance = 80;
 
     images = [Loader().imgMap[AssetList.heavyStaticAbility_1]!];
-    powerPerImage = [10];
+    powerPerImage = [15];
 
     imageBoxHeightRatio = 723 / Constant().heavyDefaultHeight;
     imageBoxWidthRatio = 553 / Constant().heavyDefaultWidth;
@@ -347,11 +347,11 @@ class HeavyStatic extends Ability {
 
 class HeavyHorizontal extends Ability {
   HeavyHorizontal() {
-    duration = 500; //millisec
-    recoilDistance = 40;
+    duration = 750; //millisec
+    recoilDistance = 100;
 
     images = [Loader().imgMap[AssetList.heavyHorizontalAbility_1]!];
-    powerPerImage = [10];
+    powerPerImage = [15];
 
     imageBoxHeightRatio = 709 / Constant().heavyDefaultHeight;
     imageBoxWidthRatio = 1080 / Constant().heavyDefaultWidth;
@@ -383,14 +383,14 @@ class HeavyHorizontal extends Ability {
 
 class HeavyFloor extends Ability {
   HeavyFloor() {
-    duration = 500; //millisec
+    duration = 750; //millisec
     recoilDistance = 40;
 
     images = [
       Loader().imgMap[AssetList.heavyFloorAbility_1]!,
       Loader().imgMap[AssetList.heavyFloorAbility_2]!
     ];
-    powerPerImage = [0, 10];
+    powerPerImage = [0, 15];
 
     imageBoxHeightRatio = 766 / Constant().heavyDefaultHeight;
     imageBoxWidthRatio = 1058 / Constant().heavyDefaultWidth;

@@ -121,8 +121,8 @@ class Heavy extends Character {
     _name = "Heavy";
     _imageDir = "./assets/images/heavy/heavy_static_1.png";
 
-    health = 100;
-    maxHealth = 100;
+    health = 150;
+    maxHealth = 150;
     _speed = speed;
 
     _facing = facing;
@@ -218,7 +218,7 @@ abstract class Character {
 
   int _invincibilityDuration = 0;
 
-  double recoilSpeed = 10;
+  double recoilSpeed = 5;
 
   String getImageDir() => _imageDir;
 
@@ -338,7 +338,18 @@ abstract class Character {
         double horizontalOffset = 0;
         double verticalOffset = 0;
         if (_bboxOverlaps(platform.bbox)) {
-          switch (_facing) {
+          var facing = _facing;
+          if (isGettingDamage) {
+            switch (_facing) {
+              case 'RIGHT':
+                facing = 'LEFT';
+                break;
+              case 'LEFT':
+                facing = 'RIGHT';
+                break;
+            }
+          }
+          switch (facing) {
             case 'RIGHT':
               horizontalOffset = platform.bbox.left - (box.right + 1);
               break;
