@@ -36,6 +36,7 @@ enum AssetList {
   lightMoving_4,
   lightJumping_1,
   lightJumping_2,
+  lightGetDamage_1,
 
   heavyStatic_1,
   heavyStatic_2,
@@ -45,13 +46,14 @@ enum AssetList {
   heavyMoving_4,
   heavyJumping_1,
   heavyJumping_2,
+  heavyGetDamage_1,
 
   lightDodgeAbility_1,
   lightQuickAbility_1,
   lightStaticAbility_1,
   lightHorizontalAbility_1,
-  lightHorizontalAbility_2,
   lightFloorAbility_1,
+  lightFloorAbility_2,
   lightAirAbility_1,
   lightAirAbility_2,
   lightAirAbility_3,
@@ -86,30 +88,29 @@ const _sceneAssets = {
   AssetList.dodgeButtonImg: "./assets/images/buttons/dodge.png",
   AssetList.heavyAttackButtonImg: "./assets/images/buttons/heavyAttack.png",
   AssetList.lightStatic_1: "./assets/images/light/light_static_1.png",
-  AssetList.lightStatic_2: "./assets/images/light/light_static_1.png",
+  AssetList.lightStatic_2: "./assets/images/light/light_static_2.png",
   AssetList.lightMoving_1: "./assets/images/light/light_moving_1.png",
   AssetList.lightMoving_2: "./assets/images/light/light_moving_2.png",
   AssetList.lightMoving_3: "./assets/images/light/light_moving_3.png",
   AssetList.lightMoving_4: "./assets/images/light/light_moving_4.png",
-  AssetList.lightJumping_1: "./assets/images/light/light_static_1.png",
-  AssetList.lightJumping_2: "./assets/images/light/light_static_1.png",
+  AssetList.lightJumping_1: "./assets/images/light/light_jumping_1.png",
+  AssetList.lightGetDamage_1: "./assets/images/light/light_get_damage_1.png",
   AssetList.heavyStatic_1: "./assets/images/heavy/heavy_static_1.png",
   AssetList.heavyStatic_2: "./assets/images/heavy/heavy_static_2.png",
   AssetList.heavyMoving_1: "./assets/images/heavy/heavy_moving_1.png",
   AssetList.heavyMoving_2: "./assets/images/heavy/heavy_moving_2.png",
   AssetList.heavyMoving_3: "./assets/images/heavy/heavy_moving_3.png",
   AssetList.heavyMoving_4: "./assets/images/heavy/heavy_moving_4.png",
-  AssetList.heavyJumping_1: "./assets/images/jumping.png",
-  AssetList.heavyJumping_2: "./assets/images/jumping.png",
+  AssetList.heavyJumping_1: "./assets/images/heavy/heavy_jumping_1.png",
+  AssetList.heavyGetDamage_1: "./assets/images/heavy/heavy_get_damage_1.png",
   AssetList.lightDodgeAbility_1: "./assets/images/abilities/light_dodge_1.png",
-  AssetList.lightQuickAbility_1: "./assets/images/abilities/light_quick_1.png",
+  AssetList.lightQuickAbility_1: "./assets/images/abilities/light_static_1.png",
   AssetList.lightStaticAbility_1:
       "./assets/images/abilities/light_static_1.png",
   AssetList.lightHorizontalAbility_1:
       "./assets/images/abilities/light_horizontal_1.png",
-  AssetList.lightHorizontalAbility_2:
-      "./assets/images/abilities/light_horizontal_2.png",
-  AssetList.lightFloorAbility_1: "./assets/images/abilities/light_static_1.png",
+  AssetList.lightFloorAbility_1: "./assets/images/abilities/light_floor_1.png",
+  AssetList.lightFloorAbility_2: "./assets/images/abilities/light_floor_2.png",
   AssetList.lightAirAbility_1: "./assets/images/abilities/light_air_1.png",
   AssetList.lightAirAbility_2: "./assets/images/abilities/light_air_2.png",
   AssetList.lightAirAbility_3: "./assets/images/abilities/light_air_3.png",
@@ -230,7 +231,7 @@ class Loader extends ChangeNotifier {
         100,
         Loader().imgMap[AssetList.swimwearImg]!,
         3));
-    Player().setCharacter(characterList[0]);
+    Player().setCharacter(characterList[1]);
     _loading = false;
     notifyListeners();
   }

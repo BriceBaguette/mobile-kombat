@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -164,14 +165,8 @@ class MainMenu extends StatelessWidget {
                                                         _player.character
                                                             .setMovement(false),
                                                         opponent = DummyBot(
-                                                            character: StickMan(
-                                                                bbox: Constant()
-                                                                    .secondPlayerPosition,
-                                                                speed: 3,
-                                                                facing: 'LEFT',
-                                                                framerate:
-                                                                    Constant()
-                                                                        .framerate)),
+                                                            character:
+                                                                randomCharacter()),
                                                         Stage().setOpponent(
                                                             opponent),
                                                         Stage().reset(),
@@ -197,14 +192,8 @@ class MainMenu extends StatelessWidget {
                                                         _player.character
                                                             .setMovement(false),
                                                         opponent = SmartBot(
-                                                            character: StickMan(
-                                                                bbox: Constant()
-                                                                    .secondPlayerPosition,
-                                                                speed: 3,
-                                                                facing: 'LEFT',
-                                                                framerate:
-                                                                    Constant()
-                                                                        .framerate)),
+                                                            character:
+                                                                randomCharacter()),
                                                         Stage().setOpponent(
                                                             opponent),
                                                         Stage().reset(),
@@ -263,6 +252,22 @@ class MainMenu extends StatelessWidget {
                 ),
               ],
             ));
+  }
+
+  Character randomCharacter() {
+    if (Random().nextBool()) {
+      return Light(
+          bbox: Constant().secondPlayerPosition,
+          speed: 3,
+          facing: 'LEFT',
+          framerate: Constant().framerate);
+    } else {
+      return Heavy(
+          bbox: Constant().secondPlayerPosition,
+          speed: 3,
+          facing: 'LEFT',
+          framerate: Constant().framerate);
+    }
   }
 
   Future startGame() async {

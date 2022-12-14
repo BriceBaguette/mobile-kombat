@@ -28,7 +28,6 @@ class MovingButton extends Button {
   void onTapCancel() {
     var character = _scene.characters[0];
     if (!character.usingAbility && !character.isGettingDamage) {
-      character.setDirection(dir);
       character.setMovement(false);
       _rtDb.setMovement(false);
     }
