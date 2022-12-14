@@ -9,7 +9,7 @@ class Credits extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.red[900],
+          backgroundColor: Colors.purple[800],
           toolbarHeight: 40,
           title: const Text("Credits"),
           leading: Row(children: [

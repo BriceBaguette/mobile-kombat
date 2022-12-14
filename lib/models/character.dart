@@ -269,7 +269,8 @@ abstract class Character {
   void setAS(int mod) {
     _attackSpeedModificator = mod.toDouble();
   }
-  void resetBox(){
+
+  void resetBox() {
     hatBbox = Constant().hatBbox;
     bodyBbox = Constant().bodyBbox;
     footBbox = Constant().footBbox;
@@ -366,9 +367,8 @@ abstract class Character {
               break;
           }
           verticalOffset = platform.bbox.top - (box.bottom + 10);
-          print(horizontalOffset);
-          print(verticalOffset);
-          if (verticalOffset > horizontalOffset) {
+
+          if (verticalOffset.abs() > horizontalOffset.abs()) {
             _bbox = _bbox.translate(horizontalOffset, 0);
           } else {
             _bbox = _bbox.translate(0, verticalOffset);
@@ -400,7 +400,7 @@ abstract class Character {
         setMovement(move);
       }
     }
-    if (!isGrounded() && !_usingStaticAbility) {
+    if (!isGrounded() && !(usingAbility && _usingStaticAbility)) {
       if (_upSpeed == 0 && !usingAbility && !isGettingDamage) {
         jump(_gravity);
       }
@@ -450,6 +450,7 @@ abstract class Character {
   }
 
   void jump(double speed) {
+    print(1);
     if (!usingAbility &&
         !isGettingDamage &&
         (!hasJumped || speed == _gravity)) {
@@ -488,7 +489,18 @@ abstract class Character {
 
   bool _bboxIntersect(Rect otherBox) {
     var box = getHitBox();
-    switch (_facing) {
+    var facing = _facing;
+    if (isGettingDamage) {
+      switch (_facing) {
+        case 'RIGHT':
+          facing = 'LEFT';
+          break;
+        case 'LEFT':
+          facing = 'RIGHT';
+          break;
+      }
+    }
+    switch (facing) {
       case 'LEFT':
         return otherBox.contains(Offset(box.left - _speed, box.bottom - 1));
       case 'RIGHT':

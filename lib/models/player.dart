@@ -43,6 +43,7 @@ class Player {
     character.hasJumped = false;
     character.setMovement(false);
     character.isFloor = false;
+    character.usingAbility = false;
     character.isGettingDamage = false;
     character.isInvincible = false;
     character.resetBox();
