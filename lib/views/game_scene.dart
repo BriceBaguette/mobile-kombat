@@ -22,7 +22,7 @@ class GameScene extends StatelessWidget {
               builder: (context) => EndingScreen(
                     characters: scene.getChar(),
                     op: scene.opponent!,
-                  ))); //, scene.getCosm1, scene.getCosm2
+                  )));
         });
       }
       return Listener(

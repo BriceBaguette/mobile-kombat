@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,7 +31,12 @@ class Database {
       'gold': 0,
       'shopCharacter': characterShop,
       'shopCosmetic': cosmeticShop,
-      'Statistics': stats
+      'NumChar': 1,
+      'NumCosm': 0,
+      'TotalGold': 0,
+      'TotalTime': 0,
+      'TotalTimeChar1': 0,
+      'TotalTimeChar2': 0,
     });
   }
 
@@ -75,6 +79,9 @@ class Database {
     db.collection('users').doc(userUid).update({
       "gold": FieldValue.increment(n),
     });
+    if(n>0){
+      updateStats(userUid, 0, 0, 0, n, 0, 0);
+    }
   }
 
   Future<List<Cosmetics>> getCosmeticFromUser(String userUid) async {
@@ -117,42 +124,47 @@ class Database {
     });
   }
 
-  updateStats(String userUid, int time, int tc1, int tc2, int gold, int nch,
+  updateStats(String userUid, double time, double tc1, double tc2, int gold, int nch,
       int nco) async {
     db
         .collection('users')
         .doc(userUid)
-        .update({"Statistics.0": FieldValue.increment(time)});
+        .update({"TotalTime": FieldValue.increment(time)});
     db
         .collection('users')
         .doc(userUid)
-        .update({"Statistics.1": FieldValue.increment(tc1)});
+        .update({"TotalTimeChar1": FieldValue.increment(tc1)});
     db
         .collection('users')
         .doc(userUid)
-        .update({"Statistics.2": FieldValue.increment(tc2)});
+        .update({"TotalTimeChar2": FieldValue.increment(tc2)});
     db
         .collection('users')
         .doc(userUid)
-        .update({"Statistics.3": FieldValue.increment(gold)});
+        .update({"TotalGold": FieldValue.increment(gold)});
     db
         .collection('users')
         .doc(userUid)
-        .update({"Statistics.4": FieldValue.increment(nch)});
+        .update({"NumChar": FieldValue.increment(nch)});
     db
         .collection('users')
         .doc(userUid)
-        .update({"Statistics.5": FieldValue.increment(nco)});
+        .update({"NumCosm": FieldValue.increment(nco)});
   }
 
-  getStats(String userUid) async {
+  Future<List<int>> getStats(String userUid) async {
     var docSnap = await db.collection('users').doc(userUid).get();
     var data = docSnap.data();
-    List<int> stats = data!["Statistics"].cast<int>();
+    List<int> stats = [];
+    stats.add(data!["TotalTime"].toInt());
+    stats.add(data["TotalTimeChar1"].toInt());
+    stats.add(data["TotalTimeChar2"].toInt());
+    stats.add(data["TotalGold"].toInt());
+    stats.add(data["NumChar"].toInt());
+    stats.add(data["NumCosm"].toInt());
     return stats;
   }
 }
-
 class RealTimeDB {
   final Constant _constant = Constant();
   final db = FirebaseDatabase.instance;

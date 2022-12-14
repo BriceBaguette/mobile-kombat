@@ -125,7 +125,7 @@ class MainMenu extends StatelessWidget {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red[900]),
-                            child: const Text('disconnect'),
+                            child: const Text('Log Out'),
                             onPressed: () => {
                                   Auth().signout(),
                                   Navigator.of(context).popAndPushNamed('login')

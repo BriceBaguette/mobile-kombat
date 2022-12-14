@@ -4,6 +4,8 @@ import 'package:mobile_kombat/models/character.dart';
 import 'package:provider/provider.dart';
 
 import '../controller_inventory.dart';
+import '../models/constant.dart';
+import '../models/game_stage.dart';
 import '../models/opponent.dart';
 
 class EndingScreen extends StatelessWidget {
@@ -49,7 +51,7 @@ class Winner extends StatelessWidget {
                     Center(
                         child: SizedBox(
                             width: 300,
-                            height: 280,
+                            height: Constant().h-150,
                             child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -67,7 +69,7 @@ class Winner extends StatelessWidget {
                                   Stack(
                                     children: [
                                       Image.asset(characters[0].getImageDir(),
-                                          height: 180),
+                                          height: Constant().h/2-20,),
                                       if (characters[0]
                                               .equippedCosmetics["H"] !=
                                           null) ...[
@@ -110,7 +112,7 @@ class Winner extends StatelessWidget {
                     Center(
                         child: SizedBox(
                             width: 300,
-                            height: 280,
+                            height:  Constant().h-150,
                             child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -127,7 +129,7 @@ class Winner extends StatelessWidget {
                                     children: [
                                       Image.asset(
                                         characters[1].getImageDir(),
-                                        height: 180,
+                                        height: Constant().h/2-20,
                                         color: Colors.blueGrey.withOpacity(0.5),
                                         colorBlendMode: BlendMode.modulate,
                                       ),
@@ -196,17 +198,18 @@ class Winner extends StatelessWidget {
                                 width: 20,
                               )
                             ]),
-                        Consumer<ControllerInventory>(
-                            builder: (_, val, __) => IconButton(
-                                  iconSize: 50,
-                                  icon: const Icon(Icons.play_arrow,
-                                      size: 75, color: Color(0xFFB71C1C)),
-                                  onPressed: () {
-                                    val.updateGold(50);
-                                    Navigator.of(context)
-                                        .popAndPushNamed('menu');
-                                  },
-                                ))
+                        Consumer2(
+                            builder: (context, Stage scene, ControllerInventory val, _) => IconButton(
+                              iconSize: 50,
+                              icon: const Icon(Icons.play_arrow,
+                                  size: 75, color: Color(0xFFB71C1C)),
+                              onPressed: () {
+                                val.updateTimeStat(Player().character, 15000-scene.displayTime);
+                                val.updateGold(50);
+                                Navigator.of(context)
+                                    .popAndPushNamed('menu');
+                              },
+                            ))
                       ])
                 ]))));
   }
@@ -231,7 +234,7 @@ class Loser extends StatelessWidget {
                     Center(
                         child: SizedBox(
                             width: 300,
-                            height: 280,
+                            height:  Constant().h-150,
                             child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -250,7 +253,7 @@ class Loser extends StatelessWidget {
                                     children: [
                                       Image.asset(
                                         characters[0].getImageDir(),
-                                        height: 180,
+                                        height: Constant().h/2-20,
                                         color: Colors.blueGrey.withOpacity(0.5),
                                         colorBlendMode: BlendMode.modulate,
                                       ),
@@ -308,7 +311,7 @@ class Loser extends StatelessWidget {
                     Center(
                         child: SizedBox(
                             width: 300,
-                            height: 280,
+                            height:  Constant().h-150,
                             child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -325,7 +328,7 @@ class Loser extends StatelessWidget {
                                     children: [
                                       Image.asset(
                                         characters[1].getImageDir(),
-                                        height: 180,
+                                        height: Constant().h/2-20,
                                       ),
                                       if (characters[1]
                                               .equippedCosmetics["H"] !=
@@ -380,17 +383,18 @@ class Loser extends StatelessWidget {
                                 width: 20,
                               )
                             ]),
-                        Consumer<ControllerInventory>(
-                            builder: (_, val, __) => IconButton(
-                                  iconSize: 50,
-                                  icon: const Icon(Icons.play_arrow,
-                                      size: 75, color: Color(0xFFB71C1C)),
-                                  onPressed: () {
-                                    val.updateGold(20);
-                                    Navigator.of(context)
-                                        .popAndPushNamed('menu');
-                                  },
-                                ))
+                        Consumer2(
+                            builder: (context, Stage scene, ControllerInventory val, _) => IconButton(
+                              iconSize: 50,
+                              icon: const Icon(Icons.play_arrow,
+                                  size: 75, color: Color(0xFFB71C1C)),
+                              onPressed: () {
+                                val.updateTimeStat(Player().character, 15000-scene.displayTime);
+                                val.updateGold(20);
+                                Navigator.of(context)
+                                    .popAndPushNamed('menu');
+                              },
+                            ))
                       ])
                 ]))));
   }
