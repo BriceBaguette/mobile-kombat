@@ -45,6 +45,7 @@ class Player {
     character.isFloor = false;
     character.isGettingDamage = false;
     character.isInvincible = false;
+    character.resetBox();
   }
 
   getUsername() {

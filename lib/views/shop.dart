@@ -33,34 +33,39 @@ class Shop extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     return Consumer<ControllerInventory>(
         builder: (_, data, __) => Center(
-              child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.red[900],
-                  toolbarHeight: 40,
-                  leading: Row(children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back_ios),
-                      onPressed: () {
-                        Navigator.of(context).popAndPushNamed('menu');
-                      },
-                      tooltip: 'Shop',
-                    ),
-                  ]),
-                  actions: const [],
-                  title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(),
-                        const Text("Shop"),
-                        Row(children: [
-                          Text(data.getGold().toString()),
-                          const Text("   "),
-                          Image.asset("./assets/images/Coins.png", width: 20)
-                        ])
-                      ]),
-                  centerTitle: true,
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.purple[800],
+              toolbarHeight: 40,
+              leading: Row(children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    Navigator.of(context).popAndPushNamed('menu');
+                  },
+                  tooltip: 'Shop',
                 ),
-                body: Row(
+              ]),
+              actions: const [],
+              title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(),
+                    const Text("Shop"),
+                    Row(children: [
+                      Text(data.getGold().toString()),
+                      const Text("   "),
+                      Image.asset("./assets/images/Coins.png", width: 20)
+                    ])
+                  ]),
+              centerTitle: true,
+            ),
+            body: DecoratedBox(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("./assets/images/environment3.jpg"), fit: BoxFit.cover),
+                ),
+                child:Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Padding(
@@ -70,7 +75,7 @@ class Shop extends StatelessWidget {
                             height: 40,
                             width: 300,
                             decoration: BoxDecoration(
-                                color: Colors.red[900]!,
+                                color: Colors.purple[800]!,
                                 border: Border.all(
                                   color: Colors.black,
                                 ),
@@ -78,9 +83,9 @@ class Shop extends StatelessWidget {
                                     Radius.circular(10))),
                             child: const Center(
                                 child: Text(
-                              "Characters",
-                              style: TextStyle(color: Colors.white),
-                            )),
+                                  "Characters",
+                                  style: TextStyle(color: Colors.white),
+                                )),
                           ),
                           SizedBox(
                             width: 300,
@@ -96,109 +101,110 @@ class Shop extends StatelessWidget {
                                               context: context,
                                               builder:
                                                   (BuildContext context) =>
-                                                      AlertDialog(
-                                                        title: Center(
-                                                            child: Text(data
+                                                  AlertDialog(
+                                                    title: Center(
+                                                        child: Text(data
+                                                            .getArticlesChar()[
+                                                        index]
+                                                            .getName())),
+                                                    content: PopUpChar(
+                                                        c: data.getArticlesChar()[
+                                                        index]),
+                                                    actions: [
+                                                      Text(
+                                                          "Price: ${data.getArticlesChar()[index].getPrice()}"),
+                                                      Image.asset(
+                                                        "assets/images/Coins.png",
+                                                        scale: 5,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 40,
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          if (data.getGold() >=
+                                                              data
+                                                                  .getArticlesChar()[
+                                                              index]
+                                                                  .getPrice()) {
+                                                            data.updateGold(-data
                                                                 .getArticlesChar()[
-                                                                    index]
-                                                                .getName())),
-                                                        content: PopUpChar(
-                                                            c: data.getArticlesChar()[
-                                                                index]),
-                                                        actions: [
-                                                          Text(
-                                                              "Price: ${data.getArticlesChar()[index].getPrice()}"),
-                                                          Image.asset(
-                                                            "assets/images/Coins.png",
-                                                            scale: 5,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 40,
-                                                          ),
-                                                          ElevatedButton(
-                                                            onPressed: () {
-                                                              if (data.getGold() >=
-                                                                  data
-                                                                      .getArticlesChar()[
-                                                                          index]
-                                                                      .getPrice()) {
-                                                                data.updateGold(-data
-                                                                    .getArticlesChar()[
-                                                                        index]
-                                                                    .getPrice());
-                                                                data.addItemChar(
-                                                                    data.getArticlesChar()[
-                                                                        index]);
-                                                                data.deleteArticleChar(
-                                                                    index);
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              } else {
-                                                                showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (BuildContext
-                                                                            context) =>
-                                                                        AlertDialog(
-                                                                          title:
-                                                                              const Center(child: Text("Unable to buy this character")),
-                                                                          content: Column(
-                                                                              mainAxisSize: MainAxisSize.min,
-                                                                              children: const [
-                                                                                Center(
-                                                                                    child: Text(
+                                                            index]
+                                                                .getPrice());
+                                                            data.addItemChar(
+                                                                data.getArticlesChar()[
+                                                                index]);
+                                                            data.deleteArticleChar(
+                                                                index);
+                                                            Navigator.of(
+                                                                context)
+                                                                .pop();
+                                                          } else {
+                                                            showDialog(
+                                                                context:
+                                                                context,
+                                                                builder: (BuildContext
+                                                                context) =>
+                                                                    AlertDialog(
+                                                                      title:
+                                                                      const Center(child: Text("Unable to buy this character")),
+                                                                      content: Column(
+                                                                          mainAxisSize: MainAxisSize.min,
+                                                                          children: const [
+                                                                            Center(
+                                                                                child: Text(
                                                                                   "Not enough money",
-                                                                                  style: TextStyle(color: Colors.red),
+                                                                                  style: TextStyle(color: Color(0xFF6A1B9A)),
                                                                                 )),
-                                                                              ]),
-                                                                          actions: [
-                                                                            ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  Navigator.of(context).pop();
-                                                                                  Navigator.of(context).pop();
-                                                                                },
-                                                                                child: const Text("Close"))
-                                                                          ],
-                                                                        ));
-                                                              }
-                                                            },
-                                                            child: const Text(
-                                                                'Buy'),
-                                                          ),
-                                                          ElevatedButton(
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: const Text(
-                                                                'Close'),
-                                                          ),
-                                                        ],
-                                                      ));
+                                                                          ]),
+                                                                      actions: [
+                                                                        ElevatedButton(
+                                                                            onPressed: () {
+                                                                              Navigator.of(context).pop();
+                                                                              Navigator.of(context).pop();
+                                                                            },
+                                                                            child: const Text("Close"))
+                                                                      ],
+                                                                    ));
+                                                          }
+                                                        },
+                                                        child: const Text(
+                                                            'Buy'),
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          Navigator.of(
+                                                              context)
+                                                              .pop();
+                                                        },
+                                                        child: const Text(
+                                                            'Close'),
+                                                      ),
+                                                    ],
+                                                  ));
                                         },
                                         child: Container(
                                             height: 100,
                                             decoration: BoxDecoration(
+                                              color: Colors.white,
                                               border: Border.all(
-                                                color: Colors.blueGrey.shade300,
+                                                color: const Color(0xFF6A1B9A),
                                               ),
                                               borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(10)),
+                                              const BorderRadius.all(
+                                                  Radius.circular(10)),
                                             ),
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   right: 20),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 children: [
                                                   CharacterWidget(
                                                       c: data.getArticlesChar()[
-                                                          index]),
+                                                      index]),
                                                   //Make widget for character
                                                   Text(data
                                                       .getArticlesChar()[index]
@@ -213,38 +219,38 @@ class Shop extends StatelessWidget {
                                                       if (data.getGold() >=
                                                           data
                                                               .getArticlesChar()[
-                                                                  index]
+                                                          index]
                                                               .getPrice()) {
                                                         data.updateGold(-data
                                                             .getArticlesChar()[
-                                                                index]
+                                                        index]
                                                             .getPrice());
                                                         data.addItemChar(
                                                             data.getArticlesChar()[
-                                                                index]);
+                                                            index]);
                                                         data.deleteArticleChar(
                                                             index);
                                                       } else {
                                                         showDialog(
                                                             context: context,
                                                             builder: (BuildContext
-                                                                    context) =>
+                                                            context) =>
                                                                 AlertDialog(
                                                                   title: const Center(
                                                                       child: Text(
                                                                           "Unable to buy this character")),
                                                                   content: Column(
                                                                       mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .min,
+                                                                      MainAxisSize
+                                                                          .min,
                                                                       children: const [
                                                                         Center(
                                                                             child:
-                                                                                Text(
-                                                                          "Not enough money",
-                                                                          style:
-                                                                              TextStyle(color: Colors.red),
-                                                                        )),
+                                                                            Text(
+                                                                              "Not enough money",
+                                                                              style:
+                                                                              TextStyle(color: Color(0xFF6A1B9A)),
+                                                                            )),
                                                                       ]),
                                                                   actions: [
                                                                     ElevatedButton(
@@ -274,7 +280,7 @@ class Shop extends StatelessWidget {
                             height: 40,
                             width: 300,
                             decoration: BoxDecoration(
-                                color: Colors.red[900]!,
+                                color: const Color(0xFF6A1B9A),
                                 border: Border.all(
                                   color: Colors.black,
                                 ),
@@ -282,9 +288,9 @@ class Shop extends StatelessWidget {
                                     Radius.circular(10))),
                             child: const Center(
                                 child: Text(
-                              "Cosmetics",
-                              style: TextStyle(color: Colors.white),
-                            )),
+                                  "Cosmetics",
+                                  style: TextStyle(color: Colors.white),
+                                )),
                           ),
                           SizedBox(
                             width: 300,
@@ -300,110 +306,112 @@ class Shop extends StatelessWidget {
                                               context: context,
                                               builder:
                                                   (BuildContext context) =>
-                                                      AlertDialog(
-                                                        title: Center(
-                                                            child: Text(data
+                                                  AlertDialog(
+                                                    title: Center(
+                                                        child: Text(data
+                                                            .getArticlesCosmetics()[
+                                                        index]
+                                                            .getName())),
+                                                    content: PopUpCosmetic(
+                                                        c: data.getArticlesCosmetics()[
+                                                        index]),
+                                                    actions: [
+                                                      Text(
+                                                          "Price: ${data.getArticlesCosmetics()[index].getPrice()}"),
+                                                      Image.asset(
+                                                        "assets/images/Coins.png",
+                                                        scale: 5,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 40,
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          if (data.getGold() >=
+                                                              data
+                                                                  .getArticlesCosmetics()[
+                                                              index]
+                                                                  .getPrice()) {
+                                                            data.updateGold(-data
                                                                 .getArticlesCosmetics()[
-                                                                    index]
-                                                                .getName())),
-                                                        content: PopUpCosmetic(
-                                                            c: data.getArticlesCosmetics()[
-                                                                index]),
-                                                        actions: [
-                                                          Text(
-                                                              "Price: ${data.getArticlesCosmetics()[index].getPrice()}"),
-                                                          Image.asset(
-                                                            "assets/images/Coins.png",
-                                                            scale: 5,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 40,
-                                                          ),
-                                                          ElevatedButton(
-                                                            onPressed: () {
-                                                              if (data.getGold() >=
-                                                                  data
-                                                                      .getArticlesCosmetics()[
-                                                                          index]
-                                                                      .getPrice()) {
-                                                                data.updateGold(-data
-                                                                    .getArticlesCosmetics()[
-                                                                        index]
-                                                                    .getPrice());
-                                                                data.addItem(
-                                                                    data.getArticlesCosmetics()[
-                                                                        index]);
-                                                                data.deleteArticle(
-                                                                    index);
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              } else {
-                                                                showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (BuildContext
-                                                                            context) =>
-                                                                        AlertDialog(
-                                                                          title:
-                                                                              const Center(child: Text("Unable to buy this item")),
-                                                                          content: Column(
-                                                                              mainAxisSize: MainAxisSize.min,
-                                                                              children: const [
-                                                                                Center(
-                                                                                    child: Text(
+                                                            index]
+                                                                .getPrice());
+                                                            data.addItem(
+                                                                data.getArticlesCosmetics()[
+                                                                index]);
+                                                            data.deleteArticle(
+                                                                index);
+                                                            Navigator.of(
+                                                                context)
+                                                                .pop();
+                                                          } else {
+                                                            showDialog(
+                                                                context:
+                                                                context,
+                                                                builder: (BuildContext
+                                                                context) =>
+                                                                    AlertDialog(
+                                                                      title:
+                                                                      const Center(child: Text("Unable to buy this item")),
+                                                                      content: Column(
+                                                                          mainAxisSize: MainAxisSize.min,
+                                                                          children: const [
+                                                                            Center(
+                                                                                child: Text(
                                                                                   "Not enough money",
-                                                                                  style: TextStyle(color: Colors.red),
+                                                                                  style: TextStyle(color: Color(0xFF6A1B9A)),
                                                                                 )),
-                                                                              ]),
-                                                                          actions: [
-                                                                            ElevatedButton(
-                                                                                onPressed: () {
-                                                                                  Navigator.of(context).pop();
-                                                                                  Navigator.of(context).pop();
-                                                                                },
-                                                                                child: const Text("Close"))
-                                                                          ],
-                                                                        ));
-                                                              }
-                                                            },
-                                                            child: const Text(
-                                                                'Buy'),
-                                                          ),
-                                                          ElevatedButton(
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: const Text(
-                                                                'Close'),
-                                                          ),
-                                                        ],
-                                                      ));
+                                                                          ]),
+                                                                      actions: [
+                                                                        ElevatedButton(
+                                                                            onPressed: () {
+                                                                              Navigator.of(context).pop();
+                                                                              Navigator.of(context).pop();
+                                                                            },
+                                                                            child: const Text("Close"))
+                                                                      ],
+                                                                    ));
+                                                          }
+                                                        },
+                                                        child: const Text(
+                                                            'Buy'),
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {
+                                                          Navigator.of(
+                                                              context)
+                                                              .pop();
+                                                        },
+                                                        child: const Text(
+                                                            'Close'),
+                                                      ),
+                                                    ],
+                                                  ));
                                         },
                                         child: Container(
                                             decoration: BoxDecoration(
+                                              color: Colors.white,
                                               border: Border.all(
-                                                color: Colors.blueGrey.shade300,
+                                                color: const Color(0xFF6A1B9A),
+
                                               ),
                                               borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(10)),
+                                              const BorderRadius.all(
+                                                  Radius.circular(10)),
                                             ),
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   right: 20),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 children: [
                                                   data.getArticlesCosmetics()[
-                                                      index],
+                                                  index],
                                                   Text(data
                                                       .getArticlesCosmetics()[
-                                                          index]
+                                                  index]
                                                       .getPrice()
                                                       .toString()),
                                                   Image.asset(
@@ -415,38 +423,38 @@ class Shop extends StatelessWidget {
                                                       if (data.getGold() >=
                                                           data
                                                               .getArticlesCosmetics()[
-                                                                  index]
+                                                          index]
                                                               .getPrice()) {
                                                         data.updateGold(-data
                                                             .getArticlesCosmetics()[
-                                                                index]
+                                                        index]
                                                             .getPrice());
                                                         data.addItem(
                                                             data.getArticlesCosmetics()[
-                                                                index]);
+                                                            index]);
                                                         data.deleteArticle(
                                                             index);
                                                       } else {
                                                         showDialog(
                                                             context: context,
                                                             builder: (BuildContext
-                                                                    context) =>
+                                                            context) =>
                                                                 AlertDialog(
                                                                   title: const Center(
                                                                       child: Text(
                                                                           "Unable to buy this item")),
                                                                   content: Column(
                                                                       mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .min,
+                                                                      MainAxisSize
+                                                                          .min,
                                                                       children: const [
                                                                         Center(
                                                                             child:
-                                                                                Text(
-                                                                          "Not enough money",
-                                                                          style:
-                                                                              TextStyle(color: Colors.red),
-                                                                        )),
+                                                                            Text(
+                                                                              "Not enough money",
+                                                                              style:
+                                                                              TextStyle(color: Color(0xFF6A1B9A)),
+                                                                            )),
                                                                       ]),
                                                                   actions: [
                                                                     ElevatedButton(
@@ -470,8 +478,8 @@ class Shop extends StatelessWidget {
                           )
                         ])),
                   ],
-                ),
-              ),
-            ));
+                )),
+          ),
+        ));
   }
 }

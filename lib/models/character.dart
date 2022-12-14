@@ -269,6 +269,11 @@ abstract class Character {
   void setAS(int mod) {
     _attackSpeedModificator = mod.toDouble();
   }
+  void resetBox(){
+    hatBbox = Constant().hatBbox;
+    bodyBbox = Constant().bodyBbox;
+    footBbox = Constant().footBbox;
+  }
 
   void setResistance(int mod) {
     _resistanceModificator = mod;

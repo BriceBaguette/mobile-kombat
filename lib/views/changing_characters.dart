@@ -11,7 +11,7 @@ class ChangingCharacters extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.red[900],
+          backgroundColor: Colors.purple[800],
           toolbarHeight: 40,
           leading: Row(children: [
             IconButton(
@@ -28,7 +28,7 @@ class ChangingCharacters extends StatelessWidget {
         ),
         body: Consumer<ControllerInventory>(
             builder: (_, data, __) => Center(
-                    child: Column(children: [
+                child: Column(children: [
                   SizedBox(
                       height: MediaQuery.of(context).size.height - 100,
                       width: MediaQuery.of(context).size.width - 10,
@@ -53,7 +53,7 @@ class ChangingCharacters extends StatelessWidget {
                                                 onPressed: () {
                                                   data.equipChar(
                                                       data.getItemsInvChar()[
-                                                          index]);
+                                                      index]);
                                                   Navigator.of(context).pop();
                                                   Navigator.of(context).pop();
                                                   Navigator.of(context).pop();
@@ -82,7 +82,7 @@ class ChangingCharacters extends StatelessWidget {
                                       padding: const EdgeInsets.only(right: 20),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           CharacterWidget(
                                               c: data.getItemsInvChar()[index]),

@@ -122,18 +122,18 @@ class Constant {
         leftCharacterLeft, leftCharacterTop, w / 20, w / 20 * gokuRatio);
     secondPlayerPosition = Rect.fromLTWH(
         rightCharacterLeft, rightCharacterTop, w / 20, w / 20 * gokuRatio);
-    hatBbox = Rect.fromLTWH(firstPlayerPosition.left, firstPlayerPosition.top,
-        firstPlayerPosition.width, w / 30);
+    hatBbox = Rect.fromLTWH(firstPlayerPosition.left+5, firstPlayerPosition.top-15,
+        firstPlayerPosition.width/2, 30);
     bodyBbox = Rect.fromLTWH(
         firstPlayerPosition.left,
-        firstPlayerPosition.top + 2 * w / 30,
-        firstPlayerPosition.width,
-        w / 30);
+        firstPlayerPosition.top +20,
+        firstPlayerPosition.width/2+5,
+        28);
     footBbox = Rect.fromLTWH(
-        firstPlayerPosition.left,
-        firstPlayerPosition.top + 4 * w / 30,
-        firstPlayerPosition.width,
-        w / 30);
+        firstPlayerPosition.left+5,
+        firstPlayerPosition.top + 35,
+        firstPlayerPosition.width/2-2,
+        20);
 
     healthBarMaxWidth = w / 5;
     healthBarHeight = 10;
