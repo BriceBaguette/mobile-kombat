@@ -10,6 +10,7 @@ import 'package:mobile_kombat/views/main_menu.dart';
 import 'package:mobile_kombat/controller_inventory.dart';
 import 'package:mobile_kombat/views/register_page.dart';
 import 'package:mobile_kombat/views/statistics.dart';
+import 'package:mobile_kombat/views/credits.dart';
 import 'package:provider/provider.dart';
 import 'models/game_stage.dart';
 import 'views/inventory.dart';
@@ -52,7 +53,8 @@ class LaunchingScreen extends StatelessWidget {
       'gamestage': (context) => const Scaffold(body: GameScene()),
       'inventory': (context) => const Inventory(),
       'shop': (context) => const Shop(),
-      'statistics': (context) => Statistics()
+      'statistics': (context) => Statistics(),
+      'credits': (context) => Credits()
     });
   }
 }

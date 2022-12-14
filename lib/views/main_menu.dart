@@ -37,7 +37,7 @@ class MainMenu extends StatelessWidget {
                   children: [
                     const SizedBox(
                       width: 50,
-                      height: 200,
+                      height: 150,
                     ),
                     SizedBox(
                       width: 100,
@@ -70,6 +70,16 @@ class MainMenu extends StatelessWidget {
                           child: const Text('Stats'),
                           onPressed: () =>
                               Navigator.pushNamed(context, 'statistics')),
+                    ),
+                    SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red[900]),
+                          child: const Text('Credits'),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, 'credits')),
                     ),
                   ],
                 ),
