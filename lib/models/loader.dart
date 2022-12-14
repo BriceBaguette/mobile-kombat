@@ -35,7 +35,6 @@ enum AssetList {
   lightMoving_3,
   lightMoving_4,
   lightJumping_1,
-  lightJumping_2,
   lightGetDamage_1,
 
   heavyStatic_1,
@@ -45,7 +44,6 @@ enum AssetList {
   heavyMoving_3,
   heavyMoving_4,
   heavyJumping_1,
-  heavyJumping_2,
   heavyGetDamage_1,
 
   lightDodgeAbility_1,
@@ -62,9 +60,9 @@ enum AssetList {
   heavyDodgeAbility_1,
   heavyQuickAbility_1,
   heavyStaticAbility_1,
-  heavyStaticAbility_2,
   heavyHorizontalAbility_1,
   heavyFloorAbility_1,
+  heavyFloorAbility_2,
   heavyAirAbility_1,
   heavyAirAbility_2,
 
@@ -120,12 +118,10 @@ const _sceneAssets = {
       "./assets/images/abilities/heavy_horizontal_1.png",
   AssetList.heavyStaticAbility_1:
       "./assets/images/abilities/heavy_static_1.png",
-  AssetList.heavyStaticAbility_2:
-      "./assets/images/abilities/heavy_static_2.png",
   AssetList.heavyHorizontalAbility_1:
       "./assets/images/abilities/heavy_horizontal_1.png",
-  AssetList.heavyFloorAbility_1:
-      "./assets/images/abilities/heavy_horizontal_1.png",
+  AssetList.heavyFloorAbility_1: "./assets/images/abilities/heavy_floor_1.png",
+  AssetList.heavyFloorAbility_2: "./assets/images/abilities/heavy_floor_2.png",
   AssetList.heavyAirAbility_1: "./assets/images/abilities/heavy_air_1.png",
   AssetList.heavyAirAbility_2: "./assets/images/abilities/heavy_air_2.png",
   AssetList.character2Img: "assets/images/GenericGuy.png",
@@ -231,7 +227,7 @@ class Loader extends ChangeNotifier {
         100,
         Loader().imgMap[AssetList.swimwearImg]!,
         3));
-    Player().setCharacter(characterList[1]);
+    Player().setCharacter(characterList[0]);
     _loading = false;
     notifyListeners();
   }
