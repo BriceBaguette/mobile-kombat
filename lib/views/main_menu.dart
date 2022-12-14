@@ -169,11 +169,8 @@ class MainMenu extends StatelessWidget {
                                                           backgroundColor:
                                                               Colors.red[900]),
                                                   onPressed: () => {
-                                                        _player.character
-                                                            .setPosition(Constant()
-                                                                .firstPlayerPosition),
-                                                        _player.character
-                                                            .setMovement(false),
+                                                        _player
+                                                            .resetCharacter(),
                                                         opponent = DummyBot(
                                                             character:
                                                                 randomCharacter()),
@@ -196,11 +193,8 @@ class MainMenu extends StatelessWidget {
                                                           backgroundColor:
                                                               Colors.red[900]),
                                                   onPressed: () => {
-                                                        _player.character
-                                                            .setPosition(Constant()
-                                                                .firstPlayerPosition),
-                                                        _player.character
-                                                            .setMovement(false),
+                                                        _player
+                                                            .resetCharacter(),
                                                         opponent = SmartBot(
                                                             character:
                                                                 randomCharacter()),

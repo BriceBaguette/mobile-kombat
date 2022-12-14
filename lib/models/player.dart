@@ -1,3 +1,4 @@
+import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/cosmetics.dart';
 
@@ -23,7 +24,7 @@ class Player {
   }
 
   Player._hidden() {
-    resetHealth();
+    health = 100;
   }
   set username(nickname) => _username = nickname;
   get username => _username;
@@ -36,8 +37,14 @@ class Player {
     this.cosmetics = cosmetics;
   }
 
-  resetHealth() {
-    health = 100;
+  resetCharacter() {
+    character.setPosition(Constant().firstPlayerPosition);
+    character.health = character.maxHealth;
+    character.hasJumped = false;
+    character.setMovement(false);
+    character.isFloor = false;
+    character.isGettingDamage = false;
+    character.isInvincible = false;
   }
 
   getUsername() {
