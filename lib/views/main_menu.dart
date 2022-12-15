@@ -338,7 +338,7 @@ class MainMenu extends StatelessWidget {
         await _rtDb.getOpponentCharacter(opponentUser, user!.uid);
     _rtDb.initListener(room, user!.uid);
     opponent =
-        RealPlayer(username: opponentUser.userName, character: opponentChar!);
+        RealPlayer(name: opponentUser.userName, character: opponentChar!);
     Stage().setOpponent(opponent);
     Stage().setRoom(room);
     Future.delayed(const Duration(seconds: 1));

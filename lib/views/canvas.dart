@@ -36,7 +36,7 @@ class ScenePainter extends CustomPainter {
         ratio = 0;
       }
       var paint = Paint()
-        ..color = Color.fromARGB(255, 99, 8, 8)
+        ..color = const Color.fromARGB(255, 99, 8, 8)
         ..style = PaintingStyle.fill;
       var barBox = Rect.fromLTWH(
           Constant().healthBarLeft + (1 - ratio) * Constant().healthBarMaxWidth,

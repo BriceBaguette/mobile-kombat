@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:mobile_kombat/models/cosmetics.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/game_stage.dart';
 
@@ -9,10 +8,9 @@ class DummyBot extends Opponent {
   DummyBot({
     required super.character,
     /*required super.cosmetics*/
-  });
-
-  @override
-  String username = "Dummy Bot";
+  }) {
+    username = "Dummy Bot";
+  }
 
   @override
   void getActions() {}
@@ -25,10 +23,9 @@ class SmartBot extends Opponent {
   SmartBot({
     required super.character,
     /*required super.cosmetics*/
-  });
-
-  @override
-  String username = "Smart Bot";
+  }) {
+    username = "Smart Bot";
+  }
 
   @override
   void getActions() {
@@ -90,8 +87,9 @@ class SmartBot extends Opponent {
 }
 
 class RealPlayer extends Opponent {
-  String username;
-  RealPlayer({required this.username, required super.character});
+  RealPlayer({required name, required super.character}) {
+    username = name;
+  }
   @override
   void getActions() {}
 }

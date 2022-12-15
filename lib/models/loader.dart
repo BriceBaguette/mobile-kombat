@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile_kombat/controller_inventory.dart';
-import 'package:mobile_kombat/models/auth.dart';
 
 import 'dart:ui' as ui;
 

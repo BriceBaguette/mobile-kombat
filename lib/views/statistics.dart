@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_kombat/controller_inventory.dart';
 import 'package:provider/provider.dart';
 
-import '../models/auth.dart';
-import '../models/database.dart';
-
 class Statistics extends StatelessWidget {
-  Statistics({super.key});
+  const Statistics({super.key});
 
   String convertDoubleToHour(double time) {
     double r1 = time % 3600;
@@ -37,33 +34,32 @@ class Statistics extends StatelessWidget {
         ),
         body: Consumer<ControllerInventory>(
           builder: (_, data, __) => Center(
-              child:
-              Row(
+              child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text("Total time played:", textAlign: TextAlign.justify),
-                          Text("Total time played as Character 1:"),
-                          Text("Total time played as Character 2:"),
-                          Text("Total gold earned:"),
-                          Text("Number of cosmetics possessed:"),
-                          Text("Number of characters possessed:"),
-                        ]),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(convertDoubleToHour(data.getTotTime())),
-                          Text(convertDoubleToHour(data.getTimeChar1())),
-                          Text(convertDoubleToHour(data.getTimeChar2())),
-                          Text(" ${data.getTotGold()} gold"),
-                          Text(" ${data.getNumCosm()}"),
-                          Text(" ${data.getNumChar()}"),
-                        ]),
-                  ])),)
-    );
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text("Total time played:", textAlign: TextAlign.justify),
+                      Text("Total time played as Character 1:"),
+                      Text("Total time played as Character 2:"),
+                      Text("Total gold earned:"),
+                      Text("Number of cosmetics possessed:"),
+                      Text("Number of characters possessed:"),
+                    ]),
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(convertDoubleToHour(data.getTotTime())),
+                      Text(convertDoubleToHour(data.getTimeChar1())),
+                      Text(convertDoubleToHour(data.getTimeChar2())),
+                      Text(" ${data.getTotGold()} gold"),
+                      Text(" ${data.getNumCosm()}"),
+                      Text(" ${data.getNumChar()}"),
+                    ]),
+              ])),
+        ));
   }
 }

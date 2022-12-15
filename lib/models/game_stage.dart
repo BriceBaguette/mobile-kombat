@@ -9,7 +9,6 @@ import 'package:mobile_kombat/models/database.dart';
 import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
 import 'package:mobile_kombat/models/room.dart';
-import 'package:mobile_kombat/views/canvas.dart';
 
 import 'custom_buttons.dart';
 import 'ground.dart';
@@ -27,7 +26,7 @@ class Stage extends ChangeNotifier {
   var _ready = false;
   late Timer gameTimer;
   late int displayTime;
-  RealTimeDB _rtDb = RealTimeDB();
+  final RealTimeDB _rtDb = RealTimeDB();
   Room? room;
   bool gameOver = false;
   bool get ready => _ready && !_loading;
