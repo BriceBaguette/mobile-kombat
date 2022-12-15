@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/constant.dart';
 
 import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/database.dart';
 import 'package:mobile_kombat/models/opponent.dart';
 import 'package:mobile_kombat/models/player.dart';
 import 'package:mobile_kombat/models/room.dart';
@@ -26,6 +27,7 @@ class Stage extends ChangeNotifier {
   var _ready = false;
   late Timer gameTimer;
   late int displayTime;
+  RealTimeDB _rtDb = RealTimeDB();
   Room? room;
   bool gameOver = false;
   bool get ready => _ready && !_loading;
@@ -108,7 +110,14 @@ class Stage extends ChangeNotifier {
   }
 
   void updateGame() {
+    var updateTiming = 10;
     if (Stage().ready) {
+      if (opponent! is RealPlayer) {
+        updateTiming--;
+        if (updateTiming == 0) {
+          _rtDb.setPosition(opponent!.character.getHitBox());
+        }
+      }
       opponent!.getActions();
       for (var character in _stage!.characters) {
         for (var other in _stage!.characters) {

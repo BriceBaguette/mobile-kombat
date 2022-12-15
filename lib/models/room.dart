@@ -1,4 +1,5 @@
 import 'package:mobile_kombat/models/character.dart';
+import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/loader.dart';
 
 class Room {
@@ -34,12 +35,16 @@ class CharacterDb {
   String facing = '';
   int health = 100;
   int id = -1;
+  double left = Constant().firstPlayerPosition.left;
+  double top = Constant().firstPlayerPosition.top;
   double upSpeed = 0;
   bool isMoving = false;
 
   CharacterDb.fromJson(json) {
     facing = json['facing'];
-    health = int.parse(json['health']);
+    left = double.parse(json['left']);
+    top = double.parse(json['top']);
+    health = health = int.parse(json['health']);
     id = int.parse(json['id']);
     upSpeed = double.parse(json['upSpeed']);
     if (json['isMoving'] == 'true') {
@@ -52,6 +57,8 @@ class CharacterDb {
   Map<String, dynamic> toJson() {
     return {
       'facing': facing,
+      'left': left,
+      'top': top,
       'health': health,
       'id': id,
       'upSpeed': upSpeed,

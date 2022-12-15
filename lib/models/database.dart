@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -343,6 +344,8 @@ class RealTimeDB {
     roomRef.set({
       room.users[0].userId: {
         'character': {
+          'left': room.users[0].character.left,
+          'top': room.users[0].character.top,
           'facing': room.users[0].character.facing,
           'health': room.users[0].character.health,
           'id': room.users[0].character.id,
@@ -353,6 +356,8 @@ class RealTimeDB {
       },
       room.users[1].userId: {
         'character': {
+          'left': room.users[1].character.left,
+          'top': room.users[1].character.top,
           'facing': room.users[1].character.facing,
           'health': room.users[1].character.health,
           'id': room.users[1].character.id,
@@ -410,6 +415,25 @@ class RealTimeDB {
           break;
       }
     });
+    DatabaseReference listenLeft =
+        FirebaseDatabase.instance.ref('${room.roomId}/$id/character/left');
+    listenLeft.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      double left = double.parse(snapshot.value as String);
+      Rect hitbox = Stage().opponent!.character.getHitBox();
+      Stage().opponent!.character.setPosition(
+          Rect.fromLTWH(left, hitbox.top, hitbox.width, hitbox.height));
+    });
+    DatabaseReference listenTop =
+        FirebaseDatabase.instance.ref('${room.roomId}/$id/character/top');
+
+    listenTop.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      double top = double.parse(snapshot.value as String);
+      Rect hitbox = Stage().opponent!.character.getHitBox();
+      Stage().opponent!.character.setPosition(
+          Rect.fromLTWH(hitbox.left, top, hitbox.width, hitbox.height));
+    });
   }
 
   setMovement(bool move) async {
@@ -443,6 +467,15 @@ class RealTimeDB {
       ref.update({"attack": attack});
       Future.delayed(const Duration(milliseconds: 10));
       ref.update({"attack": ''});
+    }
+  }
+
+  setPosition(Rect hitBox) async {
+    if (Stage().room != null) {
+      DatabaseReference ref = FirebaseDatabase.instance
+          .ref('${Stage().room!.roomId}/${Auth().currentUser!.uid}/character');
+      ref.update({"left": hitBox.left});
+      ref.update({"top": hitBox.top});
     }
   }
 }
