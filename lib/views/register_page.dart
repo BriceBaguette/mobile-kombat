@@ -55,7 +55,7 @@ class RegisterPage extends StatelessWidget {
                 ),
                 Consumer<ControllerInventory>(
                     builder: (_, data, __) => ElevatedButton(
-                        child: (const Text('Sign in')),
+                        child: (const Text('Register')),
                         onPressed: () => {
                               FutureBuilder(
                                 future: auth
