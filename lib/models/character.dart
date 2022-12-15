@@ -450,7 +450,6 @@ abstract class Character {
   }
 
   void jump(double speed) {
-    print(1);
     if (!usingAbility &&
         !isGettingDamage &&
         (!hasJumped || speed == _gravity)) {
@@ -511,6 +510,9 @@ abstract class Character {
   }
 
   String getFacing() => _facing;
+  void setFacing(String facing) {
+    _facing = facing;
+  }
 
   Rect getImageBox() {
     var box = _bbox;

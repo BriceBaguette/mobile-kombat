@@ -40,6 +40,7 @@ class Player {
   resetCharacter() {
     character.setPosition(Constant().firstPlayerPosition);
     character.health = character.maxHealth;
+    character.setFacing('RIGHT');
     character.hasJumped = false;
     character.setMovement(false);
     character.isFloor = false;

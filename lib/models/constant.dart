@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class Constant {
   static Constant? _constant;
-  late final double w;
-  late final double h;
+  late double w;
+  late double h;
   final int framerate = 16;
   final time = 15000;
   final double gokuRatio = 1.88;
@@ -64,6 +64,10 @@ class Constant {
   }
 
   Constant._hidden() {
+    reload();
+  }
+
+  void reload() {
     var window = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     w = window.size.width;
     h = window.size.height;
@@ -122,18 +126,12 @@ class Constant {
         leftCharacterLeft, leftCharacterTop, w / 20, w / 20 * gokuRatio);
     secondPlayerPosition = Rect.fromLTWH(
         rightCharacterLeft, rightCharacterTop, w / 20, w / 20 * gokuRatio);
-    hatBbox = Rect.fromLTWH(firstPlayerPosition.left+5, firstPlayerPosition.top-15,
-        firstPlayerPosition.width/2, 30);
-    bodyBbox = Rect.fromLTWH(
-        firstPlayerPosition.left,
-        firstPlayerPosition.top +20,
-        firstPlayerPosition.width/2+5,
-        28);
-    footBbox = Rect.fromLTWH(
-        firstPlayerPosition.left+5,
-        firstPlayerPosition.top + 35,
-        firstPlayerPosition.width/2-2,
-        20);
+    hatBbox = Rect.fromLTWH(firstPlayerPosition.left + 5,
+        firstPlayerPosition.top - 15, firstPlayerPosition.width / 2, 30);
+    bodyBbox = Rect.fromLTWH(firstPlayerPosition.left,
+        firstPlayerPosition.top + 20, firstPlayerPosition.width / 2 + 5, 28);
+    footBbox = Rect.fromLTWH(firstPlayerPosition.left + 5,
+        firstPlayerPosition.top + 35, firstPlayerPosition.width / 2 - 2, 20);
 
     healthBarMaxWidth = w / 5;
     healthBarHeight = 10;

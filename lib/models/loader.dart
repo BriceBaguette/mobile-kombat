@@ -163,6 +163,9 @@ class Loader extends ChangeNotifier {
       var img = await _loadImage(_sceneAssets[key]!);
       imgMap[key] = img;
     }
+    if (_constant.h > _constant.w) {
+      _constant.reload();
+    }
     characterList.add(Heavy(
         bbox: Rect.fromLTWH(
             _constant.leftCharacterLeft,
