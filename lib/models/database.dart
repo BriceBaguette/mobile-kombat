@@ -453,6 +453,7 @@ class RealTimeDB {
     if (Stage().room != null) {
       DatabaseReference ref = FirebaseDatabase.instance
           .ref('${Stage().room!.roomId}/${Auth().currentUser!.uid}/character');
+      await ref.update({"upSpeed": "0"});
       ref.update({"upSpeed": jump.toString()});
     }
   }
