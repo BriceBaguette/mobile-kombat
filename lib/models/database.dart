@@ -20,7 +20,7 @@ class Database {
   final Loader _loader = Loader();
   void addUser(UserCredential cred, String nickname) {
     List<int> characterShop = [1];
-    List<int> cosmeticShop = [0, 1, 2];
+    List<int> cosmeticShop = [0, 1, 2, 3];
     List<int> characterList = [0];
     List<int> cosmeticList = [];
     List<int> stats = [0, 0, 0, 0, 1, 0];
