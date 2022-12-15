@@ -7,7 +7,7 @@ class Constant {
   late double w;
   late double h;
   final int framerate = 16;
-  final time = 15000;
+  final time = 30000;
   final double gokuRatio = 1.88;
 
   final int environmentOriginalHeight = 1080;
