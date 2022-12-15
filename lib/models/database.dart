@@ -198,19 +198,23 @@ class RealTimeDB {
     List<Room> rooms = [];
     final snapshot = await ref.get();
     if (snapshot.exists) {
+      print(snapshot.value);
       String jsonString = snapshotToJsonString(snapshot.value.toString());
       Map<String, dynamic> json =
           jsonDecode(jsonString) as Map<String, dynamic>;
+      print(json);
       for (var room in json['rooms']) {
         rooms.add(Room.fromJson(room));
       }
       for (Room room in rooms) {
+        print(room);
         if ((room.users.length < 2)) {
           var index = rooms.indexOf(room);
           DatabaseReference refRoom =
               FirebaseDatabase.instance.ref('/newRoom/rooms/$index');
           var jsonChar = jsonEncode(
               CharacterDb.fromCharacter(_player.character, second: true));
+          print("update");
           refRoom.update({
             'users': [
               {
@@ -227,6 +231,7 @@ class RealTimeDB {
               }
             ]
           });
+          print('done');
           return room.roomId;
         }
       }

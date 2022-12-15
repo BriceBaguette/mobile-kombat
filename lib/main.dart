@@ -48,7 +48,7 @@ class LaunchingScreen extends StatelessWidget {
     return MaterialApp(initialRoute: 'loader', routes: {
       'login': (context) => const Scaffold(body: LoginPage()),
       'register': (context) => const Scaffold(body: RegisterPage()),
-      'loader': (context) => const LoaderScreen(),
+      'loader': (context) => LoaderScreen(),
       'menu': (context) => Scaffold(body: MainMenu()),
       'gamestage': (context) => const Scaffold(body: GameScene()),
       'inventory': (context) => const Inventory(),

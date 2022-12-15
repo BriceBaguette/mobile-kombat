@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/controller_inventory.dart';
 import 'package:mobile_kombat/models/auth.dart';
+import 'package:mobile_kombat/models/database.dart';
 import 'package:mobile_kombat/models/loader.dart';
+import 'package:mobile_kombat/models/player.dart';
 import 'package:provider/provider.dart';
 
 class LoaderScreen extends StatelessWidget {
-  const LoaderScreen({super.key});
+  LoaderScreen({super.key});
+  final Database _database = Database();
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,13 @@ class LoaderScreen extends StatelessWidget {
           return Consumer<ControllerInventory>(
               builder: (_, data, __) => FutureBuilder(
                   future: data.init().then(
-                      (_) => Navigator.of(context).popAndPushNamed('menu')),
+                        (_) => _database
+                            .getUserName(Auth().currentUser!.uid)
+                            .then((value) => {
+                                  Player().username = value,
+                                  Navigator.of(context).popAndPushNamed('menu')
+                                }),
+                      ),
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     return const Center(child: CircularProgressIndicator());
