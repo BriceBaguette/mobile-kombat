@@ -161,8 +161,8 @@ class Database {
     stats.add(data["TotalTimeChar1"].toInt());
     stats.add(data["TotalTimeChar2"].toInt());
     stats.add(data["TotalGold"].toInt());
-    stats.add(data["NumChar"].toInt());
     stats.add(data["NumCosm"].toInt());
+    stats.add(data["NumChar"].toInt());
     return stats;
   }
 }
