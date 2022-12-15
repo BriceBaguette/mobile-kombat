@@ -201,7 +201,7 @@ class Loader extends ChangeNotifier {
           key: const ObjectKey('test2'),
           'test2',
           const [0, 0, -1, 0],
-          'assets/images/GenericGuy.png',
+          'assets/images/pilot-hat.png',
           "H",
           "gen",
           100,
