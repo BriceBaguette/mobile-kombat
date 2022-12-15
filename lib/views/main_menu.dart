@@ -1,17 +1,12 @@
 import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_kombat/models/auth.dart';
 import 'package:mobile_kombat/models/character.dart';
 import 'package:mobile_kombat/models/constant.dart';
 import 'package:mobile_kombat/models/database.dart';
-import 'package:mobile_kombat/models/loader.dart';
 import 'package:mobile_kombat/models/player.dart';
 import 'package:mobile_kombat/models/room.dart';
-import 'package:mobile_kombat/views/game_scene.dart';
-import 'package:mobile_kombat/views/inventory.dart';
-import 'package:mobile_kombat/views/shop.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_kombat/controller_inventory.dart';
 import 'package:mobile_kombat/models/opponent.dart';
