@@ -270,6 +270,10 @@ abstract class Character {
     _attackSpeedModificator = mod.toDouble();
   }
 
+  void setHealth(int newH) {
+    health = newH;
+  }
+
   void resetBox() {
     hatBbox = Constant().hatBbox;
     bodyBbox = Constant().bodyBbox;

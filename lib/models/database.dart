@@ -476,6 +476,14 @@ class RealTimeDB {
     }
   }
 
+  setHealth(int health) async {
+    if (Stage().room != null) {
+      DatabaseReference ref = FirebaseDatabase.instance
+          .ref('${Stage().room!.roomId}/${Auth().currentUser!.uid}/character');
+      ref.update({"health": health});
+    }
+  }
+
   setPosition(Rect hitBox) async {
     if (Stage().room != null) {
       DatabaseReference ref = FirebaseDatabase.instance
