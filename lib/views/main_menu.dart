@@ -333,23 +333,15 @@ class MainMenu extends StatelessWidget {
 
   Future startGame() async {
     _player.resetCharacter();
-    print('here');
     String roomId = await _rtDb.joinRoom(user!.uid);
-    print('there');
     Room? room = await _rtDb.getRoom(roomId);
-    print('here2');
     UserDb? opponentUser = await _rtDb.getOpponent(room!, user!.uid);
-    print('here3');
     if (opponentUser!.first == false) {
-      print('here4');
       await _rtDb.createGameRoom(room);
-      print('here5');
     }
     Character? opponentChar =
         await _rtDb.getOpponentCharacter(opponentUser, user!.uid);
-    print('here6');
     _rtDb.initListener(room, user!.uid);
-    print('here7');
     opponent =
         RealPlayer(username: opponentUser.userName, character: opponentChar!);
     Stage().setOpponent(opponent);
