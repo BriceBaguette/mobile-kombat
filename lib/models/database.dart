@@ -28,12 +28,12 @@ class Database {
       'ownedCharacter': characterList,
       'nickname': nickname,
       'ownedCosmetic': cosmeticList,
-      'gold': 0,
+      'gold': 800,
       'shopCharacter': characterShop,
       'shopCosmetic': cosmeticShop,
       'NumChar': 1,
       'NumCosm': 0,
-      'TotalGold': 0,
+      'TotalGold': 800,
       'TotalTime': 0,
       'TotalTimeChar1': 0,
       'TotalTimeChar2': 0,
@@ -79,7 +79,7 @@ class Database {
     db.collection('users').doc(userUid).update({
       "gold": FieldValue.increment(n),
     });
-    if(n>0){
+    if (n > 0) {
       updateStats(userUid, 0, 0, 0, n, 0, 0);
     }
   }
@@ -124,8 +124,8 @@ class Database {
     });
   }
 
-  updateStats(String userUid, double time, double tc1, double tc2, int gold, int nch,
-      int nco) async {
+  updateStats(String userUid, double time, double tc1, double tc2, int gold,
+      int nch, int nco) async {
     db
         .collection('users')
         .doc(userUid)
@@ -165,6 +165,7 @@ class Database {
     return stats;
   }
 }
+
 class RealTimeDB {
   final Constant _constant = Constant();
   final db = FirebaseDatabase.instance;

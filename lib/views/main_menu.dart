@@ -32,7 +32,8 @@ class MainMenu extends StatelessWidget {
         builder: (_, data, __) => DecoratedBox(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("./assets/images/environment2.jpg"), fit: BoxFit.cover),
+                  image: AssetImage("./assets/images/environment2.jpg"),
+                  fit: BoxFit.cover),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -99,7 +100,8 @@ class MainMenu extends StatelessWidget {
                         child: Image.asset(data.getEquippedChar().getImageDir(),
                             height: 150),
                       ),
-                      if (data.getEquippedItems()["H"] != null && data.getEquippedChar().id == 0) ...[
+                      if (data.getEquippedItems()["H"] != null &&
+                          data.getEquippedChar().id == 0) ...[
                         Positioned(
                           top: 145,
                           right: 50,
@@ -108,7 +110,8 @@ class MainMenu extends StatelessWidget {
                               height: 80),
                         ),
                       ],
-                      if (data.getEquippedItems()["H"] != null && data.getEquippedChar().id == 1) ...[
+                      if (data.getEquippedItems()["H"] != null &&
+                          data.getEquippedChar().id == 1) ...[
                         Positioned(
                           top: 163,
                           right: 90,
@@ -117,17 +120,19 @@ class MainMenu extends StatelessWidget {
                               height: 60),
                         ),
                       ],
-                      if (data.getEquippedItems()["F"] != null && data.getEquippedChar().id == 0) ...[
+                      if (data.getEquippedItems()["F"] != null &&
+                          data.getEquippedChar().id == 0) ...[
                         Positioned(
                           top: 245,
                           right: 80,
                           child: Image.asset(
                             data.getEquippedItems()["F"]?.getImage() ?? "",
-                            width:50,
+                            width: 50,
                           ),
                         ),
                       ],
-                      if (data.getEquippedItems()["F"] != null && data.getEquippedChar().id == 1) ...[
+                      if (data.getEquippedItems()["F"] != null &&
+                          data.getEquippedChar().id == 1) ...[
                         Positioned(
                           top: 250,
                           right: 105,
@@ -137,17 +142,19 @@ class MainMenu extends StatelessWidget {
                           ),
                         ),
                       ],
-                      if (data.getEquippedItems()["B"] != null && data.getEquippedChar().id == 0) ...[
+                      if (data.getEquippedItems()["B"] != null &&
+                          data.getEquippedChar().id == 0) ...[
                         Positioned(
                           top: 208,
                           right: 70,
                           child: Image.asset(
                             data.getEquippedItems()["B"]?.getImage() ?? "",
-                            width:70,
+                            width: 70,
                           ),
                         ),
                       ],
-                      if (data.getEquippedItems()["B"] != null && data.getEquippedChar().id == 1) ...[
+                      if (data.getEquippedItems()["B"] != null &&
+                          data.getEquippedChar().id == 1) ...[
                         Positioned(
                           top: 218,
                           right: 98,
@@ -160,109 +167,120 @@ class MainMenu extends StatelessWidget {
                     ],
                   ),
                 ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 10,
-              width: 170,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(width :50, height: 50,),SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.purple[800]),
-                            child: const Icon(Icons.logout),
-                            onPressed: () => {
-                                  Auth().signout(),
-                                  Navigator.of(context).popAndPushNamed('login')
-                                }))]),
-                    Container(
-                      height: 200,
-                    ),
-                    SizedBox(
-                      width: 150,
-                      height: 75,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.purple[800]),
-                          child: const Text('Play'),
-                          onPressed: () => showDialog(
-                              context: context,
-                              builder: (BuildContext ctx) => AlertDialog(
-                                      title: const Center(
-                                          child: Text("Select game mode")),
-                                      actions: [
-                                        Align(
-                                            child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            SizedBox(
-                                              width: 150,
-                                              child: ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          backgroundColor:
-                                                              Colors.purple[800]),
-                                                  onPressed: () => {
-                                                        _player
-                                                            .resetCharacter(),
-                                                        opponent = DummyBot(
-                                                            character:
-                                                                randomCharacter()),
-                                                        Stage().setOpponent(
-                                                            opponent),
-                                                        Stage().reset(),
-                                                        Navigator.of(ctx).pop(),
-                                                        Navigator.pushNamed(
-                                                            context,
-                                                            'gamestage')
-                                                      },
-                                                  child:
-                                                      const Text("Training")),
-                                            ),
-                                            SizedBox(
-                                              width: 150,
-                                              child: ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          backgroundColor:
-                                                          Colors.purple[800]),
-                                                  onPressed: () => {
-                                                        _player
-                                                            .resetCharacter(),
-                                                        opponent = SmartBot(
-                                                            character:
-                                                                randomCharacter()),
-                                                        Stage().setOpponent(
-                                                            opponent),
-                                                        Stage().reset(),
-                                                        Navigator.of(ctx).pop(),
-                                                        Navigator.pushNamed(
-                                                            context,
-                                                            'gamestage')
-                                                      },
-                                                  child: const Text(
-                                                      "Play vs bot")),
-                                            ),
-                                            SizedBox(
-                                                width: 150,
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                            backgroundColor:
-                                                            Colors.purple[800]),
-                                                    onPressed: () => {
-                                                          Navigator.of(ctx)
-                                                              .pop(),
-                                                          showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
+                SizedBox(
+                    height: MediaQuery.of(context).size.height - 10,
+                    width: 170,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const SizedBox(
+                                width: 50,
+                                height: 50,
+                              ),
+                              SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.purple[800]),
+                                      child: const Icon(Icons.logout),
+                                      onPressed: () => {
+                                            Auth().signout(),
+                                            Navigator.of(context)
+                                                .popAndPushNamed('login')
+                                          }))
+                            ]),
+                        Container(
+                          height: 200,
+                        ),
+                        SizedBox(
+                          width: 150,
+                          height: 75,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.purple[800]),
+                              child: const Text('Play'),
+                              onPressed: () => showDialog(
+                                  context: context,
+                                  builder: (BuildContext ctx) => AlertDialog(
+                                          title: const Center(
+                                              child: Text("Select game mode")),
+                                          actions: [
+                                            Align(
+                                                child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                SizedBox(
+                                                  width: 150,
+                                                  child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.purple[
+                                                                      800]),
+                                                      onPressed: () => {
+                                                            _player
+                                                                .resetCharacter(),
+                                                            opponent = DummyBot(
+                                                                character:
+                                                                    randomCharacter()),
+                                                            Stage().setOpponent(
+                                                                opponent),
+                                                            Stage().reset(),
+                                                            Navigator.of(ctx)
+                                                                .pop(),
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                'gamestage')
+                                                          },
+                                                      child: const Text(
+                                                          "Training")),
+                                                ),
+                                                SizedBox(
+                                                  width: 150,
+                                                  child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.purple[
+                                                                      800]),
+                                                      onPressed: () => {
+                                                            _player
+                                                                .resetCharacter(),
+                                                            opponent = SmartBot(
+                                                                character:
+                                                                    randomCharacter()),
+                                                            Stage().setOpponent(
+                                                                opponent),
+                                                            Stage().reset(),
+                                                            Navigator.of(ctx)
+                                                                .pop(),
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                'gamestage')
+                                                          },
+                                                      child: const Text(
+                                                          "Play vs bot")),
+                                                ),
+                                                SizedBox(
+                                                    width: 150,
+                                                    child: ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                                backgroundColor:
+                                                                    Colors.purple[
+                                                                        800]),
+                                                        onPressed: () => {
+                                                              Navigator.of(ctx)
+                                                                  .pop(),
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (BuildContext
                                                                           ctx) =>
                                                                       AlertDialog(
                                                                         title: const Center(
@@ -284,15 +302,15 @@ class MainMenu extends StatelessWidget {
                                                                           ),
                                                                         ],
                                                                       )),
-                                                        },
-                                                    child: const Text(
-                                                        "Play online")))
-                                          ],
-                                        ))
-                                      ]))),
-                    )
-                  ],
-                )),
+                                                            },
+                                                        child: const Text(
+                                                            "Play online")))
+                                              ],
+                                            ))
+                                          ]))),
+                        )
+                      ],
+                    )),
               ],
             )));
   }
@@ -314,6 +332,7 @@ class MainMenu extends StatelessWidget {
   }
 
   Future startGame() async {
+    _player.resetCharacter();
     String roomId = await _rtDb.joinRoom(user!.uid);
     Room? room = await _rtDb.getRoom(roomId);
     UserDb? opponentUser = await _rtDb.getOpponent(room!, user!.uid);

@@ -59,7 +59,7 @@ class Light extends Character {
       required Rect bbox,
       required String facing,
       required double speed}) {
-    _price = 0;
+    _price = 100;
     id = 1;
     _framerate = framerate;
 

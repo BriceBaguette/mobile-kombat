@@ -22,13 +22,13 @@ class EndingScreen extends StatelessWidget {
     return SizedBox(
         child: checkHealth()
             ? Winner(
-          characters: characters,
-          op: op,
-        )
+                characters: characters,
+                op: op,
+              )
             : Loser(
-          characters: characters,
-          op: op,
-        ));
+                characters: characters,
+                op: op,
+              ));
   }
 }
 
@@ -44,119 +44,151 @@ class Winner extends StatelessWidget {
         body: DecoratedBox(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("./assets/images/environment3.jpg"), fit: BoxFit.cover),
+                  image: AssetImage("./assets/images/environment3.jpg"),
+                  fit: BoxFit.cover),
             ),
-            child:Padding(
+            child: Padding(
                 padding: const EdgeInsets.all(30),
-                child:  SizedBox(
+                child: SizedBox(
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
                             Center(
                                 child: SizedBox(
                                     width: 300,
-                                    height: Constant().h-150,
+                                    height: Constant().h - 150,
                                     child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           const Text(
                                             "Winner",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               fontSize: 35,
+                                              color: Colors.white,
                                             ),
                                           ),
-                                          Text(Player().getUsername()),
+                                          Text(
+                                            Player().getUsername(),
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
 
                                           //Player1.cosmetics,
                                           Stack(
                                             children: [
-                                              Image.asset(characters[0].getImageDir(),
-                                                height: Constant().h/2-20,),
+                                              Image.asset(
+                                                characters[0].getImageDir(),
+                                                height: Constant().h / 2 - 20,
+                                              ),
                                               if (characters[0]
-                                                  .equippedCosmetics["H"] !=
-                                                  null && characters[0].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "H"] !=
+                                                      null &&
+                                                  characters[0].id == 1) ...[
                                                 Positioned(
                                                   top: -20,
                                                   left: 5,
                                                   child: Image.asset(
                                                       characters[0]
-                                                          .equippedCosmetics["H"]
-                                                          ?.getImage() ??
+                                                              .equippedCosmetics[
+                                                                  "H"]
+                                                              ?.getImage() ??
                                                           "",
                                                       width: 70),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["H"] !=
-                                                  null && characters[0].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "H"] !=
+                                                      null &&
+                                                  characters[0].id == 0) ...[
                                                 Positioned(
                                                   top: -25,
                                                   left: 34,
                                                   child: Image.asset(
                                                       characters[0]
-                                                          .equippedCosmetics["H"]
-                                                          ?.getImage() ??
+                                                              .equippedCosmetics[
+                                                                  "H"]
+                                                              ?.getImage() ??
                                                           "",
                                                       width: 80),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["F"] !=
-                                                  null && characters[0].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "F"] !=
+                                                      null &&
+                                                  characters[0].id == 1) ...[
                                                 Positioned(
                                                   top: 90,
                                                   left: 5,
                                                   child: Image.asset(
                                                     characters[0]
-                                                        .equippedCosmetics["F"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "F"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    width: 50,),
+                                                    width: 50,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["F"] !=
-                                                  null && characters[0].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "F"] !=
+                                                      null &&
+                                                  characters[0].id == 0) ...[
                                                 Positioned(
                                                   top: 80,
                                                   left: 20,
                                                   child: Image.asset(
                                                     characters[0]
-                                                        .equippedCosmetics["F"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "F"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    width: 70,),
+                                                    width: 70,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["B"] !=
-                                                  null&& characters[0].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "B"] !=
+                                                      null &&
+                                                  characters[0].id == 1) ...[
                                                 Positioned(
                                                   top: 45,
                                                   left: 0,
                                                   child: Image.asset(
                                                     characters[0]
-                                                        .equippedCosmetics["B"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "B"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    width: 60,),
+                                                    width: 60,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["B"] !=
-                                                  null && characters[0].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "B"] !=
+                                                      null &&
+                                                  characters[0].id == 0) ...[
                                                 Positioned(
                                                   top: 35,
                                                   left: 15,
                                                   child: Image.asset(
                                                     characters[0]
-                                                        .equippedCosmetics["B"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "B"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    width: 80,),
+                                                    width: 80,
+                                                  ),
                                                 ),
                                               ],
                                             ],
@@ -165,145 +197,185 @@ class Winner extends StatelessWidget {
                             Center(
                                 child: SizedBox(
                                     width: 300,
-                                    height:  Constant().h-150,
+                                    height: Constant().h - 150,
                                     child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           const Text(
                                             "Loser",
                                             style: TextStyle(
+                                              color: Colors.white,
                                               fontWeight: FontWeight.w700,
                                               fontSize: 35,
                                             ),
                                           ),
-                                          Text(op.username),
+                                          Text(op.username,
+                                              style: const TextStyle(
+                                                  color: Colors.white)),
                                           Stack(
                                             children: [
-                                              Image.asset(characters[1].getImageDir(),
-                                                height: Constant().h/2-20,
-                                                color: Colors.blueGrey.withOpacity(0.5),),
+                                              Image.asset(
+                                                characters[1].getImageDir(),
+                                                height: Constant().h / 2 - 20,
+                                                color: Colors.blueGrey
+                                                    .withOpacity(0.5),
+                                              ),
                                               if (characters[1]
-                                                  .equippedCosmetics["H"] !=
-                                                  null && characters[1].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "H"] !=
+                                                      null &&
+                                                  characters[1].id == 1) ...[
                                                 Positioned(
                                                   top: -20,
                                                   left: 5,
                                                   child: Image.asset(
                                                       characters[1]
-                                                          .equippedCosmetics["H"]
-                                                          ?.getImage() ??
+                                                              .equippedCosmetics[
+                                                                  "H"]
+                                                              ?.getImage() ??
                                                           "",
-                                                      color: Colors.blueGrey.withOpacity(0.5),
+                                                      color: Colors.blueGrey
+                                                          .withOpacity(0.5),
                                                       width: 70),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["H"] !=
-                                                  null && characters[1].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "H"] !=
+                                                      null &&
+                                                  characters[1].id == 0) ...[
                                                 Positioned(
                                                   top: -25,
                                                   left: 34,
                                                   child: Image.asset(
                                                       characters[1]
-                                                          .equippedCosmetics["H"]
-                                                          ?.getImage() ??
+                                                              .equippedCosmetics[
+                                                                  "H"]
+                                                              ?.getImage() ??
                                                           "",
-                                                      color: Colors.blueGrey.withOpacity(0.5),
+                                                      color: Colors.blueGrey
+                                                          .withOpacity(0.5),
                                                       width: 80),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["F"] !=
-                                                  null && characters[1].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "F"] !=
+                                                      null &&
+                                                  characters[1].id == 1) ...[
                                                 Positioned(
                                                   top: 90,
                                                   left: 5,
                                                   child: Image.asset(
                                                     characters[1]
-                                                        .equippedCosmetics["F"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "F"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    color: Colors.blueGrey.withOpacity(0.5),
-                                                    width: 50,),
+                                                    color: Colors.blueGrey
+                                                        .withOpacity(0.5),
+                                                    width: 50,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["F"] !=
-                                                  null && characters[1].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "F"] !=
+                                                      null &&
+                                                  characters[1].id == 0) ...[
                                                 Positioned(
                                                   top: 80,
                                                   left: 20,
                                                   child: Image.asset(
                                                     characters[1]
-                                                        .equippedCosmetics["F"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "F"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    color: Colors.blueGrey.withOpacity(0.5),
-                                                    width: 70,),
+                                                    color: Colors.blueGrey
+                                                        .withOpacity(0.5),
+                                                    width: 70,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["B"] !=
-                                                  null&& characters[1].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "B"] !=
+                                                      null &&
+                                                  characters[1].id == 1) ...[
                                                 Positioned(
                                                   top: 45,
                                                   left: 0,
                                                   child: Image.asset(
                                                     characters[1]
-                                                        .equippedCosmetics["B"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "B"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    color: Colors.blueGrey.withOpacity(0.5),
-                                                    width: 60,),
+                                                    color: Colors.blueGrey
+                                                        .withOpacity(0.5),
+                                                    width: 60,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["B"] !=
-                                                  null && characters[1].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "B"] !=
+                                                      null &&
+                                                  characters[1].id == 0) ...[
                                                 Positioned(
                                                   top: 35,
                                                   left: 15,
                                                   child: Image.asset(
                                                     characters[1]
-                                                        .equippedCosmetics["B"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "B"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    color: Colors.blueGrey.withOpacity(0.5),
-                                                    width: 80,),
+                                                    color: Colors.blueGrey
+                                                        .withOpacity(0.5),
+                                                    width: 80,
+                                                  ),
                                                 ),
                                               ],
                                             ],
                                           ),
                                         ]))),
                           ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const SizedBox(width: 50),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Center(child: Text("Earned gold: 50     ")),
-                                      Image.asset(
-                                        "assets/images/Coins.png",
-                                        width: 20,
-                                      )
-                                    ]),
-                                Consumer2(
-                                    builder: (context, Stage scene, ControllerInventory val, _) => IconButton(
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(width: 50),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Center(
+                                      child: Text("Earned gold: 50     ",
+                                          style:
+                                              TextStyle(color: Colors.white))),
+                                  Image.asset(
+                                    "assets/images/Coins.png",
+                                    width: 20,
+                                  )
+                                ]),
+                            Consumer2(
+                                builder: (context, Stage scene,
+                                        ControllerInventory val, _) =>
+                                    IconButton(
                                       iconSize: 50,
                                       icon: const Icon(Icons.play_arrow,
                                           size: 75, color: Colors.white),
                                       onPressed: () {
-                                        val.updateTimeStat(Player().character, 15000-scene.displayTime);
+                                        val.updateTimeStat(Player().character,
+                                            15000 - scene.displayTime);
                                         val.updateGold(50);
                                         Navigator.of(context)
                                             .popAndPushNamed('menu');
                                       },
                                     ))
-                              ])
-                        ])))));
+                          ])
+                    ])))));
   }
 }
 
@@ -319,126 +391,163 @@ class Loser extends StatelessWidget {
         body: DecoratedBox(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("./assets/images/environment3.jpg"), fit: BoxFit.cover),
+                  image: AssetImage("./assets/images/environment3.jpg"),
+                  fit: BoxFit.cover),
             ),
-            child:Padding(
+            child: Padding(
                 padding: const EdgeInsets.all(30),
-                child:  SizedBox(
+                child: SizedBox(
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
                             Center(
                                 child: SizedBox(
                                     width: 300,
-                                    height:  Constant().h-150,
+                                    height: Constant().h - 150,
                                     child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           const Text(
                                             "Loser",
                                             style: TextStyle(
+                                              color: Colors.white,
                                               fontWeight: FontWeight.w700,
                                               fontSize: 35,
                                             ),
                                           ),
-                                          Text(Player().getUsername()),
+                                          Text(Player().getUsername(),
+                                              style: const TextStyle(
+                                                  color: Colors.white)),
 
                                           //Player1.cosmetics,
                                           Stack(
                                             children: [
-                                              Image.asset(characters[0].getImageDir(),
-                                                height: Constant().h/2-20,
-                                                color: Colors.blueGrey.withOpacity(0.5),),
+                                              Image.asset(
+                                                characters[0].getImageDir(),
+                                                height: Constant().h / 2 - 20,
+                                                color: Colors.blueGrey
+                                                    .withOpacity(0.5),
+                                              ),
                                               if (characters[0]
-                                                  .equippedCosmetics["H"] !=
-                                                  null && characters[0].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "H"] !=
+                                                      null &&
+                                                  characters[0].id == 1) ...[
                                                 Positioned(
                                                   top: -20,
                                                   left: 5,
                                                   child: Image.asset(
                                                       characters[0]
-                                                          .equippedCosmetics["H"]
-                                                          ?.getImage() ??
+                                                              .equippedCosmetics[
+                                                                  "H"]
+                                                              ?.getImage() ??
                                                           "",
-                                                      color: Colors.blueGrey.withOpacity(0.5),
+                                                      color: Colors.blueGrey
+                                                          .withOpacity(0.5),
                                                       width: 70),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["H"] !=
-                                                  null && characters[0].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "H"] !=
+                                                      null &&
+                                                  characters[0].id == 0) ...[
                                                 Positioned(
                                                   top: -25,
                                                   left: 34,
                                                   child: Image.asset(
                                                       characters[0]
-                                                          .equippedCosmetics["H"]
-                                                          ?.getImage() ??
+                                                              .equippedCosmetics[
+                                                                  "H"]
+                                                              ?.getImage() ??
                                                           "",
-                                                      color: Colors.blueGrey.withOpacity(0.5),
+                                                      color: Colors.blueGrey
+                                                          .withOpacity(0.5),
                                                       width: 80),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["F"] !=
-                                                  null && characters[0].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "F"] !=
+                                                      null &&
+                                                  characters[0].id == 1) ...[
                                                 Positioned(
                                                   top: 90,
                                                   left: 5,
                                                   child: Image.asset(
                                                     characters[0]
-                                                        .equippedCosmetics["F"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "F"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    color: Colors.blueGrey.withOpacity(0.5),
-                                                    width: 50,),
+                                                    color: Colors.blueGrey
+                                                        .withOpacity(0.5),
+                                                    width: 50,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["F"] !=
-                                                  null && characters[0].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "F"] !=
+                                                      null &&
+                                                  characters[0].id == 0) ...[
                                                 Positioned(
                                                   top: 80,
                                                   left: 20,
                                                   child: Image.asset(
                                                     characters[0]
-                                                        .equippedCosmetics["F"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "F"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    color: Colors.blueGrey.withOpacity(0.5),
-                                                    width: 70,),
+                                                    color: Colors.blueGrey
+                                                        .withOpacity(0.5),
+                                                    width: 70,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["B"] !=
-                                                  null&& characters[0].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "B"] !=
+                                                      null &&
+                                                  characters[0].id == 1) ...[
                                                 Positioned(
                                                   top: 45,
                                                   left: 0,
                                                   child: Image.asset(
                                                     characters[0]
-                                                        .equippedCosmetics["B"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "B"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    color: Colors.blueGrey.withOpacity(0.5),
-                                                    width: 60,),
+                                                    color: Colors.blueGrey
+                                                        .withOpacity(0.5),
+                                                    width: 60,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[0]
-                                                  .equippedCosmetics["B"] !=
-                                                  null && characters[0].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "B"] !=
+                                                      null &&
+                                                  characters[0].id == 0) ...[
                                                 Positioned(
                                                   top: 35,
                                                   left: 15,
                                                   child: Image.asset(
                                                     characters[0]
-                                                        .equippedCosmetics["B"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "B"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    color: Colors.blueGrey.withOpacity(0.5),
-                                                    width: 80,),
+                                                    color: Colors.blueGrey
+                                                        .withOpacity(0.5),
+                                                    width: 80,
+                                                  ),
                                                 ),
                                               ],
                                             ],
@@ -447,137 +556,170 @@ class Loser extends StatelessWidget {
                             Center(
                                 child: SizedBox(
                                     width: 300,
-                                    height:  Constant().h-150,
+                                    height: Constant().h - 150,
                                     child: Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           const Text(
                                             "Winner",
                                             style: TextStyle(
+                                              color: Colors.white,
                                               fontWeight: FontWeight.w700,
                                               fontSize: 35,
                                             ),
                                           ),
-                                          Text(op.username),
+                                          Text(op.username,
+                                              style: const TextStyle(
+                                                  color: Colors.white)),
                                           Stack(
                                             children: [
-                                              Image.asset(characters[1].getImageDir(),
-                                                height: Constant().h/2-20,),
+                                              Image.asset(
+                                                characters[1].getImageDir(),
+                                                height: Constant().h / 2 - 20,
+                                              ),
                                               if (characters[1]
-                                                  .equippedCosmetics["H"] !=
-                                                  null && characters[1].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "H"] !=
+                                                      null &&
+                                                  characters[1].id == 1) ...[
                                                 Positioned(
                                                   top: -20,
                                                   left: 5,
                                                   child: Image.asset(
                                                       characters[1]
-                                                          .equippedCosmetics["H"]
-                                                          ?.getImage() ??
+                                                              .equippedCosmetics[
+                                                                  "H"]
+                                                              ?.getImage() ??
                                                           "",
                                                       width: 70),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["H"] !=
-                                                  null && characters[1].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "H"] !=
+                                                      null &&
+                                                  characters[1].id == 0) ...[
                                                 Positioned(
                                                   top: -25,
                                                   left: 34,
                                                   child: Image.asset(
                                                       characters[1]
-                                                          .equippedCosmetics["H"]
-                                                          ?.getImage() ??
+                                                              .equippedCosmetics[
+                                                                  "H"]
+                                                              ?.getImage() ??
                                                           "",
                                                       width: 80),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["F"] !=
-                                                  null && characters[1].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "F"] !=
+                                                      null &&
+                                                  characters[1].id == 1) ...[
                                                 Positioned(
                                                   top: 90,
                                                   left: 5,
                                                   child: Image.asset(
                                                     characters[1]
-                                                        .equippedCosmetics["F"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "F"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    width: 50,),
+                                                    width: 50,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["F"] !=
-                                                  null && characters[1].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "F"] !=
+                                                      null &&
+                                                  characters[1].id == 0) ...[
                                                 Positioned(
                                                   top: 80,
                                                   left: 20,
                                                   child: Image.asset(
                                                     characters[1]
-                                                        .equippedCosmetics["F"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "F"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    width: 70,),
+                                                    width: 70,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["B"] !=
-                                                  null&& characters[1].id == 1) ...[
+                                                              .equippedCosmetics[
+                                                          "B"] !=
+                                                      null &&
+                                                  characters[1].id == 1) ...[
                                                 Positioned(
                                                   top: 45,
                                                   left: 0,
                                                   child: Image.asset(
                                                     characters[1]
-                                                        .equippedCosmetics["B"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "B"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    width: 60,),
+                                                    width: 60,
+                                                  ),
                                                 ),
                                               ],
                                               if (characters[1]
-                                                  .equippedCosmetics["B"] !=
-                                                  null && characters[1].id == 0) ...[
+                                                              .equippedCosmetics[
+                                                          "B"] !=
+                                                      null &&
+                                                  characters[1].id == 0) ...[
                                                 Positioned(
                                                   top: 35,
                                                   left: 15,
                                                   child: Image.asset(
                                                     characters[1]
-                                                        .equippedCosmetics["B"]
-                                                        ?.getImage() ??
+                                                            .equippedCosmetics[
+                                                                "B"]
+                                                            ?.getImage() ??
                                                         "",
-                                                    width: 80,),
+                                                    width: 80,
+                                                  ),
                                                 ),
                                               ],
                                             ],
                                           ),
                                         ]))),
                           ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const SizedBox(width: 50),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Center(child: Text("Earned gold: 20     ")),
-                                      Image.asset(
-                                        "assets/images/Coins.png",
-                                        width: 20,
-                                      )
-                                    ]),
-                                Consumer2(
-                                    builder: (context, Stage scene, ControllerInventory val, _) => IconButton(
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(width: 50),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Center(
+                                      child: Text("Earned gold: 20     ",
+                                          style:
+                                              TextStyle(color: Colors.white))),
+                                  Image.asset(
+                                    "assets/images/Coins.png",
+                                    width: 20,
+                                  )
+                                ]),
+                            Consumer2(
+                                builder: (context, Stage scene,
+                                        ControllerInventory val, _) =>
+                                    IconButton(
                                       iconSize: 50,
                                       icon: const Icon(Icons.play_arrow,
                                           size: 75, color: Colors.white),
                                       onPressed: () {
-                                        val.updateTimeStat(Player().character, 15000-scene.displayTime);
+                                        val.updateTimeStat(Player().character,
+                                            15000 - scene.displayTime);
                                         val.updateGold(20);
                                         Navigator.of(context)
                                             .popAndPushNamed('menu');
                                       },
                                     ))
-                              ])
-                        ])))));
+                          ])
+                    ])))));
   }
 }
